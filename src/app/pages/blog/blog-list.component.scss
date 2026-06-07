@@ -2,7 +2,7 @@
 
 .blog-page {
   padding: var(--spacing-3xl) 0;
-  min-height: 60vh;
+  min-height: 40vh;
 
   &__container {
     @include container;
@@ -23,6 +23,10 @@
 
   @include responsive(md) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include responsive(lg) {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

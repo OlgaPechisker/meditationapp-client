@@ -45,6 +45,10 @@
       list-style: none;
       margin: 0;
       padding: 0;
+
+      @include responsive(xl) {
+        gap: var(--spacing-2xl);
+      }
     }
 
     a {

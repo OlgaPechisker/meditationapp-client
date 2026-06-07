@@ -3,12 +3,17 @@
   @if $breakpoint == md { @media (min-width: 768px) { @content; } }
   @if $breakpoint == lg { @media (min-width: 1024px) { @content; } }
   @if $breakpoint == xl { @media (min-width: 1280px) { @content; } }
+  @if $breakpoint == 2xl { @media (min-width: 1536px) { @content; } }
 }
 
 @mixin container {
   max-width: var(--max-width);
   margin-inline: auto;
   padding-inline: var(--spacing-lg);
+
+  @include responsive(xl) {
+    padding-inline: var(--spacing-xl);
+  }
 }
 
 @mixin card {

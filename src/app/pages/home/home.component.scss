@@ -2,7 +2,7 @@
 
 .hero {
   background: linear-gradient(160deg, var(--color-bg-alt) 0%, rgba(123, 94, 167, 0.12) 100%);
-  min-height: 100vh;
+  min-height: clamp(480px, 80vh, 800px);
   margin-top: calc(-1 * var(--header-height));
   padding-top: var(--header-height);
   display: flex;
@@ -18,12 +18,20 @@
     font-size: var(--font-size-3xl);
     color: var(--color-primary);
     margin: 0 0 var(--spacing-md);
+
+    @include responsive(xl) {
+      font-size: clamp(3rem, 4vw, 3.5rem);
+    }
   }
 
   &__subtitle {
     font-size: var(--font-size-lg);
     color: var(--color-text-light);
     margin: 0 0 var(--spacing-xl);
+
+    @include responsive(xl) {
+      font-size: var(--font-size-xl);
+    }
   }
 
   &__actions {
@@ -59,7 +67,6 @@
 
 .section {
   padding: var(--spacing-3xl) 0;
-  min-height: 40vh;
 
   &--alt {
     background: var(--color-bg-alt);
