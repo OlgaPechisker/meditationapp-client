@@ -3,11 +3,11 @@
     <h1 class="blog-page__title">{{ 'blog.title' | transloco }}</h1>
 
     @if (posts().length) {
-      <div class="blog-grid">
+      <div class="ui-grid">
         @for (post of posts(); track post.id) {
-          <article class="blog-card" data-testid="blog-card" [attr.data-slug]="post.slug" [routerLink]="['/blog', post.slug]" style="cursor:pointer">
-            <div class="blog-card__image" [style.background-image]="post.imageUrl ? 'url(' + post.imageUrl + ')' : ''"></div>
-            <div class="blog-card__body">
+          <article class="ui-card" data-testid="blog-card" [attr.data-slug]="post.slug" [routerLink]="['/blog', post.slug]" style="cursor:pointer">
+            <div class="ui-card__image" [style.background-image]="post.imageUrl ? 'url(' + post.imageUrl + ')' : ''"></div>
+            <div class="ui-card__body">
               <time class="blog-card__date" data-testid="blog-card-date">{{ post.publishedAt | date:'dd/MM/yyyy' }}</time>
               <h2 class="blog-card__title">
                 <a [routerLink]="['/blog', post.slug]" data-testid="blog-card-title">{{ post.title }}</a>

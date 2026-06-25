@@ -3,11 +3,11 @@
     <h1 class="treatments-page__title">{{ 'treatments.title' | transloco }}</h1>
 
     @if (treatments().length) {
-      <div class="treatments-grid">
+      <div class="ui-grid">
         @for (treatment of treatments(); track treatment.id) {
-          <article class="treatment-card" data-testid="treatment-card" [attr.data-slug]="treatment.slug" [routerLink]="['/treatments', treatment.slug]" style="cursor:pointer">
-            <div class="treatment-card__image" [style.background-image]="treatment.imageUrl ? 'url(' + treatment.imageUrl + ')' : ''"></div>
-            <div class="treatment-card__body">
+          <article class="ui-card" data-testid="treatment-card" [attr.data-slug]="treatment.slug" [routerLink]="['/treatments', treatment.slug]" style="cursor:pointer">
+            <div class="ui-card__image" [style.background-image]="treatment.imageUrl ? 'url(' + treatment.imageUrl + ')' : ''"></div>
+            <div class="ui-card__body">
               <h2 class="treatment-card__title">
                 <a [routerLink]="['/treatments', treatment.slug]" data-testid="treatment-card-title">{{ treatment.title }}</a>
               </h2>

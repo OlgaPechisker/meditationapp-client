@@ -16,47 +16,7 @@
   }
 }
 
-.treatments-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-xl);
-  min-height: 50vh;
-
-  @include responsive(md) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include responsive(lg) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @include responsive(xl) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
 .treatment-card {
-  @include card;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  &__image {
-    height: 200px;
-    background: var(--color-bg-alt);
-    background-size: cover;
-    background-position: center;
-    margin: calc(-1 * var(--spacing-xl));
-    margin-bottom: 0;
-  }
-
-  &__body {
-    padding-top: var(--spacing-lg);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
   &__title {
     font-size: var(--font-size-lg);
     margin: 0 0 var(--spacing-sm);

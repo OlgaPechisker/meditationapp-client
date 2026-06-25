@@ -2,7 +2,7 @@
 
 .hero {
   background: linear-gradient(160deg, var(--color-bg-alt) 0%, rgba(123, 94, 167, 0.12) 100%);
-  min-height: clamp(480px, 80vh, 800px);
+  min-height: 100vh;
   margin-top: calc(-1 * var(--header-height));
   padding-top: var(--header-height);
   display: flex;
@@ -89,40 +89,7 @@
   }
 }
 
-.cards-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-xl);
-  justify-items: center;
-
-  @include responsive(md) {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    justify-content: center;
-  }
-}
-
 .card {
-  @include card;
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  overflow: hidden;
-  width: 100%;
-
-  &__image {
-    height: 180px;
-    background: var(--color-bg-alt);
-    background-size: cover;
-    background-position: center;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
-    margin: calc(-1 * var(--spacing-xl));
-    margin-bottom: var(--spacing-md);
-  }
-
-  &__body {
-    padding-top: var(--spacing-md);
-  }
-
   &__title {
     font-size: var(--font-size-lg);
     color: var(--color-text);

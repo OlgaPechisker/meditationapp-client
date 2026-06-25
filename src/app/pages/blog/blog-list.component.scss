@@ -16,37 +16,7 @@
   }
 }
 
-.blog-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-xl);
-
-  @include responsive(md) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include responsive(lg) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 .blog-card {
-  @include card;
-  overflow: hidden;
-
-  &__image {
-    height: 180px;
-    background: var(--color-bg-alt);
-    background-size: cover;
-    background-position: center;
-    margin: calc(-1 * var(--spacing-xl));
-    margin-bottom: 0;
-  }
-
-  &__body {
-    padding-top: var(--spacing-lg);
-  }
-
   &__date {
     font-size: var(--font-size-xs);
     color: var(--color-text-light);

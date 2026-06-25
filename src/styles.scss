@@ -1,5 +1,6 @@
 @use 'styles/variables';
 @use 'styles/typography';
+@use 'styles/mixins' as *;
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -12,6 +13,49 @@ a { color: var(--color-primary); text-decoration: none; &:hover { text-decoratio
 button { cursor: pointer; font-family: inherit; }
 
 .container { max-width: var(--max-width); margin-inline: auto; padding-inline: var(--spacing-lg); }
+
+.ui-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  justify-items: center;
+  justify-content: center;
+
+  @include responsive(md) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, max-content));
+  }
+}
+
+.ui-card {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &__image {
+    height: 200px;
+    background: var(--color-bg-alt);
+    background-size: cover;
+    background-position: center;
+    margin: calc(-1 * var(--spacing-xl));
+    margin-bottom: 0;
+  }
+
+  &__body {
+    padding-top: var(--spacing-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
