@@ -22,7 +22,7 @@ button { cursor: pointer; font-family: inherit; }
   justify-content: center;
 
   @include responsive(md) {
-    grid-template-columns: repeat(auto-fit, minmax(280px, max-content));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
 }
 
