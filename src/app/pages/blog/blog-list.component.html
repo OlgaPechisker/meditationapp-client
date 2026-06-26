@@ -8,11 +8,11 @@
           <article class="ui-card" data-testid="blog-card" [attr.data-slug]="post.slug" [routerLink]="['/blog', post.slug]" style="cursor:pointer">
             <div class="ui-card__image" [style.background-image]="post.imageUrl ? 'url(' + post.imageUrl + ')' : ''"></div>
             <div class="ui-card__body">
-              <time class="blog-card__date" data-testid="blog-card-date">{{ post.publishedAt | date:'dd/MM/yyyy' }}</time>
-              <h2 class="blog-card__title">
+              <time class="ui-card__meta" data-testid="blog-card-date">{{ post.publishedAt | date:'dd/MM/yyyy' }}</time>
+              <h2 class="ui-card__title">
                 <a [routerLink]="['/blog', post.slug]" data-testid="blog-card-title">{{ post.title }}</a>
               </h2>
-              <p class="blog-card__excerpt">{{ post.excerpt }}</p>
+              <p class="ui-card__text">{{ post.excerpt }}</p>
               <a [routerLink]="['/blog', post.slug]" class="blog-card__link">{{ 'blog.read_more' | transloco }}</a>
             </div>
           </article>

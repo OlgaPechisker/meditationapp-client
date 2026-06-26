@@ -89,23 +89,4 @@
   }
 }
 
-.card {
-  &__title {
-    font-size: var(--font-size-lg);
-    color: var(--color-text);
-    margin: 0 0 var(--spacing-sm);
-  }
-
-  &__meta {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-light);
-    margin: 0 0 var(--spacing-sm);
-  }
-
-  &__text {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-light);
-    margin: 0;
-    line-height: 1.6;
-  }
-}
+/* Shared CSS is in styles.scss */
