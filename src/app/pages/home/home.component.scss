@@ -105,16 +105,20 @@
     background: var(--color-bg-alt);
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 
     &::before {
       content: '';
       position: absolute;
-      inset-block-start: 30%;
-      inset-inline-start: 2%;
-      width: 280px;
-      height: 480px;
+      inset-block-start: 10%;
+      inset-inline-start: clamp(1%, 3vw, 5%);
+      transform: translateY(-30%);
+      width: clamp(220px, 20vw, 440px);
+      height: clamp(360px, 62vh, 720px);
       background: url('/assets/images/floral-branch.svg') top center / contain no-repeat;
-      opacity: 0.30;
+      opacity: 0.35;
       pointer-events: none;
       z-index: 0;
     }
@@ -123,10 +127,10 @@
       content: '';
       position: absolute;
       inset-block-start: 50%;
-      inset-inline-end: 5%;
+      inset-inline-end: clamp(1%, 3vw, 5%);
       transform: translateY(-50%);
-      width: 280px;
-      height: 448px;
+      width: clamp(200px, 18vw, 400px);
+      height: clamp(320px, 56vh, 660px);
       background: url('/assets/images/buddha-meditation.svg') center / contain no-repeat;
       opacity: 0.30;
       pointer-events: none;
@@ -136,6 +140,7 @@
     .section__container {
       position: relative;
       z-index: 1;
+      width: 100%;
     }
   }
 
@@ -170,13 +175,12 @@
   }
 }
 
-// ── Expertise Deck ──────────────────────────────────────────────────────────
-// ── Expertise Deck — 2×2 grid, fits in one viewport ─────────────────────────
+// ── Expertise Deck — 2×2 grid, responsive ────────────────────────────────────
 .expertise-deck {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-lg);
-  max-width: 620px;
+  gap: clamp(var(--spacing-md), 2vw, var(--spacing-xl));
+  max-width: clamp(560px, 55vw, 1000px);
   margin: var(--spacing-xl) auto var(--spacing-2xl);
 
   &__card {
@@ -204,8 +208,8 @@
   }
 
   &__icon {
-    width: 56px;
-    height: 56px;
+    width: clamp(48px, 4vw, 72px);
+    height: clamp(48px, 4vw, 72px);
     margin-bottom: var(--spacing-md);
     flex-shrink: 0;
     transition: transform 0.3s ease;
