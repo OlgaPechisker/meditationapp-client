@@ -108,49 +108,65 @@
 }
 
 // ── Expertise Deck ──────────────────────────────────────────────────────────
+//   ▼ Tweak these 4 variables — container size auto-follows
+$card-w: 290px;   // card width
+$card-h: 330px;   // card height
+$step-x: 200px;   // horizontal step between cards (smaller = more overlap)
+$step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
 
 .expertise-deck {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0;
-  padding: var(--spacing-xl) 0 var(--spacing-2xl);
+  position: relative;
+  width: calc(#{$card-w} + 3 * #{$step-x});   // 290 + 600 = 890px
+  height: calc(#{$card-h} + 3 * #{$step-y});  // 330 + 132 = 462px
+  margin: var(--spacing-xl) auto var(--spacing-2xl);
 
   &__card {
-    position: relative;
-    width: 200px;
-    min-height: 230px;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-md);
+    position: absolute;
+    width: $card-w;
+    height: $card-h;
+    // Gradient sampled from the logo: soft lavender (dove body) → blush pink (lower wing)
+    background: linear-gradient(145deg, #F0EDF8 0%, #EDE4F2 55%, #F4DDE8 100%);
+    border: 2px solid var(--color-primary);
+    color: var(--color-text);
     border-radius: var(--radius-md);
     padding: var(--spacing-xl) var(--spacing-lg);
-    margin: 0 -44px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    transition: transform 0.45s ease, margin 0.45s ease, box-shadow 0.3s ease;
-    transform: rotate(calc(var(--r, 0) * 1deg));
+    box-shadow: 0 6px 24px rgba(91, 62, 135, 0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     cursor: default;
 
-    &:nth-child(2),
-    &:nth-child(3) { z-index: 2; }
-    &:nth-child(1),
-    &:nth-child(4) { z-index: 1; }
-  }
+    &:nth-child(1) { top: 0;           left: 0;           z-index: 4; }
+    &:nth-child(2) { top: $step-y;     left: $step-x;     z-index: 3; }
+    &:nth-child(3) { top: 2 * $step-y; left: 2 * $step-x; z-index: 2; }
+    &:nth-child(4) { top: 3 * $step-y; left: 3 * $step-x; z-index: 1; }
 
-  &:hover &__card {
-    transform: rotate(0deg);
-    margin: 0 var(--spacing-sm);
-    box-shadow: var(--shadow-lg);
+    &:hover {
+      transform: scale(1.13) translateY(-10px);
+      box-shadow: 0 20px 45px rgba(91, 62, 135, 0.28);
+      background: linear-gradient(145deg, #E8E0F4 0%, #E2D5EF 55%, #EDD0E0 100%);
+      z-index: 10;
+    }
   }
 
   &__icon {
-    font-size: 2.75rem;
+    width: 56px;
+    height: 56px;
     margin-bottom: var(--spacing-md);
-    line-height: 1;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  // icon tilts slightly when its card is hovered
+  &__card:hover &__icon {
+    transform: scale(1.1) rotate(-6deg);
   }
 
   &__title {
@@ -167,18 +183,26 @@
     margin: 0;
   }
 
-  // On small screens: stack as a simple grid
+  // On small screens: flat 2×2 grid
   @media (max-width: 680px) {
-    flex-wrap: wrap;
+    position: static;
+    width: auto;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-md);
-    padding: 0;
+    margin: var(--spacing-xl) 0;
 
     &__card {
-      margin: 0 !important;
-      transform: none !important;
-      width: calc(50% - var(--spacing-md));
-      min-height: auto;
-      flex: 1 1 140px;
+      position: static;
+      width: auto;
+      height: auto;
+
+      &:nth-child(n) { z-index: auto; }
+
+      &:hover {
+        transform: scale(1.04) translateY(-4px);
+      }
     }
   }
 }

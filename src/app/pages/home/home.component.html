@@ -10,13 +10,13 @@
 </section>
 
 <!-- Expertise Cards -->
-<section class="section section--alt">
+<section class="section">
   <div class="section__container">
     <h2 class="section__title">מה אני מציעה?</h2>
     <div class="expertise-deck">
       @for (card of expertiseCards; track card.title) {
-        <div class="expertise-deck__card" [style]="'--r: ' + card.rotation">
-          <div class="expertise-deck__icon">{{ card.icon }}</div>
+        <div class="expertise-deck__card">
+        <div class="expertise-deck__icon" [innerHTML]="card.icon"></div>
           <h3 class="expertise-deck__title">{{ card.title }}</h3>
           <p class="expertise-deck__text">{{ card.description }}</p>
         </div>
