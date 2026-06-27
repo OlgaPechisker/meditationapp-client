@@ -15,8 +15,13 @@ import { FooterComponent } from './shared/footer/footer.component';
     <app-footer />
   `,
   styles: [`
+    :host {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
     .main-content {
-      min-height: calc(100vh - var(--header-height) - 200px);
+      flex: 1;
       padding-block-start: var(--header-height);
     }
   `],

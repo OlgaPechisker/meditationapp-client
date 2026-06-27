@@ -1,55 +1,74 @@
 <div class="admin-section">
   <div class="section-header">
     <h2>ניהול תוכן האתר</h2>
-    <button class="btn-primary" (click)="openCreate()" data-testid="add-content-btn">+ הוסף תוכן</button>
   </div>
-
-  @if (error()) {
-    <div class="alert-error" data-testid="form-error">{{ error() }}</div>
-  }
 
   @if (loading()) {
     <p class="loading">טוען...</p>
   } @else {
-    @if (showForm()) {
-      <div class="form-card" data-testid="content-form">
-        <h3>{{ editing() ? 'עריכת תוכן' : 'תוכן חדש' }}</h3>
-        <form [formGroup]="form" (ngSubmit)="save()">
-          <div class="form-group">
-            <label>מפתח (key)</label>
-            <input formControlName="key" [attr.readonly]="editing() ? true : null" data-testid="field-key" />
-          </div>
-          <div class="form-group">
-            <label>תוכן (HTML)</label>
-            <textarea formControlName="value" rows="10" data-testid="field-value"></textarea>
-          </div>
-          <div class="form-actions">
-            <button type="submit" class="btn-primary" data-testid="form-save">שמור</button>
-            <button type="button" class="btn-secondary" (click)="cancel()" data-testid="form-cancel">ביטול</button>
-          </div>
-        </form>
-      </div>
-    }
 
-    <table class="data-table" data-testid="content-table">
-      <thead>
-        <tr>
-          <th>מפתח</th>
-          <th>תצוגה מקדימה</th>
-          <th>פעולות</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of items(); track item.id) {
-          <tr data-testid="content-row" [attr.data-key]="item.key">
-            <td data-testid="content-key">{{ item.key }}</td>
-            <td class="preview">{{ item.value.substring(0, 80) }}...</td>
-            <td class="actions">
-              <button class="btn-sm btn-edit" (click)="openEdit(item)" data-testid="content-edit-btn">ערוך</button>
-            </td>
-          </tr>
+    <!-- About section -->
+    <div class="form-card" data-testid="about-section">
+      <h3>דף אודות</h3>
+      <form [formGroup]="aboutForm" (ngSubmit)="saveAbout()">
+        <div class="form-group">
+          <label for="about-title">כותרת</label>
+          <input id="about-title" formControlName="title" data-testid="field-about-title" />
+        </div>
+        <div class="form-group">
+          <label for="about-text">טקסט</label>
+          <textarea id="about-text" formControlName="text" rows="8" data-testid="field-about-text"></textarea>
+        </div>
+        <app-image-upload
+          label="תמונה"
+          [imageUrl]="aboutImageUrl()"
+          (imageUrlChange)="aboutImageUrl.set($event)"
+        />
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="aboutSaveState() === 'saving'" data-testid="save-about">
+            {{ aboutSaveState() === 'saving' ? 'שומר...' : 'שמור' }}
+          </button>
+        </div>
+        @if (aboutSaveState() === 'success') {
+          <p class="alert-success" data-testid="about-success">השינויים נשמרו בהצלחה</p>
         }
-      </tbody>
-    </table>
+        @if (aboutSaveState() === 'error') {
+          <p class="alert-error">שגיאה בשמירה, נסה שוב</p>
+        }
+        @if (aboutForm.invalid && aboutForm.touched) {
+          <p class="alert-error" data-testid="about-form-error">אנא מלא את כל השדות הנדרשים</p>
+        }
+      </form>
+    </div>
+
+    <!-- Contact section -->
+    <div class="form-card" data-testid="contact-section">
+      <h3>דף צור קשר</h3>
+      <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
+        <div class="form-group">
+          <label for="contact-phone">טלפון</label>
+          <input id="contact-phone" type="tel" formControlName="phone" data-testid="field-contact-phone" />
+        </div>
+        <div class="form-group">
+          <label for="contact-email">אימייל</label>
+          <input id="contact-email" type="email" formControlName="email" data-testid="field-contact-email" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="contactSaveState() === 'saving'" data-testid="save-contact">
+            {{ contactSaveState() === 'saving' ? 'שומר...' : 'שמור' }}
+          </button>
+        </div>
+        @if (contactSaveState() === 'success') {
+          <p class="alert-success" data-testid="contact-success">השינויים נשמרו בהצלחה</p>
+        }
+        @if (contactSaveState() === 'error') {
+          <p class="alert-error">שגיאה בשמירה, נסה שוב</p>
+        }
+        @if (contactForm.invalid && contactForm.touched) {
+          <p class="alert-error" data-testid="contact-form-error">אנא מלא את כל השדות הנדרשים</p>
+        }
+      </form>
+    </div>
+
   }
 </div>

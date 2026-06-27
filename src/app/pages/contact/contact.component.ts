@@ -1,8 +1,18 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { WhatsappService } from '../../core/services/whatsapp.service';
 import { SeoService } from '../../core/services/seo.service';
+import { ApiService } from '../../core/services/api.service';
+
+interface SiteContent {
+  id: number;
+  key: string;
+  value: string;
+  locale: string;
+}
 
 @Component({
   selector: 'app-contact',
@@ -14,10 +24,11 @@ import { SeoService } from '../../core/services/seo.service';
 export class ContactComponent implements OnInit {
   private whatsapp = inject(WhatsappService);
   private seo = inject(SeoService);
+  private api = inject(ApiService);
   private fb = inject(FormBuilder);
 
-  email = 'einat@example.com';
-  phone = '050-1234567';
+  email = signal('einat@example.com');
+  phone = signal('050-1234567');
 
   contactForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
@@ -30,6 +41,14 @@ export class ContactComponent implements OnInit {
 
   ngOnInit() {
     this.seo.updateMeta({ title: 'צור קשר', description: 'יצירת קשר עם עינת שומונוב' });
+
+    forkJoin({
+      phone: this.api.get<SiteContent>('/content/contact_phone', { locale: 'he' }).pipe(catchError(() => of(null))),
+      email: this.api.get<SiteContent>('/content/contact_email', { locale: 'he' }).pipe(catchError(() => of(null))),
+    }).subscribe(({ phone, email }) => {
+      if (phone) this.phone.set(phone.value);
+      if (email) this.email.set(email.value);
+    });
   }
 
   submitForm() {

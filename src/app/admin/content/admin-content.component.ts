@@ -1,17 +1,23 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { ApiService, PaginatedResponse } from '../../core/services/api.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ApiService } from '../../core/services/api.service';
+import { ImageUploadComponent } from '../_shared/image-upload/image-upload.component';
 
-interface ContentItem {
-  id: string;
+interface SiteContent {
+  id: number;
   key: string;
   value: string;
+  locale: string;
 }
+
+type SaveState = 'idle' | 'saving' | 'success' | 'error';
 
 @Component({
   selector: 'app-admin-content',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ImageUploadComponent],
   templateUrl: './admin-content.component.html',
   styleUrl: './admin-content.component.scss',
 })
@@ -19,49 +25,73 @@ export class AdminContentComponent implements OnInit {
   private api = inject(ApiService);
   private fb = inject(FormBuilder);
 
-  items = signal<ContentItem[]>([]);
   loading = signal(true);
-  error = signal('');
-  editing = signal<ContentItem | null>(null);
-  showForm = signal(false);
 
-  form = this.fb.group({
-    key: ['', Validators.required],
-    value: ['', Validators.required],
+  aboutForm = this.fb.group({
+    title: ['', Validators.required],
+    text: ['', Validators.required],
   });
+  aboutImageUrl = signal<string | null>(null);
+  aboutSaveState = signal<SaveState>('idle');
 
-  ngOnInit() { this.loadItems(); }
+  contactForm = this.fb.group({
+    phone: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+  });
+  contactSaveState = signal<SaveState>('idle');
 
-  loadItems() {
-    this.loading.set(true);
-    this.api.get<PaginatedResponse<ContentItem>>('/content/admin/all', { locale: 'he', limit: 100 }).subscribe({
-      next: (res) => { this.items.set(res.data); this.loading.set(false); },
-      error: () => { this.error.set('שגיאה בטעינת תוכן'); this.loading.set(false); },
+  ngOnInit() {
+    forkJoin({
+      aboutTitle:   this.api.get<SiteContent>('/content/about_title',   { locale: 'he' }).pipe(catchError(() => of(null))),
+      aboutText:    this.api.get<SiteContent>('/content/about',         { locale: 'he' }).pipe(catchError(() => of(null))),
+      aboutImage:   this.api.get<SiteContent>('/content/about_image',   { locale: 'he' }).pipe(catchError(() => of(null))),
+      contactPhone: this.api.get<SiteContent>('/content/contact_phone', { locale: 'he' }).pipe(catchError(() => of(null))),
+      contactEmail: this.api.get<SiteContent>('/content/contact_email', { locale: 'he' }).pipe(catchError(() => of(null))),
+    }).subscribe(({ aboutTitle, aboutText, aboutImage, contactPhone, contactEmail }) => {
+      this.aboutForm.patchValue({
+        title: aboutTitle?.value ?? '',
+        text:  aboutText?.value  ?? '',
+      });
+      this.aboutImageUrl.set(aboutImage?.value ?? null);
+      this.contactForm.patchValue({
+        phone: contactPhone?.value ?? '',
+        email: contactEmail?.value ?? '',
+      });
+      this.loading.set(false);
     });
   }
 
-  openCreate() {
-    this.editing.set(null);
-    this.form.reset({ key: '', value: '' });
-    this.showForm.set(true);
+  saveAbout() {
+    if (this.aboutForm.invalid) return;
+    this.aboutSaveState.set('saving');
+
+    const { title, text } = this.aboutForm.value;
+    const imageUrl = this.aboutImageUrl();
+
+    forkJoin([
+      this.api.put('/content', { key: 'about_title', value: title!, locale: 'he' }),
+      this.api.put('/content', { key: 'about',       value: text!,  locale: 'he' }),
+      imageUrl
+        ? this.api.put('/content', { key: 'about_image', value: imageUrl, locale: 'he' })
+        : of(null),
+    ]).subscribe({
+      next: () => this.aboutSaveState.set('success'),
+      error: () => this.aboutSaveState.set('error'),
+    });
   }
 
-  openEdit(item: ContentItem) {
-    this.editing.set(item);
-    this.form.patchValue(item);
-    this.showForm.set(true);
-  }
+  saveContact() {
+    if (this.contactForm.invalid) return;
+    this.contactSaveState.set('saving');
 
-  cancel() { this.showForm.set(false); }
+    const { phone, email } = this.contactForm.value;
 
-  save() {
-    if (this.form.invalid) { this.error.set('אנא מלא את כל השדות הנדרשים'); return; }
-    const editing = this.editing();
-    const key = editing ? editing.key : this.form.value.key!;
-    const body = { key, value: this.form.value.value!, locale: 'he' };
-    this.api.put('/content', body).subscribe({
-      next: () => { this.showForm.set(false); this.loadItems(); },
-      error: () => this.error.set('שגיאה בשמירה'),
+    forkJoin([
+      this.api.put('/content', { key: 'contact_phone', value: phone!, locale: 'he' }),
+      this.api.put('/content', { key: 'contact_email', value: email!, locale: 'he' }),
+    ]).subscribe({
+      next: () => this.contactSaveState.set('success'),
+      error: () => this.contactSaveState.set('error'),
     });
   }
 }

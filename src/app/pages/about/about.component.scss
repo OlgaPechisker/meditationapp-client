@@ -1,32 +1,108 @@
+@use '../../../styles/mixins' as *;
+
 .about-page {
-  padding: var(--spacing-3xl) var(--spacing-lg);
+  padding: var(--spacing-3xl) 0;
 
   &__container {
-    max-width: var(--max-width);
-    margin: 0 auto;
+    @include container; // responsive padding + max-width: 1200px centered
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
+
+    // md: two columns — text (right in RTL), image (left in RTL)
+    @include responsive(md) {
+      grid-template-columns: 1fr clamp(280px, 30%, 360px);
+      gap: var(--spacing-2xl);
+    }
+
+    // lg: give image a bit more room
+    @include responsive(lg) {
+      grid-template-columns: 1fr clamp(340px, 32%, 420px);
+      gap: var(--spacing-3xl);
+    }
+
+    // xl: cap the text column so lines stay readable on wide screens
+    @include responsive(xl) {
+      grid-template-columns: minmax(0, 680px) clamp(360px, 30%, 440px);
+      justify-content: center;
+      gap: var(--spacing-3xl);
+    }
+  }
+
+  // On mobile: show image above text; on desktop it naturally falls to column 2 (= physical left in RTL)
+  &__image-wrap {
+    order: -1;
+
+    @include responsive(md) {
+      order: 0;
+      position: sticky;
+      top: calc(var(--header-height) + var(--spacing-xl));
+    }
+  }
+
+  &__image {
+    width: 100%;
+    display: block;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    object-fit: cover;
+    object-position: top center;
+    aspect-ratio: 3 / 4;
+    max-height: 580px;
   }
 
   &__title {
     font-size: var(--font-size-3xl);
     color: var(--color-primary-dark);
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.2;
   }
 
   &__content {
-    line-height: 1.8;
+    line-height: 1.9;
     font-size: var(--font-size-base);
     color: var(--color-text);
-    max-width: 860px;
 
     ::ng-deep {
-      h2, h3 {
+      h2 {
+        font-size: var(--font-size-xl);
         color: var(--color-primary);
         margin-top: var(--spacing-xl);
-        margin-bottom: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
+        font-weight: 700;
+        border-bottom: 2px solid var(--color-border);
+        padding-bottom: var(--spacing-xs);
+      }
+
+      h3 {
+        font-size: var(--font-size-lg);
+        color: var(--color-primary);
+        margin-top: var(--spacing-lg);
+        margin-bottom: var(--spacing-sm);
+        font-weight: 600;
       }
 
       p {
         margin-bottom: var(--spacing-md);
+      }
+
+      ul, ol {
+        padding-inline-start: var(--spacing-xl);
+        margin-bottom: var(--spacing-md);
+
+        li {
+          margin-bottom: var(--spacing-xs);
+          line-height: 1.7;
+        }
+      }
+
+      strong {
+        color: var(--color-primary-dark);
+        font-weight: 600;
       }
 
       img {
@@ -37,3 +113,4 @@
     }
   }
 }
+

@@ -46,8 +46,8 @@
     }
 
     <div class="contact-cta__details">
-      <a [href]="'mailto:' + email" class="contact-cta__detail-link">{{ email }}</a>
-      <a [href]="'tel:' + phone" class="contact-cta__detail-link">{{ phone }}</a>
+      <a [href]="'mailto:' + email()" class="contact-cta__detail-link">{{ email() }}</a>
+      <a [href]="'tel:' + phone()" class="contact-cta__detail-link">{{ phone() }}</a>
     </div>
   </div>
 </section>

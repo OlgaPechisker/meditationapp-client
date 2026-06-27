@@ -1,9 +1,25 @@
 <div class="about-page">
   <div class="about-page__container">
-    <h1 class="about-page__title">{{ 'about.title' | transloco }}</h1>
+    <div class="about-page__body">
 
-    @if (content()) {
-      <div class="about-page__content" [innerHTML]="content()"></div>
-    }
+      <div class="about-page__text-side">
+        @if (title()) {
+          <h1 class="about-page__title">{{ title() }}</h1>
+        } @else {
+          <h1 class="about-page__title">{{ 'about.title' | transloco }}</h1>
+        }
+
+        @if (content()) {
+          <div class="about-page__content" [innerHTML]="content()"></div>
+        }
+      </div>
+
+      @if (imageUrl()) {
+        <div class="about-page__image-wrap">
+          <img class="about-page__image" [src]="imageUrl()" alt="" />
+        </div>
+      }
+
+    </div>
   </div>
 </div>

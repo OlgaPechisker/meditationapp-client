@@ -1,6 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { ApiService, PaginatedResponse } from '../../core/services/api.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ApiService } from '../../core/services/api.service';
 import { SeoService } from '../../core/services/seo.service';
 
 interface SiteContent {
@@ -21,16 +23,21 @@ export class AboutComponent implements OnInit {
   private api = inject(ApiService);
   private seo = inject(SeoService);
 
+  title = signal<string>('');
   content = signal<string>('');
+  imageUrl = signal<string>('');
 
   ngOnInit() {
     this.seo.updateMeta({ title: 'אודות', description: 'אודות עינת שומונוב' });
-    this.api.get<PaginatedResponse<SiteContent>>('/content', { locale: 'he', key: 'about' })
-      .subscribe(res => {
-        const item = res.data?.find(c => c.key === 'about') ?? res.data?.[0];
-        if (item) {
-          this.content.set(item.value);
-        }
-      });
+
+    forkJoin({
+      title:   this.api.get<SiteContent>('/content/about_title', { locale: 'he' }).pipe(catchError(() => of(null))),
+      content: this.api.get<SiteContent>('/content/about',       { locale: 'he' }).pipe(catchError(() => of(null))),
+      image:   this.api.get<SiteContent>('/content/about_image', { locale: 'he' }).pipe(catchError(() => of(null))),
+    }).subscribe(({ title, content, image }) => {
+      if (title)   this.title.set(title.value);
+      if (content) this.content.set(content.value);
+      if (image)   this.imageUrl.set(image.value);
+    });
   }
 }
