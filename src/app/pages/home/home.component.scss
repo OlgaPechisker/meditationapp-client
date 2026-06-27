@@ -18,7 +18,7 @@
     background-image: url('/assets/hero-bg.jpg');
     background-size: cover;
     background-position: center 20%;
-    filter: blur(10px);
+    filter: blur(7px);
     transform: scale(1.05); // compensates for blur edge transparency
     z-index: 0;
   }
@@ -106,6 +106,20 @@
     position: relative;
     overflow: hidden;
 
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 5%;
+      transform: translateY(-50%) scaleX(-1);
+      width: 280px;
+      height: 448px;
+      background: url('/assets/images/buddha-meditation.svg') center / contain no-repeat;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     &::after {
       content: '';
       position: absolute;
@@ -158,29 +172,20 @@
 }
 
 // ── Expertise Deck ──────────────────────────────────────────────────────────
-//   ▼ Tweak these 4 variables — container size auto-follows
-$card-w: 210px;   // card width
-$card-h: 250px;   // card height
-$step-x: 200px;   // horizontal step between cards (smaller = more overlap)
-$step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
-
+// ── Expertise Deck — 2×2 grid, fits in one viewport ─────────────────────────
 .expertise-deck {
-  position: relative;
-  width: calc(#{$card-w} + 3 * #{$step-x});   // 290 + 600 = 890px
-  height: calc(#{$card-h} + 3 * #{$step-y});  // 330 + 132 = 462px
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+  max-width: 620px;
   margin: var(--spacing-xl) auto var(--spacing-2xl);
-  margin-inline: auto;
-  display: block;
 
   &__card {
-    position: absolute;
-    width: $card-w;
-    height: $card-h;
-    // Gradient sampled from the logo: soft lavender (dove body) → blush pink (lower wing)
+    position: relative;
     background: linear-gradient(145deg, #F0EDF8 0%, #EDE4F2 55%, #F4DDE8 100%);
     border: 1.5px solid var(--color-border);
     color: var(--color-text);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     padding: var(--spacing-xl) var(--spacing-lg);
     display: flex;
     flex-direction: column;
@@ -189,17 +194,13 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
     box-shadow: var(--shadow-md);
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     cursor: default;
-
-    &:nth-child(1) { top: 0;           left: 0;           z-index: 4; }
-    &:nth-child(2) { top: $step-y;     left: $step-x;     z-index: 3; }
-    &:nth-child(3) { top: 2 * $step-y; left: 2 * $step-x; z-index: 2; }
-    &:nth-child(4) { top: 3 * $step-y; left: 3 * $step-x; z-index: 1; }
+    z-index: 1;
 
     &:hover {
-      transform: scale(1.13) translateY(-10px);
+      transform: scale(1.06) translateY(-8px);
       box-shadow: var(--shadow-lg);
       background: linear-gradient(145deg, #E8E0F4 0%, #E2D5EF 55%, #EDD0E0 100%);
-      z-index: 10;
+      z-index: 2;
     }
   }
 
@@ -229,27 +230,11 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
     margin: 0;
   }
 
-  // On small screens: flat 2×2 grid
-  @media (max-width: 680px) {
-    position: static;
-    width: auto;
-    height: auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-md);
-    margin: var(--spacing-xl) 0;
+  // On small screens: single column
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
 
-    &__card {
-      position: static;
-      width: auto;
-      height: auto;
-
-      &:nth-child(n) { z-index: auto; }
-
-      &:hover {
-        transform: scale(1.04) translateY(-4px);
-      }
-    }
+    &__card:hover { transform: scale(1.03) translateY(-4px); }
   }
 }
 
