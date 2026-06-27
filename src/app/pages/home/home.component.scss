@@ -109,13 +109,12 @@
     &::before {
       content: '';
       position: absolute;
-      inset-block-start: 50%;
-      inset-inline-start: 5%;
-      transform: translateY(-50%) scaleX(-1);
+      inset-block-start: 30%;
+      inset-inline-start: 2%;
       width: 280px;
-      height: 448px;
-      background: url('/assets/images/buddha-meditation.svg') center / contain no-repeat;
-      opacity: 0.12;
+      height: 480px;
+      background: url('/assets/images/floral-branch.svg') top center / contain no-repeat;
+      opacity: 0.30;
       pointer-events: none;
       z-index: 0;
     }
@@ -129,7 +128,7 @@
       width: 280px;
       height: 448px;
       background: url('/assets/images/buddha-meditation.svg') center / contain no-repeat;
-      opacity: 0.12;
+      opacity: 0.30;
       pointer-events: none;
       z-index: 0;
     }
