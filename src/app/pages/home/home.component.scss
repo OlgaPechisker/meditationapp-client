@@ -105,36 +105,66 @@
     background: var(--color-bg-alt);
     position: relative;
     overflow: hidden;
-    min-height: 100vh;
     display: flex;
     align-items: center;
 
-    &::before {
-      content: '';
-      position: absolute;
-      inset-block-start: 10%;
-      inset-inline-start: clamp(1%, 3vw, 5%);
-      transform: translateY(-30%);
-      width: clamp(220px, 20vw, 440px);
-      height: clamp(360px, 62vh, 720px);
-      background: url('/assets/images/floral-branch.svg') top center / contain no-repeat;
-      opacity: 0.35;
-      pointer-events: none;
-      z-index: 0;
+    // Fix 1: full-screen height only on large screens
+    @include responsive(lg) {
+      min-height: 100vh;
     }
 
+    // Fix 2a: hide decorative images on mobile
+    &::before,
     &::after {
-      content: '';
-      position: absolute;
-      inset-block-start: 50%;
-      inset-inline-end: clamp(1%, 3vw, 5%);
-      transform: translateY(-50%);
-      width: clamp(200px, 18vw, 400px);
-      height: clamp(320px, 56vh, 660px);
-      background: url('/assets/images/buddha-meditation.svg') center / contain no-repeat;
-      opacity: 0.30;
-      pointer-events: none;
-      z-index: 0;
+      display: none;
+    }
+
+    // Fix 2b: show at reduced size/opacity on tablets
+    @include responsive(md) {
+      &::before {
+        display: block;
+        content: '';
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: clamp(1%, 3vw, 5%);
+        transform: translateY(-30%);
+        width: clamp(120px, 14vw, 220px);
+        height: clamp(190px, 22vw, 350px);
+        background: url('/assets/images/floral-branch.svg') top center / contain no-repeat;
+        opacity: 0.22;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      &::after {
+        display: block;
+        content: '';
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: clamp(1%, 3vw, 5%);
+        transform: translateY(-50%);
+        width: clamp(110px, 12vw, 200px);
+        height: clamp(176px, 19vw, 320px);
+        background: url('/assets/images/buddha-meditation.svg') center / contain no-repeat;
+        opacity: 0.18;
+        pointer-events: none;
+        z-index: 0;
+      }
+    }
+
+    // Fix 2c: full size on desktop
+    @include responsive(lg) {
+      &::before {
+        width: clamp(220px, 20vw, 440px);
+        height: clamp(360px, 62vh, 720px);
+        opacity: 0.35;
+      }
+
+      &::after {
+        width: clamp(200px, 18vw, 400px);
+        height: clamp(320px, 56vh, 660px);
+        opacity: 0.30;
+      }
     }
 
     .section__container {
@@ -233,9 +263,10 @@
     margin: 0;
   }
 
-  // On small screens: single column
-  @media (max-width: 480px) {
+  // Fix 3: single column up to 600px (covers phones in both orientations)
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
+    max-width: 400px;
 
     &__card:hover { transform: scale(1.03) translateY(-4px); }
   }
