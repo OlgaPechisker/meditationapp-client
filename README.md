@@ -1,59 +1,50 @@
-# Client
+# Einat Shomonov Website — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.26.
+Angular frontend for the Einat Shomonov meditation, healing & wellness practitioner website.
 
-## Development server
+> **Backend (API):** [Einat server](https://github.com/OlgaPechisker/meditationapp)
 
-To start a local development server, run:
+## Tech Stack
 
+- **Framework:** Angular 19 with SSR (Server-Side Rendering)
+- **Language:** TypeScript
+- **i18n:** Transloco (Hebrew default, English ready)
+- **Styling:** Component styles
+
+## Quick Start
+
+### Prerequisites
+- Node.js 20+
+- The [backend server](https://github.com/OlgaPechisker/meditationapp) running on `http://localhost:3000`
+
+### Install & run
 ```bash
-ng serve
+npm install
+npx ng serve
+# App available at http://localhost:4200
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Environment / API URL
 
-## Code scaffolding
+The app connects to the backend API. To point it at a different server, set the `API_URL` environment variable (or update `src/environments/`) before building.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Building for Production
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts are output to `dist/`. The production build enables SSR and optimises for performance.
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+To run the SSR build locally:
 ```bash
-ng test
+node dist/einat-client/server/server.mjs
 ```
 
-## Running end-to-end tests
+## i18n
 
-For end-to-end (e2e) testing, run:
+Default locale is **Hebrew** (`he`). English (`en`) translations are wired in but may be incomplete. Translation files live in `src/assets/i18n/`.
 
-```bash
-ng e2e
-```
+## Admin
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The admin panel is served by the frontend at `/admin/login`. It authenticates against the backend API (JWT). See the [server repo](https://github.com/OlgaPechisker/meditationapp) for admin setup.
