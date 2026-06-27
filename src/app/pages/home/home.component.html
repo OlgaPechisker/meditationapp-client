@@ -16,7 +16,7 @@
     <div class="expertise-deck">
       @for (card of expertiseCards; track card.title) {
         <div class="expertise-deck__card">
-        <div class="expertise-deck__icon" [innerHTML]="card.icon"></div>
+        <img class="expertise-deck__icon" [src]="card.icon" [alt]="card.title" aria-hidden="true" />
           <h3 class="expertise-deck__title">{{ card.title }}</h3>
           <p class="expertise-deck__text">{{ card.description }}</p>
         </div>
