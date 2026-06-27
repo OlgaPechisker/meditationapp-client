@@ -1,7 +1,8 @@
 @use '../../../styles/mixins' as *;
 
 .hero {
-  background: linear-gradient(160deg, var(--color-bg-alt) 0%, rgba(123, 94, 167, 0.12) 100%);
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
   margin-top: calc(-1 * var(--header-height));
   padding-top: var(--header-height);
@@ -9,9 +10,33 @@
   align-items: center;
   text-align: center;
 
+  // Blurred photo layer — extend beyond bounds to hide blur edge artifacts
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -30px;
+    background-image: url('/assets/hero-bg.jpg');
+    background-size: cover;
+    background-position: center 20%;
+    filter: blur(10px);
+    transform: scale(1.05); // compensates for blur edge transparency
+    z-index: 0;
+  }
+
+  // Lavender tint overlay — keeps text readable and ties to brand palette
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(245, 240, 248, 0.78);
+    z-index: 1;
+  }
+
   &__container {
     @include container;
     width: 100%;
+    position: relative;
+    z-index: 2; // above both pseudo-elements
   }
 
   &__title {
@@ -60,7 +85,7 @@
       background: transparent;
       color: var(--color-primary);
       border: 2px solid var(--color-primary);
-      &:hover { background: rgba(123, 94, 167, 0.08); text-decoration: none; }
+      &:hover { background: rgba(123, 94, 167, 0.12); text-decoration: none; }
     }
   }
 }
@@ -74,6 +99,31 @@
 
   &--cta {
     background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  }
+
+  &--expertise {
+    background: var(--color-bg-alt);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-end: 5%;
+      transform: translateY(-50%);
+      width: 280px;
+      height: 448px;
+      background: url('/assets/images/buddha-meditation.svg') center / contain no-repeat;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .section__container {
+      position: relative;
+      z-index: 1;
+    }
   }
 
   &__container {
@@ -109,8 +159,8 @@
 
 // ── Expertise Deck ──────────────────────────────────────────────────────────
 //   ▼ Tweak these 4 variables — container size auto-follows
-$card-w: 290px;   // card width
-$card-h: 330px;   // card height
+$card-w: 210px;   // card width
+$card-h: 250px;   // card height
 $step-x: 200px;   // horizontal step between cards (smaller = more overlap)
 $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
 
@@ -119,6 +169,8 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
   width: calc(#{$card-w} + 3 * #{$step-x});   // 290 + 600 = 890px
   height: calc(#{$card-h} + 3 * #{$step-y});  // 330 + 132 = 462px
   margin: var(--spacing-xl) auto var(--spacing-2xl);
+  margin-inline: auto;
+  display: block;
 
   &__card {
     position: absolute;
@@ -126,7 +178,7 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
     height: $card-h;
     // Gradient sampled from the logo: soft lavender (dove body) → blush pink (lower wing)
     background: linear-gradient(145deg, #F0EDF8 0%, #EDE4F2 55%, #F4DDE8 100%);
-    border: 2px solid var(--color-primary);
+    border: 1.5px solid var(--color-border);
     color: var(--color-text);
     border-radius: var(--radius-md);
     padding: var(--spacing-xl) var(--spacing-lg);
@@ -134,7 +186,7 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
     flex-direction: column;
     align-items: center;
     text-align: center;
-    box-shadow: 0 6px 24px rgba(91, 62, 135, 0.18);
+    box-shadow: var(--shadow-md);
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     cursor: default;
 
@@ -145,7 +197,7 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
 
     &:hover {
       transform: scale(1.13) translateY(-10px);
-      box-shadow: 0 20px 45px rgba(91, 62, 135, 0.28);
+      box-shadow: var(--shadow-lg);
       background: linear-gradient(145deg, #E8E0F4 0%, #E2D5EF 55%, #EDD0E0 100%);
       z-index: 10;
     }
@@ -350,4 +402,3 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
     margin: 0 auto;
   }
 }
-

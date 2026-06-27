@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 490" fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- Soft body fill (behind everything) -->
+  <path d="M 100,222 Q 82,265 72,311 Q 63,350 68,382 Q 76,405 100,418 Q 122,428 150,430 Q 178,428 200,418 Q 224,405 232,382 Q 237,350 228,311 Q 218,265 200,222 Q 176,215 150,213 Q 124,215 100,222Z" fill="rgba(245,240,248,0.45)" stroke="none"/>
+
+  <!-- HALO -->
+  <circle cx="150" cy="140" r="73" stroke="#D4A5B5" stroke-width="0.85" stroke-dasharray="3.5 3" opacity="0.6"/>
+
+  <!-- HEAD -->
+  <ellipse cx="150" cy="140" rx="47" ry="51" stroke="#7B5EA7" stroke-width="1.4" fill="rgba(255,255,255,0.55)"/>
+
+  <!-- USHNISHA (topknot) -->
+  <path d="M 128,95 Q 134,73 150,68 Q 166,73 172,95" stroke="#7B5EA7" stroke-width="1.4" fill="rgba(255,255,255,0.55)"/>
+  <path d="M 133,93 Q 138,78 150,75 Q 162,78 167,93" stroke="#7B5EA7" stroke-width="0.95" opacity="0.65"/>
+  <circle cx="150" cy="68" r="4.5" stroke="#7B5EA7" stroke-width="1.1" fill="rgba(212,165,181,0.5)"/>
+  <path d="M 130,91 Q 140,82 150,80 Q 160,82 170,91" stroke="#D4A5B5" stroke-width="0.8" opacity="0.65"/>
+
+  <!-- LEFT EAR (elongated lobe) -->
+  <path d="M 103,126 Q 97,140 99,155 Q 101,167 110,168 Q 117,167 116,155 Q 115,143 108,132" stroke="#7B5EA7" stroke-width="1.3"/>
+
+  <!-- RIGHT EAR (elongated lobe) -->
+  <path d="M 197,126 Q 203,140 201,155 Q 199,167 190,168 Q 183,167 184,155 Q 185,143 192,132" stroke="#7B5EA7" stroke-width="1.3"/>
+
+  <!-- THIRD EYE (urna dot) -->
+  <circle cx="150" cy="125" r="2.5" stroke="#7B5EA7" stroke-width="0.9" fill="rgba(212,165,181,0.65)"/>
+
+  <!-- EYEBROWS -->
+  <path d="M 120,133 Q 129,128 139,132" stroke="#7B5EA7" stroke-width="1.3"/>
+  <path d="M 161,132 Q 171,128 180,133" stroke="#7B5EA7" stroke-width="1.3"/>
+
+  <!-- CLOSED EYES -->
+  <path d="M 120,142 Q 130,137 140,142" stroke="#7B5EA7" stroke-width="1.6"/>
+  <path d="M 160,142 Q 170,137 180,142" stroke="#7B5EA7" stroke-width="1.6"/>
+
+  <!-- NOSE -->
+  <path d="M 146,150 Q 144,160 147,163 Q 150,165 153,163 Q 156,160 154,150" stroke="#7B5EA7" stroke-width="1.05"/>
+
+  <!-- LIPS (gentle smile) -->
+  <path d="M 134,173 Q 150,180 166,173" stroke="#7B5EA7" stroke-width="1.4"/>
+  <path d="M 136,173 Q 143,169 150,170 Q 157,169 164,173" stroke="#D4A5B5" stroke-width="1.05" opacity="0.75"/>
+
+  <!-- NECK with 3 rings -->
+  <line x1="143" y1="191" x2="143" y2="213" stroke="#7B5EA7" stroke-width="1.1"/>
+  <line x1="157" y1="191" x2="157" y2="213" stroke="#7B5EA7" stroke-width="1.1"/>
+  <path d="M 136,197 Q 150,194 164,197" stroke="#7B5EA7" stroke-width="0.95" opacity="0.75"/>
+  <path d="M 135,204 Q 150,201 165,204" stroke="#7B5EA7" stroke-width="0.85" opacity="0.55"/>
+  <path d="M 136,210 Q 150,207 164,210" stroke="#7B5EA7" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- SHOULDERS -->
+  <path d="M 100,222 Q 124,215 150,213 Q 176,215 200,222" stroke="#7B5EA7" stroke-width="1.4"/>
+
+  <!-- OUTER BODY (robe silhouette) -->
+  <path d="M 100,222 Q 82,266 72,311 Q 63,350 68,382" stroke="#7B5EA7" stroke-width="1.4"/>
+  <path d="M 200,222 Q 218,266 228,311 Q 237,350 232,382" stroke="#7B5EA7" stroke-width="1.4"/>
+
+  <!-- LEFT ARM INNER LINE -->
+  <path d="M 107,226 Q 90,268 87,311 Q 85,336 94,356 Q 106,370 126,374" stroke="#7B5EA7" stroke-width="1.25"/>
+  <!-- RIGHT ARM INNER LINE -->
+  <path d="M 193,226 Q 210,268 213,311 Q 215,336 206,356 Q 194,370 174,374" stroke="#7B5EA7" stroke-width="1.25"/>
+
+  <!-- ROBE FOLDS -->
+  <path d="M 119,226 Q 109,269 107,310 Q 106,338 109,362" stroke="#7B5EA7" stroke-width="0.9" opacity="0.52"/>
+  <path d="M 136,219 Q 128,263 126,305 Q 125,336 128,366" stroke="#7B5EA7" stroke-width="0.78" opacity="0.42"/>
+  <line x1="150" y1="218" x2="150" y2="372" stroke="#7B5EA7" stroke-width="0.7" opacity="0.35"/>
+  <path d="M 164,219 Q 172,263 174,305 Q 175,336 172,366" stroke="#7B5EA7" stroke-width="0.78" opacity="0.42"/>
+  <path d="M 181,226 Q 191,269 193,310 Q 194,338 191,362" stroke="#7B5EA7" stroke-width="0.9" opacity="0.52"/>
+
+  <!-- ROBE NECKLINE DECORATION -->
+  <path d="M 114,223 Q 132,232 150,234 Q 168,232 186,223" stroke="#D4A5B5" stroke-width="1.05" opacity="0.8"/>
+  <path d="M 116,229 Q 133,237 150,239 Q 167,237 184,229" stroke="#D4A5B5" stroke-width="0.85" opacity="0.55"/>
+
+  <!-- HANDS – DHYANA MUDRA -->
+  <path d="M 116,368 Q 128,384 150,387 Q 172,384 184,368 Q 172,353 150,351 Q 128,353 116,368Z" stroke="#7B5EA7" stroke-width="1.3" fill="rgba(212,165,181,0.18)"/>
+  <path d="M 124,366 Q 135,378 150,381 Q 165,378 176,366" stroke="#D4A5B5" stroke-width="1" opacity="0.75"/>
+  <circle cx="150" cy="352" r="5.5" stroke="#D4A5B5" stroke-width="1.05" fill="rgba(212,165,181,0.22)"/>
+  <path d="M 118,363 Q 116,372 119,379" stroke="#7B5EA7" stroke-width="0.8" opacity="0.65"/>
+  <path d="M 122,360 Q 120,369 123,377" stroke="#7B5EA7" stroke-width="0.7" opacity="0.5"/>
+  <path d="M 182,363 Q 184,372 181,379" stroke="#7B5EA7" stroke-width="0.8" opacity="0.65"/>
+  <path d="M 178,360 Q 180,369 177,377" stroke="#7B5EA7" stroke-width="0.7" opacity="0.5"/>
+
+  <!-- LEFT KNEE (extends wide, lotus position) -->
+  <path d="M 68,382 Q 58,392 56,408 Q 58,422 72,430 Q 92,438 120,440 Q 136,441 148,441" stroke="#7B5EA7" stroke-width="1.35"/>
+  <!-- Left knee cap suggestion -->
+  <path d="M 60,400 Q 57,412 62,422" stroke="#7B5EA7" stroke-width="1" opacity="0.65"/>
+  <!-- Left ankle / foot -->
+  <path d="M 72,430 Q 80,438 96,442 Q 112,445 130,444 Q 142,443 148,441" stroke="#7B5EA7" stroke-width="1.1"/>
+
+  <!-- RIGHT KNEE (extends wide, lotus position) -->
+  <path d="M 232,382 Q 242,392 244,408 Q 242,422 228,430 Q 208,438 180,440 Q 164,441 152,441" stroke="#7B5EA7" stroke-width="1.35"/>
+  <!-- Right knee cap suggestion -->
+  <path d="M 240,400 Q 243,412 238,422" stroke="#7B5EA7" stroke-width="1" opacity="0.65"/>
+  <!-- Right ankle / foot -->
+  <path d="M 228,430 Q 220,438 204,442 Q 188,445 170,444 Q 158,443 152,441" stroke="#7B5EA7" stroke-width="1.1"/>
+
+  <!-- LOTUS FLOWER -->
+  <line x1="150" y1="441" x2="150" y2="455" stroke="#7B5EA7" stroke-width="1" opacity="0.5"/>
+  <circle cx="150" cy="462" r="10" stroke="#D4A5B5" stroke-width="1.2" fill="rgba(212,165,181,0.28)"/>
+  <!-- Inner petals (8) -->
+  <path d="M 146,452 Q 143,439 150,434 Q 157,439 154,452 Q 152,456 150,456 Q 148,456 146,452Z" stroke="#7B5EA7" stroke-width="1.05" fill="rgba(245,240,248,0.7)"/>
+  <path d="M 157,454 Q 165,443 177,446 Q 175,457 163,460 Q 159,459 157,457Z" stroke="#7B5EA7" stroke-width="1.05" fill="rgba(245,240,248,0.7)"/>
+  <path d="M 160,463 Q 173,458 180,466 Q 173,476 160,471 Q 158,468 158,465Z" stroke="#7B5EA7" stroke-width="1.05" fill="rgba(245,240,248,0.7)"/>
+  <path d="M 156,472 Q 164,483 159,491 Q 149,489 148,477 Q 149,472 152,470Z" stroke="#7B5EA7" stroke-width="1.05" fill="rgba(245,240,248,0.7)"/>
+  <path d="M 146,473 Q 143,486 150,491 Q 157,486 154,473 Q 152,469 150,469 Q 148,469 146,473Z" stroke="#7B5EA7" stroke-width="1.05" fill="rgba(245,240,248,0.7)"/>
+  <path d="M 144,472 Q 136,483 141,491 Q 151,489 152,477 Q 151,472 148,470Z" stroke="#7B5EA7" stroke-width="1.05" fill="rgba(245,240,248,0.7)"/>
+  <path d="M 140,463 Q 127,458 120,466 Q 127,476 140,471 Q 142,468 142,465Z" stroke="#7B5EA7" stroke-width="1.05" fill="rgba(245,240,248,0.7)"/>
+  <path d="M 143,454 Q 135,443 123,446 Q 125,457 137,460 Q 141,459 143,457Z" stroke="#7B5EA7" stroke-width="1.05" fill="rgba(245,240,248,0.7)"/>
+  <!-- Outer petals -->
+  <path d="M 136,463 Q 119,455 112,465 Q 121,477 136,471Z" stroke="#D4A5B5" stroke-width="0.9" fill="rgba(212,165,181,0.12)" opacity="0.85"/>
+  <path d="M 164,463 Q 181,455 188,465 Q 179,477 164,471Z" stroke="#D4A5B5" stroke-width="0.9" fill="rgba(212,165,181,0.12)" opacity="0.85"/>
+  <path d="M 143,451 Q 145,434 155,431 Q 163,439 157,451Z" stroke="#D4A5B5" stroke-width="0.9" fill="rgba(212,165,181,0.12)" opacity="0.75"/>
+  <path d="M 157,451 Q 155,434 145,431 Q 137,439 143,451Z" stroke="#D4A5B5" stroke-width="0.9" fill="rgba(212,165,181,0.12)" opacity="0.75"/>
+
+  <!-- SPARKLES (matching website meditation icon) -->
+  <path d="M 252,56 L 253.3,60.8 L 258.2,61.8 L 253.3,62.8 L 252,67.5 L 250.7,62.8 L 245.8,61.8 L 250.7,60.8Z" stroke="#7B5EA7" stroke-width="1" fill="rgba(123,94,167,0.12)"/>
+  <line x1="266" y1="45" x2="266" y2="51" stroke="#D4A5B5" stroke-width="1" opacity="0.7"/>
+  <line x1="263" y1="48" x2="269" y2="48" stroke="#D4A5B5" stroke-width="1" opacity="0.7"/>
+  <line x1="258" y1="76" x2="258" y2="80" stroke="#D4A5B5" stroke-width="0.85" opacity="0.55"/>
+  <line x1="256" y1="78" x2="260" y2="78" stroke="#D4A5B5" stroke-width="0.85" opacity="0.55"/>
+  <line x1="36" y1="98" x2="36" y2="104" stroke="#D4A5B5" stroke-width="0.95" opacity="0.6"/>
+  <line x1="33" y1="101" x2="39" y2="101" stroke="#D4A5B5" stroke-width="0.95" opacity="0.6"/>
+  <line x1="26" y1="126" x2="26" y2="130" stroke="#D4A5B5" stroke-width="0.8" opacity="0.45"/>
+  <line x1="24" y1="128" x2="28" y2="128" stroke="#D4A5B5" stroke-width="0.8" opacity="0.45"/>
+
+  <!-- AURA RAYS -->
+  <line x1="150" y1="67" x2="150" y2="52" stroke="#D4A5B5" stroke-width="0.75" opacity="0.38"/>
+  <line x1="173" y1="73" x2="183" y2="61" stroke="#D4A5B5" stroke-width="0.75" opacity="0.32"/>
+  <line x1="127" y1="73" x2="117" y2="61" stroke="#D4A5B5" stroke-width="0.75" opacity="0.32"/>
+  <line x1="191" y1="91" x2="204" y2="81" stroke="#D4A5B5" stroke-width="0.7" opacity="0.28"/>
+  <line x1="109" y1="91" x2="96" y2="81" stroke="#D4A5B5" stroke-width="0.7" opacity="0.28"/>
+
+</svg>
