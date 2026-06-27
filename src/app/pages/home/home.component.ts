@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   private whatsapp = inject(WhatsappService);
   private fb = inject(FormBuilder);
 
-  aboutImageUrl = signal<string>('');
+  aboutImageUrl = signal<string>('/assets/about.png');
 
   expertiseCards: ExpertiseCard[] = [
     { icon: '/assets/icons/meditation.svg', title: 'מדיטציה',         description: 'הנחייה אישית לעומק הנשימה ושקט הנפש' },

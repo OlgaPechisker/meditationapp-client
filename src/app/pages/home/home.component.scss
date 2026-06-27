@@ -210,7 +210,7 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
   align-items: center;
 
   @include responsive(md) {
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   &__image-wrap {
@@ -223,12 +223,13 @@ $step-y: 44px;    // vertical drop per card (smaller = flatter diagonal)
     box-shadow: var(--shadow-lg);
     display: block;
     object-fit: cover;
-    aspect-ratio: 3 / 4;
+    object-position: top center;
+    aspect-ratio: 4 / 3;
   }
 
   &__image-placeholder {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 3;
     background: var(--color-bg-alt);
     border-radius: var(--radius-lg);
     border: 2px dashed var(--color-border);
