@@ -72,6 +72,10 @@
     background: var(--color-bg-alt);
   }
 
+  &--cta {
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  }
+
   &__container {
     @include container;
   }
@@ -81,6 +85,20 @@
     color: var(--color-text);
     margin: 0 0 var(--spacing-xl);
     text-align: center;
+
+    &--inverted {
+      color: #fff;
+    }
+  }
+
+  &__lead {
+    text-align: center;
+    margin: calc(-1 * var(--spacing-md)) 0 var(--spacing-xl);
+    font-size: var(--font-size-lg);
+
+    &--inverted {
+      color: rgba(255, 255, 255, 0.85);
+    }
   }
 
   &__empty {
@@ -89,4 +107,228 @@
   }
 }
 
-/* Shared CSS is in styles.scss */
+// ── Expertise Deck ──────────────────────────────────────────────────────────
+
+.expertise-deck {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: var(--spacing-xl) 0 var(--spacing-2xl);
+
+  &__card {
+    position: relative;
+    width: 200px;
+    min-height: 230px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl) var(--spacing-lg);
+    margin: 0 -44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.45s ease, margin 0.45s ease, box-shadow 0.3s ease;
+    transform: rotate(calc(var(--r, 0) * 1deg));
+    cursor: default;
+
+    &:nth-child(2),
+    &:nth-child(3) { z-index: 2; }
+    &:nth-child(1),
+    &:nth-child(4) { z-index: 1; }
+  }
+
+  &:hover &__card {
+    transform: rotate(0deg);
+    margin: 0 var(--spacing-sm);
+    box-shadow: var(--shadow-lg);
+  }
+
+  &__icon {
+    font-size: 2.75rem;
+    margin-bottom: var(--spacing-md);
+    line-height: 1;
+  }
+
+  &__title {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 var(--spacing-sm);
+  }
+
+  &__text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  // On small screens: stack as a simple grid
+  @media (max-width: 680px) {
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    padding: 0;
+
+    &__card {
+      margin: 0 !important;
+      transform: none !important;
+      width: calc(50% - var(--spacing-md));
+      min-height: auto;
+      flex: 1 1 140px;
+    }
+  }
+}
+
+// ── About Preview ────────────────────────────────────────────────────────────
+
+.about-preview {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-2xl);
+  align-items: center;
+
+  @include responsive(md) {
+    grid-template-columns: 300px 1fr;
+  }
+
+  &__image-wrap {
+    flex-shrink: 0;
+  }
+
+  &__image {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+  }
+
+  &__image-placeholder {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__image-placeholder-text {
+    font-size: 4rem;
+    opacity: 0.3;
+  }
+
+  &__heading {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+    margin: 0 0 var(--spacing-lg);
+  }
+
+  &__text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    line-height: 1.9;
+    margin: 0 0 var(--spacing-xl);
+  }
+}
+
+// ── CTA Form ─────────────────────────────────────────────────────────────────
+
+.cta-form {
+  max-width: 780px;
+  margin: 0 auto;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+
+    @include responsive(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+  }
+
+  &__label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  &__input {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+
+    &::placeholder { color: rgba(255, 255, 255, 0.5); }
+
+    &:focus {
+      border-color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    &--invalid {
+      border-color: #ffb3b3 !important;
+    }
+
+    &--textarea {
+      resize: vertical;
+    }
+  }
+
+  &__error {
+    font-size: var(--font-size-xs);
+    color: #ffb3b3;
+  }
+
+  &__submit {
+    display: block;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-2xl);
+    border-radius: var(--radius-full);
+    background: #fff;
+    color: var(--color-primary-dark);
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: var(--color-bg-alt);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__success {
+    text-align: center;
+    font-size: var(--font-size-xl);
+    color: #fff;
+    padding: var(--spacing-2xl);
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+

@@ -9,61 +9,95 @@
   </div>
 </section>
 
-<section class="section">
+<!-- Expertise Cards -->
+<section class="section section--alt">
   <div class="section__container">
-    <h2 class="section__title">{{ 'home.treatments_section' | transloco }}</h2>
-    @if (treatments().length) {
-      <div class="ui-grid">
-        @for (treatment of treatments(); track treatment.id) {
-          <a [routerLink]="['/treatments', treatment.slug]" class="ui-card">
-            <div class="ui-card__image" [style.background-image]="treatment.imageUrl ? 'url(' + treatment.imageUrl + ')' : ''"></div>
-            <div class="ui-card__body">
-              <h3 class="ui-card__title">{{ treatment.title }}</h3>
-              <p class="ui-card__text">{{ treatment.description | slice:0:80 }}...</p>
-            </div>
-          </a>
-        }
-      </div>
-    }
+    <h2 class="section__title">מה אני מציעה?</h2>
+    <div class="expertise-deck">
+      @for (card of expertiseCards; track card.title) {
+        <div class="expertise-deck__card" [style]="'--r: ' + card.rotation">
+          <div class="expertise-deck__icon">{{ card.icon }}</div>
+          <h3 class="expertise-deck__title">{{ card.title }}</h3>
+          <p class="expertise-deck__text">{{ card.description }}</p>
+        </div>
+      }
+    </div>
   </div>
 </section>
 
+<!-- About Me -->
 <section class="section">
   <div class="section__container">
-    <h2 class="section__title">{{ 'home.blog_section' | transloco }}</h2>
-    @if (blogPosts().length) {
-      <div class="ui-grid">
-        @for (post of blogPosts(); track post.id) {
-          <a [routerLink]="['/blog', post.slug]" class="ui-card">
-            <div class="ui-card__image" [style.background-image]="post.imageUrl ? 'url(' + post.imageUrl + ')' : ''"></div>
-            <div class="ui-card__body">
-              <h3 class="ui-card__title">{{ post.title }}</h3>
-              <p class="ui-card__text">{{ post.excerpt }}</p>
-            </div>
-          </a>
-        }
-      </div>
-    }
-  </div>
-</section>
-
-<section class="section">
-  <div class="section__container">
-    <h2 class="section__title">{{ 'home.upcoming_lectures' | transloco }}</h2>
-    @if (lectures().length) {
-      <div class="ui-grid">
-        @for (lecture of lectures(); track lecture.id) {
-          <div class="ui-card">
-            <div class="ui-card__body">
-              <h3 class="ui-card__title">{{ lecture.title }}</h3>
-              <p class="ui-card__meta">{{ lecture.date | slice:0:10 }} · {{ lecture.location }}</p>
-              <p class="ui-card__text">{{ lecture.description | slice:0:100 }}...</p>
-            </div>
+    <div class="about-preview">
+      <div class="about-preview__image-wrap">
+        @if (aboutImageUrl()) {
+          <img [src]="aboutImageUrl()" alt="עינת שומונוב" class="about-preview__image" />
+        } @else {
+          <div class="about-preview__image-placeholder">
+            <span class="about-preview__image-placeholder-text">📷</span>
           </div>
         }
       </div>
-    } @else if (lecturesLoaded()) {
-      <p class="section__empty">אין הרצאות קרובות כרגע</p>
+      <div class="about-preview__content">
+        <h2 class="about-preview__heading">קצת עליי</h2>
+        <p class="about-preview__text">
+          שמי עינת שומונוב, ואני מלווה אנשים בדרכם לשלווה פנימית ולחיים מלאים יותר.
+          עם שנות ניסיון בטיפול רגשי, מדיטציה והנחיית קבוצות, אני מאמינה בכוחו של כל אדם לרפא ולהתחדש.
+          כל מפגש הוא מרחב בטוח של קשב, כנות ואהבה.
+        </p>
+        <a routerLink="/about" class="btn btn--outline">קראו עוד עליי</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section section--cta">
+  <div class="section__container">
+    <h2 class="section__title section__title--inverted">בואו נדבר</h2>
+    <p class="section__lead section__lead--inverted">השאירו פרטים ואחזור אליכם בהקדם</p>
+
+    @if (submitted()) {
+      <div class="cta-form__success">ההודעה נשלחה! ניפגש בוואטסאפ 💜</div>
+    } @else {
+      <form class="cta-form" [formGroup]="contactForm" (ngSubmit)="submitForm()">
+        <div class="cta-form__row">
+          <div class="cta-form__field">
+            <label class="cta-form__label" for="cta-name">שם מלא <span aria-hidden="true">*</span></label>
+            <input id="cta-name" type="text" class="cta-form__input"
+              formControlName="name"
+              [class.cta-form__input--invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched" />
+            @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
+              <span class="cta-form__error">שדה חובה</span>
+            }
+          </div>
+          <div class="cta-form__field">
+            <label class="cta-form__label" for="cta-phone">טלפון <span aria-hidden="true">*</span></label>
+            <input id="cta-phone" type="tel" class="cta-form__input"
+              formControlName="phone"
+              [class.cta-form__input--invalid]="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched" />
+            @if (contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched) {
+              <span class="cta-form__error">שדה חובה</span>
+            }
+          </div>
+          <div class="cta-form__field">
+            <label class="cta-form__label" for="cta-email">אימייל <span aria-hidden="true">*</span></label>
+            <input id="cta-email" type="email" class="cta-form__input"
+              formControlName="email"
+              [class.cta-form__input--invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" />
+            @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+              <span class="cta-form__error">אימייל לא תקין</span>
+            }
+          </div>
+        </div>
+        <div class="cta-form__field">
+          <label class="cta-form__label" for="cta-message">הודעה (אופציונלי)</label>
+          <textarea id="cta-message" class="cta-form__input cta-form__input--textarea"
+            formControlName="message" rows="3"></textarea>
+        </div>
+        <button type="submit" class="cta-form__submit">שלחו הודעה בוואטסאפ 💬</button>
+      </form>
     }
   </div>
 </section>
+
