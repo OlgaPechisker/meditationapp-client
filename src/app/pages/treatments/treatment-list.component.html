@@ -1,30 +1,63 @@
 <div class="treatments-page">
-  <div class="treatments-page__container">
-    <h1 class="treatments-page__title">{{ 'treatments.title' | transloco }}</h1>
 
-    @if (treatments().length) {
-      <div class="ui-grid">
-        @for (treatment of treatments(); track treatment.id) {
-          <article class="ui-card" data-testid="treatment-card" [attr.data-slug]="treatment.slug" [routerLink]="['/treatments', treatment.slug]" style="cursor:pointer">
-            <div class="ui-card__image" [style.background-image]="treatment.imageUrl ? 'url(' + treatment.imageUrl + ')' : ''"></div>
-            <div class="ui-card__body">
-              <h2 class="ui-card__title">
-                <a [routerLink]="['/treatments', treatment.slug]" data-testid="treatment-card-title">{{ treatment.title }}</a>
-              </h2>
-              <p class="ui-card__text">{{ treatment.description | slice:0:120 }}...</p>
-              <p class="treatment-card__price" data-testid="treatment-card-price">{{ 'treatments.price' | transloco }}: ₪{{ treatment.price }}</p>
-              <div class="treatment-card__actions">
-                <a [routerLink]="['/treatments', treatment.slug]" class="btn btn--outline">קרא עוד</a>
-                <a [href]="getWhatsappLink(treatment.title)" target="_blank" rel="noopener" class="btn btn--whatsapp">
-                  {{ 'treatments.book_via_whatsapp' | transloco }}
-                </a>
-              </div>
-            </div>
-          </article>
-        }
+  <header class="treatments-hero">
+    <div class="treatments-hero__inner">
+      <h1 class="treatments-hero__title">{{ 'treatments.title' | transloco }}</h1>
+      <p class="treatments-hero__subtitle">מרחב ריפוי, מדיטציה ושלווה פנימית</p>
+      <span class="treatments-hero__ornament" aria-hidden="true"></span>
+    </div>
+  </header>
+
+  @for (treatment of treatments(); track treatment.id; let idx = $index) {
+    <section
+      class="treatment-section"
+      [class.treatment-section--reverse]="idx % 2 === 1"
+      [class.treatment-section--alt-bg]="idx % 2 === 1"
+      data-testid="treatment-card"
+      [attr.data-slug]="treatment.slug"
+    >
+      <div class="treatment-section__container">
+
+        <div class="treatment-section__visual">
+          @if (treatment.imageUrl) {
+            <img
+              class="treatment-section__image"
+              [src]="treatment.imageUrl"
+              [alt]="treatment.title"
+              loading="lazy"
+            />
+          } @else {
+            <div class="treatment-section__image-placeholder" aria-hidden="true"></div>
+          }
+        </div>
+
+        <div class="treatment-section__content">
+          <!-- doodle decorations (aria-hidden) -->
+          <svg class="note-doodle note-doodle--sparkle" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 0C12 6.6 17.4 12 24 12C17.4 12 12 17.4 12 24C12 17.4 6.6 12 0 12C6.6 12 12 6.6 12 0Z"/>
+          </svg>
+          <svg class="note-doodle note-doodle--swirl" viewBox="0 0 100 100" aria-hidden="true">
+            <path d="M50 10C27.9 10 10 27.9 10 50C10 72.1 27.9 90 50 90C72.1 90 90 72.1 90 50C90 32.3 75.7 18 58 18C44.3 18 33 29.3 33 43C33 53.5 41.5 62 52 62C59.7 62 66 55.7 66 48"/>
+          </svg>
+          <h2 class="treatment-section__title" data-testid="treatment-card-title">{{ treatment.title }}</h2>
+          <span class="treatment-section__divider" aria-hidden="true"></span>
+          <p class="treatment-section__description">{{ treatment.description }}</p>
+          <a
+            [href]="getWhatsappLink(treatment.title)"
+            target="_blank"
+            rel="noopener"
+            class="treatment-section__cta"
+          >
+            {{ 'treatments.book_via_whatsapp' | transloco }}
+          </a>
+        </div>
+
       </div>
-    } @else if (loaded()) {
-      <p data-testid="no-treatments-msg">אין טיפולים זמינים כרגע</p>
-    }
-  </div>
+    </section>
+  }
+
+  @if (!treatments().length && loaded()) {
+    <p class="treatments-page__empty" data-testid="no-treatments-msg">אין טיפולים זמינים כרגע</p>
+  }
+
 </div>

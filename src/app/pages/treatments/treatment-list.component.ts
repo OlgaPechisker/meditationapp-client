@@ -1,8 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { SlicePipe } from '@angular/common';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { WhatsappService } from '../../core/services/whatsapp.service';
 import { SeoService } from '../../core/services/seo.service';
@@ -22,7 +20,7 @@ interface Treatment {
 @Component({
   selector: 'app-treatment-list',
   standalone: true,
-  imports: [RouterLink, TranslocoPipe, SlicePipe],
+  imports: [TranslocoPipe],
   templateUrl: './treatment-list.component.html',
   styleUrl: './treatment-list.component.scss',
 })
