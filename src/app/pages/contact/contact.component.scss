@@ -2,7 +2,7 @@
 
 .contact-cta {
   min-height: calc(100vh - var(--header-height));
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  background: linear-gradient(160deg, var(--color-bg-alt) 0%, rgba(123, 94, 167, 0.12) 100%);
   display: flex;
   align-items: center;
   padding: var(--spacing-3xl) 0;
@@ -14,7 +14,7 @@
 
   &__title {
     font-size: var(--font-size-2xl);
-    color: #fff;
+    color: var(--color-primary);
     margin: 0 0 var(--spacing-sm);
     text-align: center;
   }
@@ -22,7 +22,7 @@
   &__lead {
     text-align: center;
     font-size: var(--font-size-lg);
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--color-text-light);
     margin: 0 0 var(--spacing-xl);
   }
 
@@ -36,12 +36,12 @@
 
   &__detail-link {
     font-size: var(--font-size-sm);
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--color-primary);
     text-decoration: none;
     transition: color 0.2s;
 
     &:hover {
-      color: #fff;
+      color: var(--color-primary-dark);
     }
   }
 }
@@ -71,29 +71,29 @@
   &__label {
     font-size: var(--font-size-sm);
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--color-text);
   }
 
   &__input {
     padding: var(--spacing-sm) var(--spacing-md);
-    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border: 1.5px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    background: #fff;
+    color: var(--color-text);
     font-family: inherit;
     font-size: var(--font-size-base);
     transition: border-color 0.2s, background 0.2s;
     outline: none;
 
-    &::placeholder { color: rgba(255, 255, 255, 0.5); }
+    &::placeholder { color: var(--color-text-light); }
 
     &:focus {
-      border-color: rgba(255, 255, 255, 0.7);
-      background: rgba(255, 255, 255, 0.2);
+      border-color: var(--color-primary);
+      background: #fff;
     }
 
     &--invalid {
-      border-color: #ffb3b3 !important;
+      border-color: var(--color-error) !important;
     }
 
     &--textarea {
@@ -103,7 +103,7 @@
 
   &__error {
     font-size: var(--font-size-xs);
-    color: #ffb3b3;
+    color: var(--color-error);
   }
 
   &__submit {
@@ -111,8 +111,8 @@
     margin: 0 auto;
     padding: var(--spacing-md) var(--spacing-2xl);
     border-radius: var(--radius-full);
-    background: #fff;
-    color: var(--color-primary-dark);
+    background: var(--color-primary);
+    color: #fff;
     font-family: inherit;
     font-size: var(--font-size-base);
     font-weight: 700;
@@ -121,7 +121,7 @@
     transition: all 0.2s;
 
     &:hover {
-      background: var(--color-bg-alt);
+      background: var(--color-primary-dark);
       transform: translateY(-2px);
     }
   }
@@ -129,9 +129,9 @@
   &__success {
     text-align: center;
     font-size: var(--font-size-xl);
-    color: #fff;
+    color: var(--color-primary);
     padding: var(--spacing-2xl);
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(123, 94, 167, 0.08);
     border-radius: var(--radius-lg);
     max-width: 500px;
     margin: 0 auto;

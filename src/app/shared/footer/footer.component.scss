@@ -2,7 +2,7 @@
 
 .footer {
   background: var(--color-bg-alt);
-  border-top: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-border);
   padding: var(--spacing-2xl) 0;
 
   &__container {
@@ -32,9 +32,14 @@
       color: var(--color-primary);
       text-decoration: none;
       font-size: var(--font-size-sm);
+      border: 1.5px solid var(--color-primary);
+      border-radius: var(--radius-full);
+      padding: var(--spacing-xs) var(--spacing-md);
+      transition: background 0.2s;
 
       &:hover {
-        text-decoration: underline;
+        background: rgba(123, 94, 167, 0.08);
+        text-decoration: none;
       }
     }
   }
