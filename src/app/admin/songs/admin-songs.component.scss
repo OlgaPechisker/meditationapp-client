@@ -1,1 +1,9 @@
 @import '../_shared-admin';
+
+.song-thumbnail {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}

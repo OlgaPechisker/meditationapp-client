@@ -15,13 +15,19 @@
       <div class="form-card" data-testid="song-form">
         <h3>{{ editing() ? 'עריכת שיר' : 'שיר חדש' }}</h3>
         <form [formGroup]="form" (ngSubmit)="save()">
-          <div class="form-group">
-            <label>כותרת</label>
-            <input formControlName="title" data-testid="field-title" />
-          </div>
-          <div class="form-group">
-            <label>תוכן (מילים)</label>
-            <textarea formControlName="lyrics" rows="12" data-testid="field-lyrics"></textarea>
+          <div class="form-row">
+            <div class="form-group">
+              <app-image-upload
+                label="תמונת השיר"
+                [imageUrl]="form.value.imageUrl"
+                (imageUrlChange)="onImageUrlChange($event)"
+                data-testid="field-imageUrl"
+              ></app-image-upload>
+            </div>
+            <div class="form-group">
+              <label>סדר הופעה</label>
+              <input type="number" formControlName="sortOrder" data-testid="field-sortOrder" />
+            </div>
           </div>
           <div class="form-actions">
             <button type="submit" class="btn-primary" data-testid="form-save">שמור</button>
@@ -34,14 +40,18 @@
     <table class="data-table" data-testid="songs-table">
       <thead>
         <tr>
-          <th>כותרת</th>
+          <th>תמונה</th>
+          <th>סדר הופעה</th>
           <th>פעולות</th>
         </tr>
       </thead>
       <tbody>
         @for (item of songs(); track item.id) {
           <tr data-testid="song-row" [attr.data-id]="item.id">
-            <td data-testid="song-title">{{ item.title }}</td>
+            <td>
+              <img class="song-thumbnail" [src]="item.imageUrl" alt="" data-testid="song-thumbnail" />
+            </td>
+            <td data-testid="song-sortOrder">{{ item.sortOrder }}</td>
             <td class="actions">
               <button class="btn-sm btn-edit" (click)="openEdit(item)" data-testid="song-edit-btn">ערוך</button>
               <button class="btn-sm btn-delete" (click)="deleteItem(item)" data-testid="song-delete-btn">מחק</button>

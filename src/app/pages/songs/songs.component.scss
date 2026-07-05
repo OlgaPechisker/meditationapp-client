@@ -1,69 +1,110 @@
 .songs-page {
-  padding: var(--spacing-3xl) var(--spacing-lg);
-  min-height: 40vh;
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  padding: var(--spacing-lg);
+  background: linear-gradient(160deg, var(--color-bg-alt) 0%, var(--color-bg) 55%, var(--color-secondary) 150%);
 
   &__container {
     max-width: var(--max-width);
+    width: 100%;
     margin: 0 auto;
-  }
-
-  &__title {
-    font-size: var(--font-size-3xl);
-    color: var(--color-primary-dark);
-    margin-bottom: var(--spacing-2xl);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 }
 
-.songs-accordion {
+.songs-gallery {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
-}
+  gap: var(--spacing-lg);
+  touch-action: pan-y;
+  flex: 1;
+  min-height: 0;
 
-.song-item {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition: box-shadow 0.2s;
-
-  &--expanded {
-    box-shadow: var(--shadow-md);
+  &__viewport {
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
   }
 
-  &__header {
+  &__track {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: var(--spacing-lg);
-    background: var(--color-bg-alt);
-    border: none;
-    cursor: pointer;
-    font-family: var(--font-family);
-    font-size: var(--font-size-lg);
-    color: var(--color-text);
-    text-align: right;
+    direction: ltr;
+    transition: transform 0.35s ease;
+    height: 100%;
+  }
 
-    &:hover {
+  &__nav {
+    display: flex;
+    direction: ltr;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+  }
+
+  &__arrow {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-primary);
+    font-size: var(--font-size-2xl);
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, box-shadow 0.2s;
+
+    &:hover:not(:disabled) {
       background: var(--color-border);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
     }
   }
 
-  &__icon {
-    font-size: var(--font-size-xl);
-    color: var(--color-primary);
-    font-weight: bold;
-  }
-
-  &__content {
-    padding: var(--spacing-lg);
-    background: var(--color-bg);
-  }
-
-  &__lyrics {
-    white-space: pre-line;
-    line-height: 1.8;
-    font-size: var(--font-size-base);
+  &__counter {
+    min-width: 4.5rem;
+    text-align: center;
     color: var(--color-text);
+    font-size: var(--font-size-base);
   }
 }
+
+.song-item {
+  flex: 0 0 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  visibility: hidden;
+
+  &--active {
+    visibility: visible;
+  }
+
+  &__image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .songs-gallery__arrow {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: var(--font-size-xl);
+  }
+}
+

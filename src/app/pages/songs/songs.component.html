@@ -1,22 +1,62 @@
 <div class="songs-page">
   <div class="songs-page__container">
-    <h1 class="songs-page__title">{{ 'songs.title' | transloco }}</h1>
-
-    @if (songs().length) {
-      <div class="songs-accordion">
-        @for (song of songs(); track song.id) {
-          <div class="song-item" [class.song-item--expanded]="expandedId() === song.id" data-testid="song-item" [attr.data-id]="song.id">
-            <button class="song-item__header" (click)="toggle(song.id)" data-testid="song-toggle-btn">
-              <span class="song-item__title" data-testid="song-title">{{ song.title }}</span>
-              <span class="song-item__icon">{{ expandedId() === song.id ? '−' : '+' }}</span>
-            </button>
-            @if (expandedId() === song.id) {
-              <div class="song-item__content">
-                <div class="song-item__lyrics" data-testid="song-lyrics">{{ song.lyrics }}</div>
+    @if (hasSongs()) {
+      <div
+        class="songs-gallery"
+        (touchstart)="onTouchStart($event)"
+        (touchend)="onTouchEnd($event)"
+      >
+        <div class="songs-gallery__viewport">
+          <div
+            class="songs-gallery__track"
+            [style.transform]="'translateX(-' + (currentIndex() * 100) + '%)'"
+          >
+            @for (song of songs(); track song.id; let i = $index) {
+              <div
+                class="song-item"
+                [class.song-item--active]="i === currentIndex()"
+                data-testid="song-item"
+                [attr.data-id]="song.id"
+              >
+                <img
+                  class="song-item__image"
+                  [src]="song.imageUrl"
+                  [attr.alt]="('songs.title' | transloco) + ' ' + (i + 1)"
+                  data-testid="song-image"
+                  loading="lazy"
+                />
               </div>
             }
           </div>
-        }
+        </div>
+
+        <div class="songs-gallery__nav">
+          <button
+            type="button"
+            class="songs-gallery__arrow"
+            (click)="prev()"
+            [disabled]="isFirst()"
+            data-testid="song-prev-btn"
+            aria-label="השיר הקודם"
+          >
+            ‹
+          </button>
+
+          <span class="songs-gallery__counter" data-testid="song-counter">
+            {{ currentIndex() + 1 }} / {{ songs().length }}
+          </span>
+
+          <button
+            type="button"
+            class="songs-gallery__arrow"
+            (click)="next()"
+            [disabled]="isLast()"
+            data-testid="song-next-btn"
+            aria-label="השיר הבא"
+          >
+            ›
+          </button>
+        </div>
       </div>
     } @else if (loaded()) {
       <p data-testid="no-songs-msg">אין שירים עדיין</p>
