@@ -6,6 +6,6 @@
   "lectures": { "title": "Lectures", "date": "Date", "location": "Location", "price": "Price" },
   "songs": { "title": "Songs" },
   "about": { "title": "About" },
-  "contact": { "title": "Contact", "whatsapp": "Send WhatsApp Message", "email": "Email", "phone": "Phone" },
+  "contact": { "title": "Contact", "lead": "Leave your details and I'll get back to you soon", "whatsapp": "Send WhatsApp Message", "email": "Email", "phone": "Phone" },
   "common": { "loading": "Loading...", "error": "An error occurred", "not_found": "Page not found", "back": "Back" }
 }

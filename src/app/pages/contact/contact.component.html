@@ -1,49 +1,9 @@
 <section class="contact-cta">
   <div class="contact-cta__container">
     <h1 class="contact-cta__title">{{ 'contact.title' | transloco }}</h1>
-    <p class="contact-cta__lead">השאירו פרטים ואחזור אליכם בהקדם</p>
+    <p class="contact-cta__lead">{{ 'contact.lead' | transloco }}</p>
 
-    @if (submitted()) {
-      <div class="cta-form__success">ההודעה נשלחה! ניפגש בוואטסאפ 💜</div>
-    } @else {
-      <form class="cta-form" [formGroup]="contactForm" (ngSubmit)="submitForm()">
-        <div class="cta-form__row">
-          <div class="cta-form__field">
-            <label class="cta-form__label" for="contact-name">שם מלא <span aria-hidden="true">*</span></label>
-            <input id="contact-name" type="text" class="cta-form__input"
-              formControlName="name"
-              [class.cta-form__input--invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched" />
-            @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
-              <span class="cta-form__error">שדה חובה</span>
-            }
-          </div>
-          <div class="cta-form__field">
-            <label class="cta-form__label" for="contact-phone">טלפון <span aria-hidden="true">*</span></label>
-            <input id="contact-phone" type="tel" class="cta-form__input"
-              formControlName="phone"
-              [class.cta-form__input--invalid]="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched" />
-            @if (contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched) {
-              <span class="cta-form__error">שדה חובה</span>
-            }
-          </div>
-          <div class="cta-form__field">
-            <label class="cta-form__label" for="contact-email">אימייל <span aria-hidden="true">*</span></label>
-            <input id="contact-email" type="email" class="cta-form__input"
-              formControlName="email"
-              [class.cta-form__input--invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" />
-            @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
-              <span class="cta-form__error">אימייל לא תקין</span>
-            }
-          </div>
-        </div>
-        <div class="cta-form__field">
-          <label class="cta-form__label" for="contact-message">הודעה (אופציונלי)</label>
-          <textarea id="contact-message" class="cta-form__input cta-form__input--textarea"
-            formControlName="message" rows="3"></textarea>
-        </div>
-        <button type="submit" class="cta-form__submit">שלחו הודעה בוואטסאפ 💬</button>
-      </form>
-    }
+    <app-cta-form idPrefix="contact" />
 
     <div class="contact-cta__details">
       <a [href]="'mailto:' + email()" class="contact-cta__detail-link">{{ email() }}</a>

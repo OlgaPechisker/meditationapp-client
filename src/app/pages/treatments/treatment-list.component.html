@@ -19,16 +19,12 @@
       <div class="treatment-section__container">
 
         <div class="treatment-section__visual">
-          @if (treatment.imageUrl) {
-            <img
-              class="treatment-section__image"
-              [src]="treatment.imageUrl"
-              [alt]="treatment.title"
-              loading="lazy"
-            />
-          } @else {
-            <div class="treatment-section__image-placeholder" aria-hidden="true"></div>
-          }
+          <img
+            class="treatment-section__illustration"
+            [src]="idx % 2 === 0 ? '/assets/images/buddha-meditation.svg' : '/assets/images/floral-branch.svg'"
+            [alt]="treatment.title"
+            aria-hidden="true"
+          />
         </div>
 
         <div class="treatment-section__content">

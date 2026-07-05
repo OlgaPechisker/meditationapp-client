@@ -1,11 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { WhatsappService } from '../../core/services/whatsapp.service';
 import { SeoService } from '../../core/services/seo.service';
 import { ApiService } from '../../core/services/api.service';
+import { CtaFormComponent } from '../../shared/cta-form/cta-form.component';
 
 interface SiteContent {
   id: number;
@@ -17,27 +16,16 @@ interface SiteContent {
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [TranslocoPipe, ReactiveFormsModule],
+  imports: [TranslocoPipe, CtaFormComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
 export class ContactComponent implements OnInit {
-  private whatsapp = inject(WhatsappService);
   private seo = inject(SeoService);
   private api = inject(ApiService);
-  private fb = inject(FormBuilder);
 
   email = signal('einat@example.com');
   phone = signal('050-1234567');
-
-  contactForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    phone: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    message: [''],
-  });
-
-  submitted = signal(false);
 
   ngOnInit() {
     this.seo.updateMeta({ title: 'צור קשר', description: 'יצירת קשר עם עינת שומונוב' });
@@ -49,17 +37,5 @@ export class ContactComponent implements OnInit {
       if (phone) this.phone.set(phone.value);
       if (email) this.email.set(email.value);
     });
-  }
-
-  submitForm() {
-    if (this.contactForm.invalid) {
-      this.contactForm.markAllAsTouched();
-      return;
-    }
-    const { name, phone, email, message } = this.contactForm.value;
-    const text = `שלום, שמי ${name}.\nטלפון: ${phone}\nאימייל: ${email}${message ? '\n' + message : ''}`;
-    window.open(this.whatsapp.buildLink(text), '_blank');
-    this.submitted.set(true);
-    this.contactForm.reset();
   }
 }

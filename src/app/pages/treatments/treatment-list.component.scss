@@ -53,61 +53,15 @@
 // ─── Treatment section (editorial alternating layout) ─────────────────────────
 
 .treatment-section {
-  padding: var(--spacing-3xl) 0;
+  padding: var(--spacing-2xl) 0;
   position: relative;
-  overflow: hidden;
 
+  @include responsive(lg) {
+    padding: var(--spacing-3xl) 0;
+  }
   // Alternating soft lavender background
   &--alt-bg {
     background: var(--color-bg-alt);
-  }
-
-  // Decorative SVG accents — hidden on mobile, shown on md+
-  &::before,
-  &::after {
-    display: none;
-    content: '';
-    position: absolute;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @include responsive(md) {
-    // Buddha silhouette — bottom-end corner of white sections
-    &:not(.treatment-section--alt-bg)::after {
-      display: block;
-      inset-block-end: -20px;
-      inset-inline-end: 0;
-      width: clamp(100px, 12vw, 220px);
-      height: clamp(160px, 20vw, 360px);
-      background: url('/assets/images/buddha-meditation.svg') bottom center / contain no-repeat;
-      opacity: 0.14;
-    }
-
-    // Floral branch — top-start corner of lavender sections
-    &--alt-bg::before {
-      display: block;
-      inset-block-start: -10px;
-      inset-inline-start: 0;
-      width: clamp(90px, 11vw, 200px);
-      height: clamp(140px, 18vw, 320px);
-      background: url('/assets/images/floral-branch.svg') top center / contain no-repeat;
-      opacity: 0.18;
-    }
-  }
-
-  @include responsive(lg) {
-    &:not(.treatment-section--alt-bg)::after {
-      width: clamp(180px, 18vw, 340px);
-      height: clamp(290px, 30vw, 560px);
-      opacity: 0.20;
-    }
-
-    &--alt-bg::before {
-      width: clamp(160px, 16vw, 300px);
-      height: clamp(250px, 27vw, 500px);
-      opacity: 0.24;
-    }
   }
 
   // ── Inner container: stack on mobile, side-by-side on lg+ ───────────────────
@@ -118,7 +72,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-2xl);
+    gap: var(--spacing-xl);
 
     @include responsive(lg) {
       flex-direction: row;
@@ -144,28 +98,16 @@
     }
   }
 
-  &__image {
+  &__illustration {
     display: block;
     width: 100%;
-    height: clamp(220px, 48vw, 420px);
-    object-fit: cover;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    max-height: clamp(180px, 38vw, 280px);
+    object-fit: contain;
+    object-position: center bottom;
+    filter: drop-shadow(0 8px 24px rgba(123, 94, 167, 0.12));
 
     @include responsive(lg) {
-      height: clamp(300px, 42vw, 480px);
-    }
-  }
-
-  &__image-placeholder {
-    width: 100%;
-    height: clamp(220px, 48vw, 420px);
-    border-radius: var(--radius-lg);
-    background: linear-gradient(145deg, #F0EDF8 0%, #EDE4F2 55%, #F4DDE8 100%);
-    box-shadow: var(--shadow-md);
-
-    @include responsive(lg) {
-      height: clamp(300px, 42vw, 480px);
+      max-height: clamp(340px, 52vh, 560px);
     }
   }
 
@@ -192,11 +134,15 @@
       0.4em 0.4em 0 rgba(123, 94, 167, 0.35),
       0 8px 24px rgba(123, 94, 167, 0.08);
 
-    padding: 3em 1.5em 2em;
+    padding: 2.5em 1.2em 1.8em;
     transition:
       transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
       box-shadow 0.4s ease,
       border-radius 0.4s ease;
+
+    @include responsive(md) {
+      padding: 3em 1.5em 2em;
+    }
 
     @include responsive(lg) {
       padding: 3.5em var(--spacing-2xl) 2.5em;
@@ -261,32 +207,40 @@
   }
 
   &__cta {
-    display: inline-flex;
+    display: flex;
+    justify-content: center;
     align-items: center;
     gap: var(--spacing-sm);
-    background: #25D366;
+    width: 100%;
+    background: var(--color-primary);
     color: #fff;
-    padding: var(--spacing-md) var(--spacing-2xl);
+    padding: var(--spacing-md) var(--spacing-lg);
     border-radius: var(--radius-full);
     text-decoration: none;
     font-size: var(--font-size-base);
     font-weight: 600;
-    box-shadow: var(--shadow-md);
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0.2em 0.2em 0 rgba(123, 94, 167, 0.35), var(--shadow-md);
+    border: 0.12em solid rgba(123, 94, 167, 0.4);
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
     margin-block-start: var(--spacing-sm);
     position: relative;
     z-index: 1;
 
-    &:hover {
-      background: #1da851;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
+    @include responsive(md) {
+      width: auto;
+      padding: var(--spacing-md) var(--spacing-2xl);
     }
 
-    // WhatsApp icon via CSS
+    &:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0.3em 0.4em 0 rgba(123, 94, 167, 0.4), var(--shadow-lg);
+    }
+
     &::before {
-      content: '💬';
-      font-size: 1.1em;
+      content: '✦';
+      font-size: 0.85em;
+      opacity: 0.8;
     }
   }
 }

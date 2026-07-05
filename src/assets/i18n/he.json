@@ -6,6 +6,6 @@
   "lectures": { "title": "הרצאות", "date": "תאריך", "location": "מיקום", "price": "מחיר" },
   "songs": { "title": "שירים" },
   "about": { "title": "אודות" },
-  "contact": { "title": "צור קשר", "whatsapp": "שלח הודעה בוואטסאפ", "email": "אימייל", "phone": "טלפון" },
+  "contact": { "title": "צור קשר", "lead": "השאירו פרטים ואחזור אליכם בהקדם", "whatsapp": "שלח הודעה בוואטסאפ", "email": "אימייל", "phone": "טלפון" },
   "common": { "loading": "טוען...", "error": "אירעה שגיאה", "not_found": "הדף לא נמצא", "back": "חזרה" }
 }
