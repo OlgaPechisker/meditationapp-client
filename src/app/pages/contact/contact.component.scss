@@ -2,7 +2,7 @@
 
 .contact-cta {
   min-height: calc(100vh - var(--header-height));
-  background: linear-gradient(160deg, var(--color-bg-alt) 0%, rgba(123, 94, 167, 0.12) 100%);
+  background: linear-gradient(160deg, var(--color-bg-alt) 0%, var(--color-primary-a12) 100%);
   display: flex;
   align-items: center;
   padding: var(--spacing-3xl) 0;

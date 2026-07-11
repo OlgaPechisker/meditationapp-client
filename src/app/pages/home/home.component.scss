@@ -28,7 +28,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(245, 240, 248, 0.78);
+    background: color-mix(in srgb, var(--color-bg-alt) 78%, transparent);
     z-index: 1;
   }
 
@@ -85,7 +85,7 @@
       background: transparent;
       color: var(--color-primary);
       border: 2px solid var(--color-primary);
-      &:hover { background: rgba(123, 94, 167, 0.12); text-decoration: none; }
+      &:hover { background: var(--color-primary-a12); text-decoration: none; }
     }
   }
 }
@@ -98,7 +98,7 @@
   }
 
   &--cta {
-    background: linear-gradient(145deg, #F0EDF8 0%, #EDE4F2 55%, #F4DDE8 100%);
+    background: var(--gradient-brand);
 
     // Match the Contact page's CTA header styling
     .section__title {
@@ -226,7 +226,7 @@
 
   &__card {
     position: relative;
-    background: linear-gradient(145deg, #F0EDF8 0%, #EDE4F2 55%, #F4DDE8 100%);
+    background: var(--gradient-brand);
     border: 1.5px solid var(--color-border);
     color: var(--color-text);
     border-radius: var(--radius-lg);
@@ -243,7 +243,7 @@
     &:hover {
       transform: scale(1.06) translateY(-8px);
       box-shadow: var(--shadow-lg);
-      background: linear-gradient(145deg, #E8E0F4 0%, #E2D5EF 55%, #EDD0E0 100%);
+      background: var(--gradient-brand-hover);
       z-index: 2;
     }
   }

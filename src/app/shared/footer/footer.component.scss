@@ -38,7 +38,7 @@
       transition: background 0.2s;
 
       &:hover {
-        background: rgba(123, 94, 167, 0.08);
+        background: var(--color-primary-a08);
         text-decoration: none;
       }
     }

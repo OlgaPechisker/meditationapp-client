@@ -31,8 +31,8 @@
   &__input {
     padding: var(--spacing-sm) var(--spacing-md);
     border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: #F0EDF8;
+    border-radius: var(--radius-container);
+    background: var(--color-surface-tint);
     color: var(--color-text);
     font-family: inherit;
     font-size: var(--font-size-base);
@@ -43,7 +43,7 @@
 
     &:focus {
       border-color: var(--color-primary);
-      background: #EDE4F2;
+      background: var(--color-surface-tint-strong);
     }
 
     &--invalid {
@@ -85,9 +85,9 @@
     font-size: var(--font-size-xl);
     color: var(--color-primary);
     padding: var(--spacing-2xl);
-    background: linear-gradient(145deg, #F0EDF8 0%, #EDE4F2 55%, #F4DDE8 100%);
+    background: var(--gradient-brand);
     border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-container);
     max-width: 500px;
     margin: 0 auto;
   }

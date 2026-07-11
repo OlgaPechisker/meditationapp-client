@@ -2,7 +2,7 @@
   min-height: calc(100vh - var(--header-height));
   display: flex;
   padding: var(--spacing-lg);
-  background: linear-gradient(160deg, var(--color-bg-alt) 0%, var(--color-bg) 55%, var(--color-secondary) 150%);
+  background: linear-gradient(160deg, var(--color-bg-alt) 0%, var(--color-bg) 55%, var(--color-accent) 150%);
 
   &__container {
     max-width: var(--max-width);

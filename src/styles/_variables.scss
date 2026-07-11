@@ -1,17 +1,38 @@
+// Mirrors the unified :root token set in docs/design-system.html — the
+// single source of truth. Keep this file in sync whenever tokens change there.
 :root {
+  /* ── Brand (purple = all actions & emphasis) ─────────────────────────────── */
   --color-primary: #7B5EA7;
   --color-primary-light: #9B7EC7;
   --color-primary-dark: #5B3E87;
-  --color-secondary: #D4A5B5;
-  --color-accent: #8B7D3C;
+
+  /* ── Accents ─────────────────────────────────────────────────────────────── */
+  --color-accent: #D4A5B5;        /* blush — DECORATIVE only (gradients, highlights); never a button fill */
+  --color-champagne: #C9A46B;     /* optional premium hairline accent; use sparingly */
+
+  /* ── Surfaces ────────────────────────────────────────────────────────────── */
   --color-bg: #FFFFFF;
-  --color-bg-alt: #F5F0F8;
+  --color-surface: #FBF9FD;       /* very soft page tint */
+  --color-bg-alt: #F5F0F8;        /* lavender section background */
+  --color-surface-tint: #F0EDF8;  /* input / card fill */
+  --color-surface-tint-strong: #EDE4F2;
+
+  /* ── Text & borders ──────────────────────────────────────────────────────── */
   --color-text: #2D2D2D;
   --color-text-light: #6B6B6B;
   --color-border: #E8E0EF;
+
+  /* ── Semantic ────────────────────────────────────────────────────────────── */
   --color-error: #D32F2F;
   --color-success: #388E3C;
 
+  /* ── Brand gradients & alpha helpers ───────────────────────────────────────── */
+  --gradient-brand: linear-gradient(145deg, #F5F1FA 0%, #EFE7F5 55%, #F6E4EE 100%);
+  --gradient-brand-hover: linear-gradient(145deg, #EEE7F7 0%, #E6D8F0 55%, #F0D7E4 100%);
+  --color-primary-a08: rgba(123, 94, 167, 0.08);
+  --color-primary-a12: rgba(123, 94, 167, 0.12);
+
+  /* ── Typography ──────────────────────────────────────────────────────────── */
   --font-family: 'Heebo', sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -21,6 +42,7 @@
   --font-size-2xl: clamp(1.75rem, 2.5vw, 2.25rem);
   --font-size-3xl: clamp(2rem, 3.5vw, 3rem);
 
+  /* ── Spacing ─────────────────────────────────────────────────────────────── */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -29,15 +51,52 @@
   --spacing-2xl: 3rem;
   --spacing-3xl: 4rem;
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --radius-full: 9999px;
+  /* ── Radius — one rule: containers=lg, actions/chips=full, small inline=sm ─ */
+  --radius-sm: 6px;               /* small inline (tags, code) */
+  --radius-md: 8px;               /* legacy / misc */
+  --radius-lg: 16px;              /* containers: cards, inputs, panels, images */
+  --radius-full: 9999px;          /* actions & chips: buttons, pills, badges */
+  --radius-container: var(--radius-lg);
+  --radius-pill: var(--radius-full);
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+  /* ── Shadows — softened to a purple-tinted set ───────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(91, 62, 135, 0.06);
+  --shadow-md: 0 6px 18px rgba(91, 62, 135, 0.10);
+  --shadow-lg: 0 16px 40px rgba(91, 62, 135, 0.16);
+  --focus-ring: 0 0 0 3px rgba(123, 94, 167, 0.35);
 
+  /* ── Layout ──────────────────────────────────────────────────────────────── */
   --max-width: 1200px;
   --header-height: 88px;
+  --tap-target-min: 44px;         /* min accessible hit area for any tappable control */
+
+  /* ── Loading / skeleton (feedback while content loads) ───────────────────── */
+  --skeleton-base: var(--color-surface-tint);
+  --skeleton-sheen: var(--color-surface-tint-strong);
+
+  /* ── Iconography — ONE line-icon family (Lucide / Feather) ────────────────── */
+  --icon-stroke: 2;                 /* uniform 2px stroke, round caps & joins */
+  --icon-size-sm: 18px;             /* inline with text / dense UI */
+  --icon-size-md: 22px;             /* default (nav, buttons, list bullets) */
+  --icon-size-lg: 28px;             /* feature / section emphasis */
+  --icon-color: currentColor;       /* inherits text color — tint via the parent */
+
+  /* ── Expressive layer — signature/hand-drawn components ──────────────────── */
+  --color-primary-a35: rgba(123, 94, 167, 0.35);
+  --color-primary-a40: rgba(123, 94, 167, 0.40);
+  --color-accent-a18: rgba(212, 165, 181, 0.18);   /* blush — ruled-paper lines */
+  --color-accent-a40: rgba(212, 165, 181, 0.40);   /* blush — doodle fill */
+  --paper-bg: #FDFCF8;                              /* warm ruled-paper white */
+  --color-champagne-tape: rgba(201, 164, 107, 0.85); /* washi tape */
+
+  /* Sketchy, asymmetric "hand-drawn" corners (+ hover mirror) */
+  --sketch-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --sketch-radius-hover: 15px 255px 15px 225px / 255px 15px 225px 15px;
+
+  /* Offset hard shadow (purple) + ambient soft shadow — the "sticker" look */
+  --shadow-sketch: 0.4em 0.4em 0 var(--color-primary-a35), 0 8px 24px rgba(123, 94, 167, 0.08);
+  --shadow-sketch-hover: 0.6em 0.7em 0 var(--color-primary-a35), 0 12px 32px rgba(123, 94, 167, 0.12);
+
+  /* Blush → purple gradient hairline (dividers, hero ornament) */
+  --gradient-accent-line: linear-gradient(to left, var(--color-accent), var(--color-primary));
 }

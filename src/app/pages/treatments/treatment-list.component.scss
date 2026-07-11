@@ -14,7 +14,7 @@
 // ─── Page hero ────────────────────────────────────────────────────────────────
 
 .treatments-hero {
-  background: linear-gradient(160deg, var(--color-bg-alt) 0%, rgba(123, 94, 167, 0.12) 100%);
+  background: linear-gradient(160deg, var(--color-bg-alt) 0%, var(--color-primary-a12) 100%);
   padding: var(--spacing-3xl) 0 var(--spacing-2xl);
   text-align: center;
 
@@ -44,7 +44,7 @@
     display: block;
     width: 80px;
     height: 3px;
-    background: linear-gradient(to left, var(--color-secondary), var(--color-primary));
+    background: var(--gradient-accent-line);
     border-radius: var(--radius-full);
     margin-block-start: var(--spacing-sm);
   }
@@ -104,7 +104,7 @@
     max-height: clamp(180px, 38vw, 280px);
     object-fit: contain;
     object-position: center bottom;
-    filter: drop-shadow(0 8px 24px rgba(123, 94, 167, 0.12));
+    filter: drop-shadow(0 8px 24px var(--color-primary-a12));
 
     @include responsive(lg) {
       max-height: clamp(340px, 52vh, 560px);
@@ -122,17 +122,15 @@
 
     // Ruled paper background — warm-white with blush horizontal lines
     background:
-      linear-gradient(#FDFCF8 1.5em, transparent 1.5em) 0 0 / 100% 1.6em,
-      linear-gradient(rgba(212, 165, 181, 0.18) 0.08em, transparent 0.08em) 0 1.5em / 100% 1.6em #FDFCF8;
+      linear-gradient(var(--paper-bg) 1.5em, transparent 1.5em) 0 0 / 100% 1.6em,
+      linear-gradient(var(--color-accent-a18) 0.08em, transparent 0.08em) 0 1.5em / 100% 1.6em var(--paper-bg);
 
     // Sketchy hand-drawn border
-    border: 0.2em solid rgba(123, 94, 167, 0.4);
-    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    border: 0.2em solid var(--color-primary-a40);
+    border-radius: var(--sketch-radius);
 
     // Offset hard shadow (purple) + ambient soft shadow
-    box-shadow:
-      0.4em 0.4em 0 rgba(123, 94, 167, 0.35),
-      0 8px 24px rgba(123, 94, 167, 0.08);
+    box-shadow: var(--shadow-sketch);
 
     padding: 2.5em 1.2em 1.8em;
     transition:
@@ -158,7 +156,7 @@
       transform: translateX(-50%) rotate(-4deg);
       width: 5em;
       height: 1.4em;
-      background: rgba(139, 125, 60, 0.75);
+      background: var(--color-champagne-tape);
       border: 0.1em solid rgba(0, 0, 0, 0.1);
       box-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.1);
       border-radius: 2px 4px 2px 5px;
@@ -167,10 +165,8 @@
 
     &:hover {
       transform: translateY(-0.5em) rotate(0.5deg);
-      box-shadow:
-        0.6em 0.7em 0 rgba(123, 94, 167, 0.35),
-        0 12px 32px rgba(123, 94, 167, 0.12);
-      border-radius: 15px 255px 15px 225px / 255px 15px 225px 15px;
+      box-shadow: var(--shadow-sketch-hover);
+      border-radius: var(--sketch-radius-hover);
     }
   }
 
@@ -189,7 +185,7 @@
     display: block;
     width: 56px;
     height: 2px;
-    background: linear-gradient(to left, var(--color-secondary), var(--color-primary));
+    background: var(--gradient-accent-line);
     border-radius: var(--radius-full);
     margin-block: calc(-1 * var(--spacing-sm));
     position: relative;
@@ -218,8 +214,8 @@
     text-decoration: none;
     font-size: var(--font-size-base);
     font-weight: 600;
-    box-shadow: 0.2em 0.2em 0 rgba(123, 94, 167, 0.35), var(--shadow-md);
-    border: 0.12em solid rgba(123, 94, 167, 0.4);
+    box-shadow: 0.2em 0.2em 0 var(--color-primary-a35), var(--shadow-md);
+    border: 0.12em solid var(--color-primary-a40);
     transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
     margin-block-start: var(--spacing-sm);
     position: relative;
@@ -233,7 +229,7 @@
     &:hover {
       background: var(--color-primary-dark);
       transform: translateY(-3px);
-      box-shadow: 0.3em 0.4em 0 rgba(123, 94, 167, 0.4), var(--shadow-lg);
+      box-shadow: 0.3em 0.4em 0 var(--color-primary-a40), var(--shadow-lg);
     }
 
     &::before {
@@ -259,9 +255,9 @@
     height: 1.8em;
     inset-block-start: 1.5em;
     inset-inline-end: 1.5em;
-    stroke: #7B5EA7;
+    stroke: var(--color-primary);
     stroke-width: 1.4;
-    fill: rgba(212, 165, 181, 0.4);
+    fill: var(--color-accent-a40);
   }
 
   &--swirl {
@@ -269,7 +265,7 @@
     height: 2.5em;
     inset-block-end: 1.5em;
     inset-inline-start: 1em;
-    stroke: #D4A5B5;
+    stroke: var(--color-accent);
     stroke-width: 5;
     opacity: 0.6;
   }
