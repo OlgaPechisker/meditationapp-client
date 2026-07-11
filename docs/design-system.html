@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Einat Shomonov — Interactive Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================================
+   SINGLE SOURCE OF TRUTH — the UNIFIED Einat design system.
+   Adopts the reconciled tokens from the improvement review. Component previews
+   below render live from these. When porting to the app, mirror this :root into
+   src/styles/_variables.scss.
+   ========================================================================== */
+:root {
+  /* ── Brand (purple = all actions & emphasis) ─────────────────────────────── */
+  --color-primary: #7B5EA7;
+  --color-primary-light: #9B7EC7;
+  --color-primary-dark: #5B3E87;
+
+  /* ── Accents ─────────────────────────────────────────────────────────────── */
+  --color-accent: #D4A5B5;        /* blush — DECORATIVE only (gradients, highlights); never a button fill */
+  --color-champagne: #C9A46B;     /* optional premium hairline accent (replaces retired olive gold); use sparingly */
+
+  /* ── Surfaces ────────────────────────────────────────────────────────────── */
+  --color-bg: #FFFFFF;
+  --color-surface: #FBF9FD;       /* very soft page tint */
+  --color-bg-alt: #F5F0F8;        /* lavender section background */
+  --color-surface-tint: #F0EDF8;  /* input / card fill (was hardcoded) */
+  --color-surface-tint-strong: #EDE4F2;
+
+  /* ── Text & borders ──────────────────────────────────────────────────────── */
+  --color-text: #2D2D2D;
+  --color-text-light: #6B6B6B;
+  --color-border: #E8E0EF;
+
+  /* ── Semantic ────────────────────────────────────────────────────────────── */
+  --color-error: #D32F2F;
+  --color-success: #388E3C;
+
+  /* ── Brand gradients & alpha helpers (formerly magic values) ─────────────── */
+  --gradient-brand: linear-gradient(145deg, #F5F1FA 0%, #EFE7F5 55%, #F6E4EE 100%);
+  --gradient-brand-hover: linear-gradient(145deg, #EEE7F7 0%, #E6D8F0 55%, #F0D7E4 100%);
+  --color-primary-a08: rgba(123, 94, 167, 0.08);
+  --color-primary-a12: rgba(123, 94, 167, 0.12);
+
+  /* ── Typography ──────────────────────────────────────────────────────────── */
+  --font-family: 'Heebo', sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: clamp(1.75rem, 2.5vw, 2.25rem);
+  --font-size-3xl: clamp(2rem, 3.5vw, 3rem);
+
+  /* ── Spacing ─────────────────────────────────────────────────────────────── */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* ── Radius — one rule: containers=lg, actions/chips=full, small inline=sm ─ */
+  --radius-sm: 6px;               /* small inline (tags, code) — bumped from 4px */
+  --radius-md: 8px;               /* legacy / misc */
+  --radius-lg: 16px;              /* containers: cards, inputs, panels, images */
+  --radius-full: 9999px;          /* actions & chips: buttons, pills, badges */
+  --radius-container: var(--radius-lg);
+  --radius-pill: var(--radius-full);
+
+  /* ── Shadows — softened to a purple-tinted set ───────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(91, 62, 135, 0.06);
+  --shadow-md: 0 6px 18px rgba(91, 62, 135, 0.10);
+  --shadow-lg: 0 16px 40px rgba(91, 62, 135, 0.16);
+  --focus-ring: 0 0 0 3px rgba(123, 94, 167, 0.35);
+
+  /* ── Layout ──────────────────────────────────────────────────────────────── */
+  --max-width: 1200px;
+  --header-height: 88px;
+  --tap-target-min: 44px;         /* min accessible hit area for any tappable control */
+
+  /* ── Loading / skeleton (feedback while content loads) ───────────────────── */
+  --skeleton-base: var(--color-surface-tint);
+  --skeleton-sheen: var(--color-surface-tint-strong);
+
+  /* ── Iconography — ONE line-icon family (Lucide / Feather) ────────────────── */
+  --icon-stroke: 2;                 /* uniform 2px stroke, round caps & joins */
+  --icon-size-sm: 18px;             /* inline with text / dense UI */
+  --icon-size-md: 22px;             /* default (nav, buttons, list bullets) */
+  --icon-size-lg: 28px;             /* feature / section emphasis */
+  --icon-color: currentColor;       /* inherits text color — tint via the parent */
+
+  /* ── Expressive layer — signature/hand-drawn components ──────────────────── */
+  /* These keep the site playful and on-brand: every value draws from the same
+     purple / blush / champagne palette, so creativity never goes off-system. */
+  --color-primary-a35: rgba(123, 94, 167, 0.35);
+  --color-primary-a40: rgba(123, 94, 167, 0.40);
+  --color-accent-a18: rgba(212, 165, 181, 0.18);   /* blush — ruled-paper lines */
+  --color-accent-a40: rgba(212, 165, 181, 0.40);   /* blush — doodle fill */
+  --paper-bg: #FDFCF8;                              /* warm ruled-paper white */
+  --color-champagne-tape: rgba(201, 164, 107, 0.85); /* washi tape (re-homed from the retired olive gold) */
+
+  /* Sketchy, asymmetric "hand-drawn" corners (+ hover mirror) */
+  --sketch-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  --sketch-radius-hover: 15px 255px 15px 225px / 255px 15px 225px 15px;
+
+  /* Offset hard shadow (purple) + ambient soft shadow — the "sticker" look */
+  --shadow-sketch: 0.4em 0.4em 0 var(--color-primary-a35), 0 8px 24px rgba(123, 94, 167, 0.08);
+  --shadow-sketch-hover: 0.6em 0.7em 0 var(--color-primary-a35), 0 12px 32px rgba(123, 94, 167, 0.12);
+
+  /* Blush → purple gradient hairline (dividers, hero ornament) */
+  --gradient-accent-line: linear-gradient(to left, var(--color-accent), var(--color-primary));
+}
+
+/* ── Design-system doc chrome (not part of the app) ──────────────────────── */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--color-text);
+  background: var(--color-surface);
+  line-height: 1.6;
+}
+code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+.ds-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+.ds-sidebar {
+  position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
+  background: #fff; border-inline-end: 1px solid var(--color-border);
+  padding: var(--spacing-lg);
+}
+.ds-sidebar h1 { font-size: 1.05rem; color: var(--color-primary); margin: 0 0 var(--spacing-xs); }
+.ds-sidebar .ds-sub { font-size: .75rem; color: var(--color-text-light); margin: 0 0 var(--spacing-lg); }
+.ds-nav a {
+  display: block; padding: .4rem .5rem; border-radius: var(--radius-sm);
+  color: var(--color-text); text-decoration: none; font-size: .9rem;
+}
+.ds-nav a:hover { background: var(--color-bg-alt); color: var(--color-primary); }
+.ds-nav .ds-nav-note { font-size: .7rem; color: var(--color-text-light); margin: var(--spacing-lg) 0 0; }
+
+.ds-main { padding: var(--spacing-2xl); max-width: 1100px; }
+.ds-section { margin-bottom: var(--spacing-3xl); scroll-margin-top: var(--spacing-lg); }
+.ds-section > h2 {
+  font-size: 1.6rem; color: var(--color-primary-dark);
+  border-bottom: 2px solid var(--color-border); padding-bottom: var(--spacing-sm);
+  margin: 0 0 var(--spacing-lg);
+}
+.ds-section > h3 { font-size: 1.1rem; color: var(--color-primary); margin: var(--spacing-xl) 0 var(--spacing-md); }
+.ds-lead { color: var(--color-text-light); margin: 0 0 var(--spacing-lg); }
+
+.ds-toolbar {
+  position: sticky; top: 0; z-index: 20; background: rgba(251,249,253,.92);
+  backdrop-filter: blur(6px); padding: var(--spacing-md) 0; margin-bottom: var(--spacing-lg);
+  display: flex; gap: var(--spacing-md); align-items: center; flex-wrap: wrap;
+  border-bottom: 1px solid var(--color-border);
+}
+.ds-toolbar .hint { font-size: .8rem; color: var(--color-text-light); }
+.ds-toggle {
+  border: 1.5px solid var(--color-primary); background: #fff; color: var(--color-primary);
+  border-radius: var(--radius-full); padding: .4rem 1rem; cursor: pointer; font: inherit; font-size: .85rem;
+}
+.ds-toggle[aria-pressed="true"] { background: var(--color-primary); color: #fff; }
+
+/* Copy chips */
+[data-copy] { cursor: pointer; position: relative; }
+[data-copy]::after {
+  content: "Copied!"; position: absolute; inset-inline-start: 50%; inset-block-start: -1.9rem;
+  transform: translateX(-50%) scale(.8); background: var(--color-text); color: #fff;
+  font-size: .7rem; padding: .15rem .5rem; border-radius: var(--radius-sm);
+  opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; white-space: nowrap;
+}
+[data-copy].copied::after { opacity: 1; transform: translateX(-50%) scale(1); }
+
+/* Swatches */
+.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--spacing-md); }
+.swatch { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: #fff; }
+.swatch__chip { height: 72px; }
+.swatch__meta { padding: .55rem .7rem; }
+.swatch__name { font-size: .8rem; font-weight: 600; }
+.swatch__role { font-size: .68rem; color: var(--color-primary); }
+.swatch__val { font-size: .72rem; color: var(--color-text-light); }
+.tag { display: inline-block; font-size: .62rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  padding: .1rem .4rem; border-radius: var(--radius-sm); vertical-align: middle; margin-inline-start: .4rem; }
+.tag--new { background: #E7F6EC; color: #1E7C42; }
+.tag--asis { background: var(--color-bg-alt); color: var(--color-primary); }
+.tag--dep { background: #FDECEC; color: #B3261E; }
+
+/* Type scale */
+.type-row { display: flex; align-items: baseline; gap: var(--spacing-md); padding: .5rem 0; border-bottom: 1px dashed var(--color-border); }
+.type-row .label { flex: 0 0 210px; font-size: .78rem; color: var(--color-text-light); }
+.type-row .label b { color: var(--color-text); }
+
+/* Spacing bars */
+.space-row { display: flex; align-items: center; gap: var(--spacing-md); padding: .3rem 0; }
+.space-row .label { flex: 0 0 210px; font-size: .78rem; color: var(--color-text-light); }
+.space-bar { height: 18px; background: var(--color-primary-light); border-radius: var(--radius-sm); }
+
+/* Radius / shadow boxes */
+.box-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--spacing-lg); }
+.demo-box { height: 90px; background: #fff; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; text-align: center; font-size: .74rem; color: var(--color-text-light); }
+
+/* Preview stage */
+.stage {
+  border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  padding: var(--spacing-xl); background: var(--color-bg); margin-top: var(--spacing-md);
+}
+.stage__hd { font-size: .78rem; color: var(--color-text-light); margin: 0 0 var(--spacing-md); }
+.row { display: flex; gap: var(--spacing-md); flex-wrap: wrap; align-items: center; }
+
+.note { border-inline-start: 4px solid var(--color-primary); background: var(--color-bg-alt);
+  padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--radius-sm); margin: var(--spacing-md) 0; }
+.note h4 { margin: 0 0 .35rem; color: var(--color-primary-dark); font-size: .98rem; }
+.note p { margin: .25rem 0; font-size: .9rem; }
+.note .was { color: var(--color-text-light); }
+.bp-table { border-collapse: collapse; width: auto; font-size: .85rem; }
+.bp-table th, .bp-table td { border: 1px solid var(--color-border); padding: .4rem .8rem; text-align: start; }
+.bp-table th { background: var(--color-bg-alt); }
+
+.rule-card { display:flex; gap: var(--spacing-md); align-items:center; padding:.6rem 0; border-bottom:1px dashed var(--color-border); }
+.rule-card .k { flex:0 0 170px; font-weight:600; font-size:.85rem; }
+.rule-card .v { font-size:.8rem; color: var(--color-text-light); }
+
+/* ============================================================================
+   COMPONENT CSS — the UNIFIED system. Scoped under .app-preview so it doesn't
+   collide with doc chrome. Port these class rules to the app.
+   ========================================================================== */
+.app-preview { color: var(--color-text); }
+.app-preview a { color: var(--color-primary); }
+
+/* ── Buttons: ONE pill-shaped system, hierarchy variants + sizes ──────────── */
+.app-preview .btn {
+  --_pad-y: .7rem; --_pad-x: 1.6rem; --_fs: var(--font-size-base);
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: var(--tap-target-min);
+  padding: var(--_pad-y) var(--_pad-x); font-size: var(--_fs); font-weight: 600; font-family: inherit;
+  border-radius: var(--radius-pill); border: 2px solid transparent; cursor: pointer; text-decoration: none; line-height: 1.1;
+  transition: background .2s, color .2s, box-shadow .2s, transform .1s;
+}
+.app-preview .btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.app-preview .btn:active { transform: translateY(1px); }
+.app-preview .btn--sm { --_pad-y: .45rem; --_pad-x: 1.1rem; --_fs: var(--font-size-sm); }
+.app-preview .btn--lg { --_pad-y: .95rem; --_pad-x: 2.4rem; --_fs: 1.05rem; }
+.app-preview .btn--primary { background: var(--color-primary); color: #fff; box-shadow: 0 4px 12px rgba(123,94,167,.28); }
+.app-preview .btn--primary:hover { background: var(--color-primary-dark); box-shadow: 0 6px 16px rgba(91,62,135,.34); }
+.app-preview .btn--secondary { background: transparent; border-color: var(--color-primary); color: var(--color-primary); }
+.app-preview .btn--secondary:hover { background: var(--color-primary-a12); }
+.app-preview .btn--ghost { background: transparent; color: var(--color-primary); }
+.app-preview .btn--ghost:hover { background: var(--color-primary-a08); }
+.app-preview .btn[aria-busy="true"] { pointer-events: none; opacity: .85; }
+.app-preview .btn__spinner {
+  width: 1em; height: 1em; border: 2px solid currentColor; border-top-color: transparent;
+  border-radius: 50%; animation: btnSpin .7s linear infinite;
+}
+@keyframes btnSpin { to { transform: rotate(360deg); } }
+
+/* ── Cards: ONE family, shared bones, two variants ───────────────────────── */
+.app-preview .card {
+  background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-container);
+  box-shadow: var(--shadow-md); overflow: hidden; transition: box-shadow .3s ease, transform .3s ease, background .3s ease;
+  display: flex; flex-direction: column;
+}
+.app-preview .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-6px); }
+.app-preview .card__title { color: var(--color-text); margin: 0 0 var(--spacing-sm); }
+.app-preview .card__text { font-size: var(--font-size-sm); color: var(--color-text-light); margin: 0; line-height: 1.6; }
+.app-preview .card__meta { font-size: var(--font-size-sm); color: var(--color-text-light); margin: 0 0 var(--spacing-sm); }
+
+.app-preview .card--media { width: 100%; max-width: 320px; text-decoration: none; color: inherit; }
+.app-preview .card--media .card__media { height: 150px; background: var(--color-surface-tint); background-size: cover; background-position: center;
+  display: flex; align-items: center; justify-content: center; color: var(--color-text-light); font-size: .8rem; }
+.app-preview .card--media .card__body { padding: var(--spacing-lg); flex: 1; display: flex; flex-direction: column; }
+.app-preview .card--media .card__title { font-size: var(--font-size-lg); }
+
+.app-preview .card--feature { max-width: 240px; align-items: center; text-align: center;
+  padding: var(--spacing-xl) var(--spacing-lg); background: var(--gradient-brand); }
+.app-preview .card--feature:hover { background: var(--gradient-brand-hover); }
+.app-preview .card--feature .card__icon { width: 60px; height: 60px; border-radius: var(--radius-pill);
+  background: var(--color-primary-a12); margin-bottom: var(--spacing-md); display: flex; align-items: center; justify-content: center;
+  color: var(--color-primary); font-size: 1.4rem; transition: transform .3s ease; }
+.app-preview .card--feature:hover .card__icon { transform: scale(1.1) rotate(-6deg); }
+.app-preview .card--feature .card__title { font-size: var(--font-size-base); font-weight: 700; color: var(--color-primary); }
+
+/* ── Expressive: gradient accent hairline (dividers, hero ornament) ──────── */
+.app-preview .accent-line { display: block; width: 56px; height: 3px; border-radius: var(--radius-full);
+  background: var(--gradient-accent-line); }
+.app-preview .accent-line--wide { width: 80px; }
+
+/* ── Expressive: "Paper Note" editorial section (from treatment-list) ────── */
+/* Signature component — intentionally NOT a standard .card. Drives all its
+   character from tokens: sketch radius, offset shadow, ruled paper, champagne tape. */
+.app-preview .paper-section { padding: var(--spacing-2xl) 0; position: relative; }
+.app-preview .paper-section--alt-bg { background: var(--color-bg-alt); border-radius: var(--radius-lg); }
+.app-preview .paper-section__container {
+  position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+  gap: var(--spacing-xl); padding: var(--spacing-lg);
+}
+@media (min-width: 720px) {
+  .app-preview .paper-section__container { flex-direction: row; gap: var(--spacing-2xl); }
+  .app-preview .paper-section--reverse .paper-section__container { flex-direction: row-reverse; }
+}
+.app-preview .paper-section__visual { width: 100%; flex-shrink: 0; text-align: center; }
+@media (min-width: 720px) { .app-preview .paper-section__visual { width: clamp(180px, 30%, 300px); } }
+.app-preview .paper-section__illustration { display: block; width: 100%; max-height: clamp(160px, 30vw, 260px);
+  object-fit: contain; object-position: center bottom; filter: drop-shadow(0 8px 24px rgba(123,94,167,.12)); }
+
+/* The paper note card itself */
+.app-preview .paper-note {
+  flex: 1; position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: var(--spacing-lg);
+  padding: 2.8em 1.5em 2em;
+  background:
+    linear-gradient(var(--paper-bg) 1.5em, transparent 1.5em) 0 0 / 100% 1.6em,
+    linear-gradient(var(--color-accent-a18) 0.08em, transparent 0.08em) 0 1.5em / 100% 1.6em var(--paper-bg);
+  border: 0.2em solid var(--color-primary-a40);
+  border-radius: var(--sketch-radius);
+  box-shadow: var(--shadow-sketch);
+  transition: transform .4s cubic-bezier(.175,.885,.32,1.275), box-shadow .4s ease, border-radius .4s ease;
+}
+/* Washi tape — the re-homed champagne accent */
+.app-preview .paper-note::before {
+  content: ''; position: absolute; inset-block-start: -0.7em; inset-inline-start: 50%;
+  transform: translateX(-50%) rotate(-4deg); width: 5em; height: 1.4em;
+  background: var(--color-champagne-tape); border: 0.1em solid rgba(0,0,0,.1);
+  box-shadow: 0.1em 0.1em 0.2em rgba(0,0,0,.1); border-radius: 2px 4px 2px 5px; z-index: 2;
+}
+.app-preview .paper-note:hover {
+  transform: translateY(-0.5em) rotate(0.5deg);
+  box-shadow: var(--shadow-sketch-hover); border-radius: var(--sketch-radius-hover);
+}
+.app-preview .paper-note__title { font-size: var(--font-size-2xl); color: var(--color-primary); margin: 0;
+  font-weight: 700; line-height: 1.2; position: relative; z-index: 1; }
+.app-preview .paper-note__desc { font-size: var(--font-size-base); color: var(--color-text); line-height: 1.9;
+  margin: 0; position: relative; z-index: 1; }
+.app-preview .paper-note__cta {
+  display: inline-flex; align-items: center; gap: var(--spacing-sm);
+  background: var(--color-primary); color: #fff; padding: var(--spacing-md) var(--spacing-2xl);
+  border-radius: var(--radius-pill); text-decoration: none; font-size: var(--font-size-base); font-weight: 600;
+  box-shadow: 0.2em 0.2em 0 var(--color-primary-a35), var(--shadow-md);
+  border: 0.12em solid var(--color-primary-a40);
+  transition: background .25s, transform .25s, box-shadow .25s; position: relative; z-index: 1;
+}
+.app-preview .paper-note__cta::before { content: '✦'; font-size: .85em; opacity: .8; }
+.app-preview .paper-note__cta:hover { background: var(--color-primary-dark); transform: translateY(-3px);
+  box-shadow: 0.3em 0.4em 0 var(--color-primary-a40), var(--shadow-lg); }
+
+/* Doodle decorations */
+.app-preview .note-doodle { position: absolute; fill: none; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; z-index: 0; }
+.app-preview .note-doodle--sparkle { width: 1.8em; height: 1.8em; inset-block-start: 1.3em; inset-inline-end: 1.3em;
+  stroke: var(--color-primary); stroke-width: 1.4; fill: var(--color-accent-a40); }
+.app-preview .note-doodle--swirl { width: 2.5em; height: 2.5em; inset-block-end: 1.3em; inset-inline-start: 1em;
+  stroke: var(--color-accent); stroke-width: 5; opacity: .6; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-preview .paper-note { animation: floatCard 6s ease-in-out infinite; }
+  .app-preview .paper-note::before { animation: tapeFlutter 4s infinite alternate ease-in-out; }
+  .app-preview .note-doodle--sparkle { animation: pulseSparkle 3s infinite alternate ease-in-out; }
+  .app-preview .note-doodle--swirl { animation: rotateDoodle 15s linear infinite; }
+}
+@keyframes floatCard { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-0.4em); } }
+@keyframes tapeFlutter { 0% { transform: translateX(-50%) rotate(-4deg) scale(1); } 100% { transform: translateX(-50%) rotate(-2deg) scale(1.02); } }
+@keyframes pulseSparkle { 0% { transform: scale(.8); opacity: .6; } 100% { transform: scale(1.1); opacity: 1; } }
+@keyframes rotateDoodle { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* ── Forms: 16px containers + visible focus ring ─────────────────────────── */
+.app-preview .field { display: flex; flex-direction: column; gap: var(--spacing-xs); margin-bottom: var(--spacing-md); }
+.app-preview .field__label { font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text); }
+.app-preview .field__help { font-size: var(--font-size-xs); color: var(--color-text-light); }
+.app-preview .field__input {
+  min-height: var(--tap-target-min);
+  padding: var(--spacing-sm) var(--spacing-md); border: 1.5px solid var(--color-border); border-radius: var(--radius-container);
+  background: var(--color-surface-tint); color: var(--color-text); font-family: inherit; font-size: var(--font-size-base);
+  transition: border-color .2s, box-shadow .2s, background .2s; outline: none;
+}
+.app-preview .field__input::placeholder { color: var(--color-text-light); }
+.app-preview .field__input:focus { border-color: var(--color-primary); background: #fff; box-shadow: var(--focus-ring); }
+.app-preview .field__input--invalid { border-color: var(--color-error) !important; }
+.app-preview .field__error { font-size: var(--font-size-xs); color: var(--color-error); }
+.app-preview .form-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
+.app-preview .form-success {
+  text-align: center; font-size: var(--font-size-xl); color: var(--color-primary); padding: var(--spacing-2xl);
+  background: var(--gradient-brand); border: 1px solid var(--color-border); border-radius: var(--radius-container); max-width: 500px; margin: 0 auto;
+}
+
+/* ── Loading feedback: skeletons echo the shapes they replace ────────────── */
+.app-preview .skeleton {
+  background: linear-gradient(100deg, var(--skeleton-base) 30%, var(--skeleton-sheen) 50%, var(--skeleton-base) 70%);
+  background-size: 200% 100%; animation: skeletonSheen 1.4s ease-in-out infinite;
+}
+.app-preview .skeleton--line { height: .85em; border-radius: var(--radius-full); margin-bottom: var(--spacing-sm); }
+.app-preview .skeleton--line.w90 { width: 90%; } .app-preview .skeleton--line.w70 { width: 70%; } .app-preview .skeleton--line.w50 { width: 50%; }
+.app-preview .skeleton--media { height: 150px; border-radius: var(--radius-container); }
+.app-preview .skeleton-card { border: 1px solid var(--color-border); border-radius: var(--radius-container);
+  background: var(--color-bg); padding: 0 0 var(--spacing-md); overflow: hidden; width: 260px; }
+.app-preview .skeleton-card__body { padding: var(--spacing-md) var(--spacing-md) 0; }
+@keyframes skeletonSheen { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .app-preview .skeleton, .app-preview .btn__spinner { animation: none; } }
+
+/* ── Icons: one line family — size via tokens, color via currentColor ─────── */
+.app-preview .icon { display: inline-flex; width: var(--icon-size-md); height: var(--icon-size-md);
+  color: var(--icon-color); flex: 0 0 auto; vertical-align: middle; }
+.app-preview .icon svg { width: 100%; height: 100%; display: block; }
+.app-preview .icon--sm { width: var(--icon-size-sm); height: var(--icon-size-sm); }
+.app-preview .icon--lg { width: var(--icon-size-lg); height: var(--icon-size-lg); }
+.app-preview .icon--brand { color: var(--color-primary); }
+/* RTL: directional (chevron/arrow) icons mirror automatically */
+[dir="rtl"] .icon--dir { transform: scaleX(-1); }
+.app-preview .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: var(--spacing-md); }
+.app-preview .icon-cell { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs);
+  padding: var(--spacing-md) var(--spacing-sm); border: 1px solid var(--color-border); border-radius: var(--radius-container);
+  background: var(--color-bg); color: var(--color-primary); }
+.app-preview .icon-cell code { font-size: var(--font-size-xs); color: var(--color-text-light); background: none; }
+
+/* ── Header / footer patterns ────────────────────────────────────────────── */
+.app-preview .demo-header { height: var(--header-height); background: var(--color-bg); box-shadow: var(--shadow-sm);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spacing-xl); border-radius: var(--radius-sm); }
+.app-preview .demo-header__logo { font-weight: 700; color: var(--color-primary); }
+.app-preview .demo-header nav { display: flex; gap: var(--spacing-xl); }
+.app-preview .demo-header nav a { color: var(--color-text); text-decoration: none; font-size: var(--font-size-lg); font-weight: 500; }
+.app-preview .demo-header nav a:hover, .app-preview .demo-header nav a.active { color: var(--color-primary); }
+.app-preview .footer { background: var(--color-bg-alt); border-top: 2px solid var(--color-border); padding: var(--spacing-xl);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); border-radius: var(--radius-sm); }
+.app-preview .footer__copyright { color: var(--color-text-light); font-size: var(--font-size-sm); margin: 0; }
+.app-preview .footer__links { display: flex; gap: var(--spacing-lg); }
+.app-preview .footer__links a { color: var(--color-primary); text-decoration: none; font-size: var(--font-size-sm);
+  border: 1.5px solid var(--color-primary); border-radius: var(--radius-full); padding: var(--spacing-xs) var(--spacing-md); }
+.app-preview .footer__links a:hover { background: var(--color-primary-a08); }
+
+/* ── Rich content ────────────────────────────────────────────────────────── */
+.app-preview .rich-content { color: var(--color-text); font-size: var(--font-size-base); line-height: 1.9; }
+.app-preview .rich-content h2 { color: var(--color-primary); font-size: var(--font-size-xl); font-weight: 700; margin: var(--spacing-xl) 0 var(--spacing-sm); }
+.app-preview .rich-content h3 { color: var(--color-primary); font-size: var(--font-size-lg); font-weight: 600; margin: var(--spacing-lg) 0 var(--spacing-sm); }
+.app-preview .rich-content p { margin: 0 0 var(--spacing-md); }
+.app-preview .rich-content strong { color: var(--color-primary-dark); font-weight: 700; }
+.app-preview .rich-content a { text-decoration: underline; text-underline-offset: .12em; }
+
+@media (max-width: 800px) {
+  .ds-shell { grid-template-columns: 1fr; }
+  .ds-sidebar { position: static; height: auto; border-inline-end: none; border-bottom: 1px solid var(--color-border); }
+  .app-preview .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="ds-shell">
+  <aside class="ds-sidebar">
+    <h1>Einat Design System</h1>
+    <p class="ds-sub">Meditation, healing &amp; wellness · RTL / Hebrew · Angular 22 · <b>Unified</b></p>
+    <nav class="ds-nav">
+      <a href="#colors">Color</a>
+      <a href="#typography">Typography</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#shape">Shape · Radius &amp; Shadow</a>
+      <a href="#layout">Layout</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#cards">Cards</a>
+      <a href="#expressive">Expressive · Paper Note</a>
+      <a href="#forms">Forms</a>
+      <a href="#feedback">Feedback &amp; Loading</a>
+      <a href="#icons">Iconography</a>
+      <a href="#navigation">Header &amp; Footer</a>
+      <a href="#content">Rich Content</a>
+      <a href="#changes">What changed &amp; why</a>
+      <p class="ds-nav-note">Side-by-side before/after prototypes live in <code>design-system-proposal.html</code>.</p>
+    </nav>
+  </aside>
+
+  <main class="ds-main">
+    <div class="ds-toolbar">
+      <button class="ds-toggle" id="dirToggle" aria-pressed="true">Direction: RTL</button>
+      <span class="hint">Click any token / class name to copy it. Toggle direction to inspect components in RTL &amp; LTR.</span>
+    </div>
+
+    <p class="ds-lead">
+      The unified design reference for the Einat Shomonov public website. Everything renders live from the tokens in this
+      file’s <code>:root</code> — the single source of truth to mirror into <code>src/styles/_variables.scss</code>.
+      This version resolves the cohesion issues found in review: one cool palette, a single pill-shaped button system,
+      one card family, and a consistent shape rule. See <a href="#changes">What changed &amp; why</a>.
+    </p>
+
+    <!-- ================= COLOR ================= -->
+    <section id="colors" class="ds-section">
+      <h2>Color</h2>
+      <p class="ds-lead">One cool spa family. <b>Purple</b> carries all actions &amp; emphasis; <b>blush</b> is decorative
+        only (never a button); an optional <b>champagne</b> hairline replaces the retired olive gold. Click a swatch to copy its token.</p>
+
+      <h3>Brand</h3>
+      <div class="swatch-grid" data-swatches="brand"></div>
+      <h3>Accents</h3>
+      <div class="swatch-grid" data-swatches="accent"></div>
+      <h3>Surfaces</h3>
+      <div class="swatch-grid" data-swatches="surface"></div>
+      <h3>Text &amp; Borders</h3>
+      <div class="swatch-grid" data-swatches="textborder"></div>
+      <h3>Semantic</h3>
+      <div class="swatch-grid" data-swatches="semantic"></div>
+      <h3>Brand gradients &amp; alpha helpers</h3>
+      <p class="ds-lead">Formerly hardcoded across component SCSS — now single reusable tokens.</p>
+      <div class="swatch-grid" data-swatches="brandmix"></div>
+    </section>
+
+    <!-- ================= TYPOGRAPHY ================= -->
+    <section id="typography" class="ds-section">
+      <h2>Typography</h2>
+      <p class="ds-lead">Font: <code data-copy="var(--font-family)">'Heebo', sans-serif</code> — a Hebrew-optimised Google Font. Base line-height 1.6; headings 1.3.</p>
+      <div id="typeScale"></div>
+
+      <h3>Headings (h1–h4)</h3>
+      <div class="stage app-preview" data-preview>
+        <h1 style="font-size:var(--font-size-3xl);font-weight:700;line-height:1.3;margin:0 0 .5rem">כותרת ראשית · Heading 1</h1>
+        <h2 style="font-size:var(--font-size-2xl);font-weight:700;line-height:1.3;margin:0 0 .5rem">כותרת · Heading 2</h2>
+        <h3 style="font-size:var(--font-size-xl);font-weight:700;line-height:1.3;margin:0 0 .5rem">כותרת · Heading 3</h3>
+        <h4 style="font-size:var(--font-size-lg);font-weight:700;line-height:1.3;margin:0">כותרת · Heading 4</h4>
+      </div>
+    </section>
+
+    <!-- ================= SPACING ================= -->
+    <section id="spacing" class="ds-section">
+      <h2>Spacing</h2>
+      <p class="ds-lead">A rem-based scale. <code>--spacing-3xl</code> is the default section vertical padding.</p>
+      <div id="spacingScale"></div>
+    </section>
+
+    <!-- ================= SHAPE ================= -->
+    <section id="shape" class="ds-section">
+      <h2>Shape · Radius &amp; Shadow</h2>
+      <p class="ds-lead">One memorable rule so shape feels intentional everywhere.</p>
+      <div style="max-width:640px;margin-bottom:var(--spacing-lg)">
+        <div class="rule-card"><div class="k">Containers</div><div class="v"><code data-copy="var(--radius-container)">--radius-container</code> = 16px — cards, inputs, panels, images</div></div>
+        <div class="rule-card"><div class="k">Actions &amp; chips</div><div class="v"><code data-copy="var(--radius-pill)">--radius-pill</code> = full — buttons, pills, badges</div></div>
+        <div class="rule-card"><div class="k">Small inline</div><div class="v"><code data-copy="var(--radius-sm)">--radius-sm</code> = 6px — tags, code, subtle chips</div></div>
+      </div>
+      <h3>Radius tokens</h3>
+      <div class="box-grid" id="radiusBoxes"></div>
+      <h3>Shadows <span class="tag tag--new">softened</span></h3>
+      <p class="ds-lead">Purple-tinted shadows sit better on the lavender surfaces than neutral black.</p>
+      <div class="box-grid" id="shadowBoxes"></div>
+    </section>
+
+    <!-- ================= LAYOUT ================= -->
+    <section id="layout" class="ds-section">
+      <h2>Layout</h2>
+      <p class="ds-lead">
+        Container max-width <code data-copy="var(--max-width)">1200px</code>, centered with
+        <code>margin-inline: auto</code>. Fixed header height <code data-copy="var(--header-height)">88px</code>.
+        The site is RTL — components use logical properties (<code>inset-inline-start</code>, <code>margin-inline</code>).
+      </p>
+      <h3>Breakpoints <span class="tag tag--asis">_mixins.scss</span></h3>
+      <table class="bp-table">
+        <tr><th>Name</th><th>min-width</th></tr>
+        <tr><td>sm</td><td>640px</td></tr>
+        <tr><td>md</td><td>768px</td></tr>
+        <tr><td>lg</td><td>1024px</td></tr>
+        <tr><td>xl</td><td>1280px</td></tr>
+        <tr><td>2xl</td><td>1536px</td></tr>
+      </table>
+    </section>
+
+    <!-- ================= BUTTONS ================= -->
+    <section id="buttons" class="ds-section">
+      <h2>Buttons</h2>
+      <p class="ds-lead">
+        One pill-shaped <code data-copy=".btn">.btn</code>. Variants express <b>hierarchy</b> (not arbitrary color):
+        <code data-copy=".btn--primary">--primary</code> (filled),
+        <code data-copy=".btn--secondary">--secondary</code> (outline),
+        <code data-copy=".btn--ghost">--ghost</code> (text). Sizes:
+        <code data-copy=".btn--sm">--sm</code> / default / <code data-copy=".btn--lg">--lg</code>.
+        Visible <code>:focus-visible</code> ring for accessibility. Every variant keeps a
+        <code data-copy="var(--tap-target-min)">44px</code> minimum tap target <span class="tag tag--new">new</span> —
+        so even <code>.btn--sm</code> stays finger-friendly on mobile. Add <code>aria-busy="true"</code> with a
+        <code data-copy=".btn__spinner">.btn__spinner</code> to show work in progress <span class="tag tag--new">new</span>.
+      </p>
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">Hierarchy</p>
+        <div class="row">
+          <button class="btn btn--primary">פעולה ראשית</button>
+          <button class="btn btn--secondary">משנית</button>
+          <button class="btn btn--ghost">שקופה</button>
+        </div>
+      </div>
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">Sizes · hero &amp; form CTAs both become <code>.btn--primary.btn--lg</code></p>
+        <div class="row">
+          <button class="btn btn--primary btn--sm">קטן</button>
+          <button class="btn btn--primary">רגיל</button>
+          <button class="btn btn--primary btn--lg">קביעת פגישה</button>
+        </div>
+      </div>
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">Busy state · <code>aria-busy="true"</code> + <code>.btn__spinner</code> (fix: feedback while sending)</p>
+        <div class="row">
+          <button class="btn btn--primary btn--lg" aria-busy="true">
+            <span class="btn__spinner" aria-hidden="true"></span> שולח…
+          </button>
+          <button class="btn btn--secondary" aria-busy="true">
+            <span class="btn__spinner" aria-hidden="true"></span> טוען
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CARDS ================= -->
+    <section id="cards" class="ds-section">
+      <h2>Cards</h2>
+      <p class="ds-lead">
+        One foundation <code data-copy=".card">.card</code> (shared surface, 16px radius, 1px border, unified shadow &amp;
+        lift-on-hover) with two variants:
+        <code data-copy=".card--media">.card--media</code> (content) and
+        <code data-copy=".card--feature">.card--feature</code> (centered gradient feature). Hover to see the shared lift.
+      </p>
+      <div class="stage app-preview" data-preview>
+        <div class="row" style="align-items:stretch">
+          <a class="card card--media" href="#cards" onclick="return false">
+            <div class="card__media">image 150px</div>
+            <div class="card__body">
+              <h3 class="card__title">מדיטציה מודרכת</h3>
+              <p class="card__meta">12 ביוני 2026</p>
+              <p class="card__text">תרגול נשימה ורגיעה עמוקה לשחרור מתחים ולחזרה למרכז.</p>
+            </div>
+          </a>
+          <div class="card card--feature">
+            <div class="card__icon">✦</div>
+            <h4 class="card__title">מדיטציה</h4>
+            <p class="card__text">שקט פנימי ואיזון רגשי דרך תרגול קבוע.</p>
+          </div>
+          <div class="card card--feature">
+            <div class="card__icon">♡</div>
+            <h4 class="card__title">ריפוי רגשי</h4>
+            <p class="card__text">ליווי אישי בתהליכי ריפוי והתפתחות.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPRESSIVE ================= -->
+    <section id="expressive" class="ds-section">
+      <h2>Expressive · Paper Note <span class="tag tag--new">signature</span></h2>
+      <p class="ds-lead">
+        The design system has <b>two tiers</b>. <b>Foundational</b> components (buttons, cards, fields) are calm and
+        utilitarian. <b>Expressive</b> components are the site’s personality — hand-drawn, animated, editorial — and the
+        rule that keeps them on-brand is simple: <b>they draw every value from the same token palette</b> (purple, blush,
+        champagne) plus a small set of <code>expressive</code> tokens. Creative, never off-system.
+      </p>
+
+      <h3>The pattern — an alternating editorial “paper note”</h3>
+      <p class="ds-lead">
+        Used on the treatments page (<code>.treatment-section</code>). A ruled-paper card with a sketchy asymmetric
+        border, an offset purple “sticker” shadow, a champagne washi-tape, floating doodles, and an illustration that
+        swaps sides every other row. Hover the note; the wobble flips. Animations respect <code>prefers-reduced-motion</code>.
+      </p>
+
+      <div class="stage app-preview" data-preview>
+        <section class="paper-section">
+          <div class="paper-section__container">
+            <div class="paper-section__visual">
+              <img class="paper-section__illustration" src="../src/assets/images/buddha-meditation.svg" alt="" aria-hidden="true" />
+            </div>
+            <div class="paper-note">
+              <svg class="note-doodle note-doodle--sparkle" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12 6.6 17.4 12 24 12C17.4 12 12 17.4 12 24C12 17.4 6.6 12 0 12C6.6 12 12 6.6 12 0Z"/></svg>
+              <svg class="note-doodle note-doodle--swirl" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 10C27.9 10 10 27.9 10 50C10 72.1 27.9 90 50 90C72.1 90 90 72.1 90 50C90 32.3 75.7 18 58 18C44.3 18 33 29.3 33 43C33 53.5 41.5 62 52 62C59.7 62 66 55.7 66 48"/></svg>
+              <h2 class="paper-note__title">עיסוי מרפא</h2>
+              <span class="accent-line"></span>
+              <p class="paper-note__desc">מפגש מרגיע לשחרור מתחים בגוף ובנפש, בשילוב נשימה מודעת ומגע רך המחזיר את הגוף לאיזון.</p>
+              <a class="paper-note__cta" href="#expressive" onclick="return false">קביעת תור בוואטסאפ</a>
+            </div>
+          </div>
+        </section>
+        <section class="paper-section paper-section--reverse paper-section--alt-bg">
+          <div class="paper-section__container">
+            <div class="paper-section__visual">
+              <img class="paper-section__illustration" src="../src/assets/images/floral-branch.svg" alt="" aria-hidden="true" />
+            </div>
+            <div class="paper-note">
+              <svg class="note-doodle note-doodle--sparkle" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12 6.6 17.4 12 24 12C17.4 12 12 17.4 12 24C12 17.4 6.6 12 0 12C6.6 12 12 6.6 12 0Z"/></svg>
+              <svg class="note-doodle note-doodle--swirl" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 10C27.9 10 10 27.9 10 50C10 72.1 27.9 90 50 90C72.1 90 90 72.1 90 50C90 32.3 75.7 18 58 18C44.3 18 33 29.3 33 43C33 53.5 41.5 62 52 62C59.7 62 66 55.7 66 48"/></svg>
+              <h2 class="paper-note__title">מדיטציה מודרכת</h2>
+              <span class="accent-line"></span>
+              <p class="paper-note__desc">מסע פנימי אל השקט, בליווי קולי רך. מתאים גם למתחילים המחפשים דרך להירגע ולהתחבר לעצמם.</p>
+              <a class="paper-note__cta" href="#expressive" onclick="return false">קביעת תור בוואטסאפ</a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <h3>What makes it “expressive”, and its token anchors</h3>
+      <div style="max-width:760px">
+        <div class="rule-card"><div class="k">Sketch corners</div><div class="v"><code data-copy="var(--sketch-radius)">--sketch-radius</code> — asymmetric radius that flips to <code>--sketch-radius-hover</code> on hover</div></div>
+        <div class="rule-card"><div class="k">Sticker shadow</div><div class="v"><code data-copy="var(--shadow-sketch)">--shadow-sketch</code> — offset hard purple shadow + soft ambient (→ <code>--shadow-sketch-hover</code>)</div></div>
+        <div class="rule-card"><div class="k">Ruled paper</div><div class="v"><code data-copy="var(--paper-bg)">--paper-bg</code> warm white + <code data-copy="var(--color-accent-a18)">--color-accent-a18</code> blush lines</div></div>
+        <div class="rule-card"><div class="k">Washi tape</div><div class="v"><code data-copy="var(--color-champagne-tape)">--color-champagne-tape</code> — the retired olive gold, re-homed to champagne <span class="tag tag--new">integrated</span></div></div>
+        <div class="rule-card"><div class="k">Doodles</div><div class="v">sparkle stroke <code>--color-primary</code> / fill <code>--color-accent-a40</code>; swirl <code>--color-accent</code></div></div>
+        <div class="rule-card"><div class="k">Accent hairline</div><div class="v"><code data-copy="var(--gradient-accent-line)">--gradient-accent-line</code> — blush→purple divider &amp; hero ornament</div></div>
+      </div>
+
+      <h3>Accent hairline — <code data-copy=".accent-line">.accent-line</code></h3>
+      <p class="ds-lead">The shared decorative flourish, also usable under any section title or as the hero ornament.</p>
+      <div class="stage app-preview" data-preview>
+        <div class="row" style="flex-direction:column;align-items:flex-start;gap:var(--spacing-md)">
+          <span class="accent-line"></span>
+          <span class="accent-line accent-line--wide"></span>
+        </div>
+      </div>
+
+      <div class="note">
+        <h4>How to keep the expressive tier coherent</h4>
+        <p><b>Do:</b> reuse these tokens for any future playful component (a testimonial pinned like a photo, a “notebook” blog intro, doodle section dividers). Same palette + sketch/tape/doodle vocabulary = it feels like one hand made it.</p>
+        <p><b>Don’t:</b> introduce new raw hexes or one-off radii. If a new expressive trait is needed, add a token here first, then use it — the same discipline that fixed the button/card sprawl.</p>
+        <p><b>Reuse note:</b> the class names above mirror the app’s <code>.treatment-section</code>. Consider generalising them (e.g. <code>.paper-note</code>) so the pattern can live outside the treatments page.</p>
+      </div>
+    </section>
+
+    <!-- ================= FORMS ================= -->
+    <section id="forms" class="ds-section">
+      <h2>Forms</h2>
+      <p class="ds-lead">16px container fields that echo the pill CTAs, with a visible focus ring and a
+        <code data-copy="var(--tap-target-min)">44px</code> minimum height <span class="tag tag--new">new</span>. Uses
+        <code data-copy=".field">.field</code> / <code data-copy=".field__input">.field__input</code>, with optional
+        <code data-copy=".field__help">.field__help</code> reassurance text <span class="tag tag--new">new</span> and an
+        actionable <code data-copy=".field__error">.field__error</code>.</p>
+      <div class="stage app-preview" data-preview>
+        <form onsubmit="return false">
+          <div class="form-row">
+            <div class="field">
+              <label class="field__label">שם מלא <span>*</span></label>
+              <input class="field__input" type="text" />
+            </div>
+            <div class="field">
+              <label class="field__label">טלפון <span>*</span></label>
+              <input class="field__input" type="tel" />
+              <span class="field__help">נשלח אליכם הודעת אישור בוואטסאפ.</span>
+            </div>
+            <div class="field">
+              <label class="field__label">אימייל <span>*</span></label>
+              <input class="field__input field__input--invalid" type="email" />
+              <span class="field__error">כתובת האימייל חסרה @ — נסו למשל name@example.com</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label">הודעה (אופציונלי)</label>
+            <textarea class="field__input" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--lg" style="display:block;margin:0 auto">שלחו הודעה בוואטסאפ 💬</button>
+        </form>
+      </div>
+
+      <h3>Success state</h3>
+      <div class="stage app-preview" data-preview>
+        <div class="form-success">ההודעה נשלחה! ניפגש בוואטסאפ 💜</div>
+      </div>
+    </section>
+
+    <!-- ================= FEEDBACK & LOADING ================= -->
+    <section id="feedback" class="ds-section">
+      <h2>Feedback &amp; Loading States <span class="tag tag--new">new</span></h2>
+      <p class="ds-lead">
+        Never leave a pause unexplained. When the blog list, a treatment page, or the WhatsApp form is fetching,
+        show a <b>skeleton</b> that mirrors the shape it will become, or a button <b>spinner</b> for short actions.
+        Both draw from tokens only — <code data-copy="var(--skeleton-base)">--skeleton-base</code> /
+        <code data-copy="var(--skeleton-sheen)">--skeleton-sheen</code> and the radius scale — so a loading card is
+        visibly the <em>same</em> card, just not ready yet.
+      </p>
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">Skeleton — mirrors <code>.card--media</code> (blog / treatments list)</p>
+        <div class="skeleton-card" aria-hidden="true">
+          <div class="skeleton skeleton--media"></div>
+          <div class="skeleton-card__body">
+            <div class="skeleton skeleton--line w70"></div>
+            <div class="skeleton skeleton--line w50"></div>
+            <div class="skeleton skeleton--line w90"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">Skeleton — text block (rich content while a post loads)</p>
+        <div aria-hidden="true" style="max-width:520px">
+          <div class="skeleton skeleton--line w90"></div>
+          <div class="skeleton skeleton--line w90"></div>
+          <div class="skeleton skeleton--line w70"></div>
+        </div>
+      </div>
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">Button spinner — the WhatsApp CTA while sending</p>
+        <div class="row">
+          <button class="btn btn--primary btn--lg" aria-busy="true">
+            <span class="btn__spinner" aria-hidden="true"></span> שולח הודעה…
+          </button>
+        </div>
+      </div>
+      <p class="ds-lead" style="margin-top:var(--spacing-md)">
+        <b>Rule:</b> if the UI waits more than ~1s, show feedback. Skeletons for content areas, the spinner for
+        button-scoped actions. Both respect <code>prefers-reduced-motion</code> (animation disabled).
+      </p>
+    </section>
+
+    <!-- ================= ICONS ================= -->
+    <section id="icons" class="ds-section">
+      <h2>Iconography <span class="tag tag--new">new</span></h2>
+      <p class="ds-lead">
+        One line-icon family — <b>Lucide</b> (a maintained fork of Feather). It matches the brand’s soft, rounded,
+        pill-based language: uniform <code data-copy="var(--icon-stroke)">2px stroke</code>, round caps &amp; joins,
+        <code>fill:none</code>. Icons inherit <code>currentColor</code>, so a purple nav link and a white button icon
+        need no per-icon color. Never mix in a second set, and never use emoji for a <em>functional</em> control
+        (the ✦ / 💜 flourishes in the Expressive tier stay — they’re decorative, not interactive).
+      </p>
+
+      <h3>Sizes &amp; usage</h3>
+      <p class="ds-lead">
+        <code data-copy=".icon--sm">--sm 18px</code> inline with text ·
+        <code data-copy=".icon">default 22px</code> nav / buttons / list bullets ·
+        <code data-copy=".icon--lg">--lg 28px</code> feature emphasis. Wrap each SVG in
+        <code data-copy=".icon">.icon</code>; add <code data-copy=".icon--dir">.icon--dir</code> to directional
+        icons (chevrons, arrows) so they mirror automatically in RTL. Tint by setting <code>color</code> on the
+        parent (or <code data-copy=".icon--brand">.icon--brand</code> for the purple default).
+      </p>
+
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">The starter set — one stroke, one style</p>
+        <div class="icon-grid">
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span><code>message</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><code>phone</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><code>mail</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><code>calendar</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><code>clock</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><code>map-pin</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></span><code>heart</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8L20 10l-5.5 2.2L12 18l-2.5-5.8L4 10z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg></span><code>sparkles</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><code>search</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span><code>menu</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span><code>close</code></div>
+          <div class="icon-cell"><span class="icon icon--lg icon--dir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></span><code>chevron</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><code>user</code></div>
+          <div class="icon-cell"><span class="icon icon--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></span><code>instagram</code></div>
+        </div>
+      </div>
+
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">In context — icon inherits the parent’s color, sits inside the 44px target</p>
+        <div class="row">
+          <button class="btn btn--primary">
+            <span class="icon icon--sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+            שלחו הודעה בוואטסאפ
+          </button>
+          <button class="btn btn--secondary">
+            <span class="icon icon--sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+            קביעת תור
+          </button>
+          <a href="#icons" onclick="return false" class="btn btn--ghost">
+            פרטים
+            <span class="icon icon--sm icon--dir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="note">
+        <p><b>Do:</b> import from <code>lucide</code> (or <code>lucide-angular</code> in the app) so every icon shares one geometry. Set size with the <code>--icon-size-*</code> tokens, color via <code>currentColor</code>. <b>Don’t:</b> paste icons from a second pack, hard-code colors, or use emoji for buttons, links, or status.</p>
+      </div>
+    </section>
+
+    <!-- ================= HEADER & FOOTER ================= -->
+    <section id="navigation" class="ds-section">
+      <h2>Header &amp; Footer</h2>
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">.header (88px, fixed, shadow-sm)</p>
+        <div class="demo-header">
+          <span class="demo-header__logo">עינת שומונוב</span>
+          <nav>
+            <a href="#navigation" class="active" onclick="return false">בית</a>
+            <a href="#navigation" onclick="return false">אודות</a>
+            <a href="#navigation" onclick="return false">טיפולים</a>
+            <a href="#navigation" onclick="return false">בלוג</a>
+            <a href="#navigation" onclick="return false">צור קשר</a>
+          </nav>
+        </div>
+      </div>
+      <div class="stage app-preview" data-preview>
+        <p class="stage__hd">.footer (pill links)</p>
+        <div class="footer">
+          <p class="footer__copyright">© 2026 עינת שומונוב. כל הזכויות שמורות.</p>
+          <div class="footer__links">
+            <a href="#navigation" onclick="return false">מדיניות פרטיות</a>
+            <a href="#navigation" onclick="return false">תנאי שימוש</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RICH CONTENT ================= -->
+    <section id="content" class="ds-section">
+      <h2>Rich Content — <code data-copy=".rich-content">.rich-content</code></h2>
+      <p class="ds-lead">Styling applied to CMS/Quill body content (blog posts, treatment descriptions).</p>
+      <div class="stage app-preview" data-preview>
+        <div class="rich-content">
+          <h2>על הריפוי</h2>
+          <p>הריפוי מתחיל בהקשבה עמוקה לגוף ולנפש. דרך <strong>מדיטציה</strong> ותרגול נשימה אנו לומדים לחזור למרכז.</p>
+          <h3>מה כולל התהליך</h3>
+          <p>מפגש ראשוני, בניית תכנית אישית, ו<a href="#content" onclick="return false">ליווי מתמשך</a> לאורך הדרך.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <p class="ds-lead" style="border-top:1px solid var(--color-border);padding-top:var(--spacing-md)">
+      To adopt in the app: mirror this <code>:root</code> into <code>src/styles/_variables.scss</code> and port the
+      <code>.btn</code>, <code>.card</code> and <code>.field</code> rules. Before/after prototypes: <code>design-system-proposal.html</code>.
+    </p>
+  </main>
+</div>
+
+<script>
+/* ============================================================================
+   Token map — mirrors the unified :root above. Drives swatches/scales/boxes.
+   ========================================================================== */
+const COLORS = {
+  brand: [
+    ['--color-primary', '#7B5EA7', 'actions & brand'],
+    ['--color-primary-light', '#9B7EC7', 'light accents'],
+    ['--color-primary-dark', '#5B3E87', 'hover / active'],
+  ],
+  accent: [
+    ['--color-accent', '#D4A5B5', 'blush — decorative only'],
+    ['--color-champagne', '#C9A46B', 'washi-tape / premium hairline'],
+  ],
+  surface: [
+    ['--color-bg', '#FFFFFF', 'base'],
+    ['--color-surface', '#FBF9FD', 'soft page tint'],
+    ['--color-bg-alt', '#F5F0F8', 'section bg'],
+    ['--color-surface-tint', '#F0EDF8', 'input / card fill'],
+    ['--color-surface-tint-strong', '#EDE4F2', 'stronger tint'],
+  ],
+  textborder: [
+    ['--color-text', '#2D2D2D', 'body text'],
+    ['--color-text-light', '#6B6B6B', 'muted'],
+    ['--color-border', '#E8E0EF', 'borders'],
+  ],
+  semantic: [
+    ['--color-error', '#D32F2F', 'errors'],
+    ['--color-success', '#388E3C', 'success'],
+  ],
+  brandmix: [
+    ['--gradient-brand', 'linear-gradient(145deg,#F5F1FA,#EFE7F5,#F6E4EE)', 'card / success bg'],
+    ['--gradient-brand-hover', 'linear-gradient(145deg,#EEE7F7,#E6D8F0,#F0D7E4)', 'card hover'],
+    ['--color-primary-a08', 'rgba(123,94,167,.08)', 'ghost hover'],
+    ['--color-primary-a12', 'rgba(123,94,167,.12)', 'secondary hover / icon bg'],
+  ],
+};
+const FONT_SIZES = [
+  ['--font-size-xs', '0.75rem'], ['--font-size-sm', '0.875rem'],
+  ['--font-size-base', '1rem'], ['--font-size-lg', '1.25rem'],
+  ['--font-size-xl', '1.5rem'], ['--font-size-2xl', 'clamp(1.75rem, 2.5vw, 2.25rem)'],
+  ['--font-size-3xl', 'clamp(2rem, 3.5vw, 3rem)'],
+];
+const SPACES = [
+  ['--spacing-xs', '0.25rem'], ['--spacing-sm', '0.5rem'], ['--spacing-md', '1rem'],
+  ['--spacing-lg', '1.5rem'], ['--spacing-xl', '2rem'], ['--spacing-2xl', '3rem'], ['--spacing-3xl', '4rem'],
+];
+const RADII = [['--radius-sm', '6px'], ['--radius-md', '8px'], ['--radius-lg', '16px'], ['--radius-full', '9999px']];
+const SHADOWS = [['--shadow-sm', ''], ['--shadow-md', ''], ['--shadow-lg', '']];
+
+const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+const copyable = (node, text) => { node.setAttribute('data-copy', text); return node; };
+
+/* Swatches */
+for (const [group, list] of Object.entries(COLORS)) {
+  const host = document.querySelector(`[data-swatches="${group}"]`);
+  if (!host) continue;
+  for (const [name, val, role] of list) {
+    const card = el('div', 'swatch');
+    copyable(card, `var(${name})`);
+    const chip = el('div', 'swatch__chip'); chip.style.background = `var(${name})`;
+    if (name === '--color-bg') chip.style.boxShadow = 'inset 0 0 0 1px var(--color-border)';
+    const meta = el('div', 'swatch__meta',
+      `<div class="swatch__name mono">${name}</div><div class="swatch__role">${role || ''}</div><div class="swatch__val mono">${val}</div>`);
+    card.append(chip, meta); host.append(card);
+  }
+}
+
+/* Type scale */
+const typeHost = document.getElementById('typeScale');
+for (const [name, val] of FONT_SIZES) {
+  const row = el('div', 'type-row');
+  const label = el('div', 'label', `<b class="mono">${name}</b><br>${val}`);
+  const sample = el('div'); sample.style.fontSize = `var(${name})`; sample.textContent = 'טקסט לדוגמה · Sample Aa';
+  copyable(sample, `var(${name})`);
+  row.append(label, sample); typeHost.append(row);
+}
+
+/* Spacing */
+const spaceHost = document.getElementById('spacingScale');
+for (const [name, val] of SPACES) {
+  const row = el('div', 'space-row');
+  const label = el('div', 'label', `<b class="mono">${name}</b> · ${val}`);
+  const bar = el('div', 'space-bar'); bar.style.width = `var(${name})`;
+  copyable(bar, `var(${name})`);
+  row.append(label, bar); spaceHost.append(row);
+}
+
+/* Radius */
+const radiusHost = document.getElementById('radiusBoxes');
+for (const [name, val] of RADII) {
+  const box = el('div', 'demo-box', `${name}<br>${val}`);
+  box.style.borderRadius = `var(${name})`; box.style.background = 'var(--color-bg-alt)';
+  copyable(box, `var(${name})`);
+  radiusHost.append(box);
+}
+
+/* Shadow */
+const shadowHost = document.getElementById('shadowBoxes');
+for (const [name] of SHADOWS) {
+  const box = el('div', 'demo-box', name);
+  box.style.boxShadow = `var(${name})`; box.style.borderRadius = 'var(--radius-lg)'; box.style.border = 'none';
+  copyable(box, `var(${name})`);
+  shadowHost.append(box);
+}
+
+/* Click-to-copy (event delegation) */
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('[data-copy]');
+  if (!target) return;
+  const text = target.getAttribute('data-copy');
+  navigator.clipboard?.writeText(text).then(() => {
+    target.classList.add('copied');
+    setTimeout(() => target.classList.remove('copied'), 1000);
+  }).catch(() => {});
+});
+
+/* RTL / LTR toggle */
+const dirToggle = document.getElementById('dirToggle');
+let rtl = true;
+function applyDir() {
+  document.querySelectorAll('[data-preview]').forEach(n => n.setAttribute('dir', rtl ? 'rtl' : 'ltr'));
+  dirToggle.textContent = 'Direction: ' + (rtl ? 'RTL' : 'LTR');
+  dirToggle.setAttribute('aria-pressed', String(rtl));
+}
+dirToggle.addEventListener('click', () => { rtl = !rtl; applyDir(); });
+applyDir();
+</script>
+</body>
+</html>
