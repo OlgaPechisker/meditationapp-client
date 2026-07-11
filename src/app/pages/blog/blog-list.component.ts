@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { DatePipe } from '@angular/common';
@@ -21,6 +21,7 @@ interface BlogPost {
   standalone: true,
   imports: [RouterLink, TranslocoPipe, DatePipe],
   templateUrl: './blog-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './blog-list.component.scss',
 })
 export class BlogListComponent implements OnInit {

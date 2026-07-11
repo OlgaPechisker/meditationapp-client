@@ -1,10 +1,11 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '../../../core/services/api.service';
 
 @Component({
   selector: 'app-image-upload',
   standalone: true,
   templateUrl: './image-upload.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './image-upload.component.scss',
 })
 export class ImageUploadComponent {

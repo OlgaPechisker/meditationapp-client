@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { DatePipe } from '@angular/common';
@@ -30,6 +30,7 @@ interface BlogPost {
   standalone: true,
   imports: [TranslocoPipe, DatePipe, ReactiveFormsModule],
   templateUrl: './blog-post.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './blog-post.component.scss',
 })
 export class BlogPostComponent implements OnInit {

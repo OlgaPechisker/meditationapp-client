@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { SeoService } from '../../core/services/seo.service';
@@ -8,6 +8,7 @@ import { SeoService } from '../../core/services/seo.service';
   standalone: true,
   imports: [RouterLink, TranslocoPipe],
   templateUrl: './not-found.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './not-found.component.scss',
 })
 export class NotFoundComponent implements OnInit {

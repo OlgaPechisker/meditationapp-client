@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
@@ -22,6 +22,7 @@ interface Treatment {
   standalone: true,
   imports: [TranslocoPipe],
   templateUrl: './treatment-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './treatment-list.component.scss',
 })
 export class TreatmentListComponent implements OnInit {

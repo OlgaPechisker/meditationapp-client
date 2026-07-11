@@ -1,4 +1,4 @@
-import { Component, HostListener, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { SeoService } from '../../core/services/seo.service';
@@ -15,6 +15,7 @@ interface Song {
   standalone: true,
   imports: [TranslocoPipe],
   templateUrl: './songs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './songs.component.scss',
 })
 export class SongsComponent implements OnInit {

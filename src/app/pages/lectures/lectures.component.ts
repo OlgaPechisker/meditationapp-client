@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { DatePipe } from '@angular/common';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
@@ -21,6 +21,7 @@ interface Lecture {
   standalone: true,
   imports: [TranslocoPipe, DatePipe],
   templateUrl: './lectures.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './lectures.component.scss',
 })
 export class LecturesComponent implements OnInit {

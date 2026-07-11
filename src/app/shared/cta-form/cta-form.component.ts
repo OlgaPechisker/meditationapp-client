@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { WhatsappService } from '../../core/services/whatsapp.service';
 
@@ -7,6 +7,7 @@ import { WhatsappService } from '../../core/services/whatsapp.service';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './cta-form.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cta-form.component.scss',
 })
 export class CtaFormComponent {

@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { ImageUploadComponent } from '../_shared/image-upload/image-upload.component';
@@ -14,6 +14,7 @@ interface Song {
   standalone: true,
   imports: [ReactiveFormsModule, ImageUploadComponent],
   templateUrl: './admin-songs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-songs.component.scss',
 })
 export class AdminSongsComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -19,6 +19,7 @@ type SaveState = 'idle' | 'saving' | 'success' | 'error';
   standalone: true,
   imports: [ReactiveFormsModule, ImageUploadComponent],
   templateUrl: './admin-content.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-content.component.scss',
 })
 export class AdminContentComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 
 interface Comment {
@@ -14,6 +14,7 @@ interface Comment {
   standalone: true,
   imports: [],
   templateUrl: './admin-comments.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-comments.component.scss',
 })
 export class AdminCommentsComponent implements OnInit {

@@ -6,7 +6,7 @@ Angular frontend for the Einat Shomonov meditation, healing & wellness practitio
 
 ## Tech Stack
 
-- **Framework:** Angular 21 with SSR (Server-Side Rendering)
+- **Framework:** Angular 22 with SSR (Server-Side Rendering)
 - **Language:** TypeScript
 - **i18n:** Transloco (Hebrew default, English ready)
 - **Styling:** Component styles
@@ -42,6 +42,9 @@ To run the SSR build locally:
 ```bash
 node dist/client/server/server.mjs
 ```
+
+The SSR server permits `localhost`, `127.0.0.1`, and Railway's `RAILWAY_PUBLIC_DOMAIN`.
+For a custom production domain, set `NG_ALLOWED_HOSTS` to its comma-separated hostnames.
 
 ## CI and dependency policy
 
