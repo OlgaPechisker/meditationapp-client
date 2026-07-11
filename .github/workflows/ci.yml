@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.15.0
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test -- --watch=false --browsers=ChromeHeadless
+      - run: npm audit --omit=dev --audit-level=high
+      - name: Smoke test SSR startup
+        run: |
+          npm run serve:ssr:client &
+          server_pid=$!
+          trap 'kill $server_pid' EXIT
+          for _ in {1..30}; do
+            if curl --fail --silent http://localhost:4000/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          exit 1

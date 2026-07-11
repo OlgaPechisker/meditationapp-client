@@ -6,7 +6,7 @@ Angular frontend for the Einat Shomonov meditation, healing & wellness practitio
 
 ## Tech Stack
 
-- **Framework:** Angular 19 with SSR (Server-Side Rendering)
+- **Framework:** Angular 21 with SSR (Server-Side Rendering)
 - **Language:** TypeScript
 - **i18n:** Transloco (Hebrew default, English ready)
 - **Styling:** Component styles
@@ -14,8 +14,10 @@ Angular frontend for the Einat Shomonov meditation, healing & wellness practitio
 ## Quick Start
 
 ### Prerequisites
-- Node.js 20+
+- Node.js 24.15+ with npm 11.6.2
 - The [backend server](https://github.com/OlgaPechisker/meditationapp) running on `http://localhost:3000`
+
+The repository pins these versions in `.nvmrc`, `engines`, and `packageManager`. Use `npm ci` for reproducible installs.
 
 ### Install & run
 ```bash
@@ -38,8 +40,12 @@ Build artifacts are output to `dist/`. The production build enables SSR and opti
 
 To run the SSR build locally:
 ```bash
-node dist/einat-client/server/server.mjs
+node dist/client/server/server.mjs
 ```
+
+## CI and dependency policy
+
+GitHub Actions builds and tests the SSR application, verifies SSR startup, and runs `npm audit --omit=dev --audit-level=high` on every pull request. Production critical and high audit findings block CI; development-only findings are reviewed separately.
 
 ## i18n
 
