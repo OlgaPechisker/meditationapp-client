@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@ang
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { ImageUploadComponent } from '../_shared/image-upload/image-upload.component';
+import { RichTextEditorComponent } from '../_shared/rich-text-editor/rich-text-editor.component';
 
 interface BlogPost {
   id: string;
@@ -16,7 +17,7 @@ interface BlogPost {
 @Component({
   selector: 'app-admin-blog',
   standalone: true,
-  imports: [ReactiveFormsModule, ImageUploadComponent],
+  imports: [ReactiveFormsModule, ImageUploadComponent, RichTextEditorComponent],
   templateUrl: './admin-blog.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-blog.component.scss',

@@ -14,15 +14,15 @@ Angular frontend for the Einat Shomonov meditation, healing & wellness practitio
 ## Quick Start
 
 ### Prerequisites
-- Node.js 24.15+ with npm 11.6.2
+- Node.js 24.15.0–24.x with npm 11.6.2
 - The [backend server](https://github.com/OlgaPechisker/meditationapp) running on `http://localhost:3000`
 
-The repository pins these versions in `.nvmrc`, `engines`, and `packageManager`. Use `npm ci` for reproducible installs.
+The repository declares these versions in `.nvmrc`, `engines`, and `packageManager`, but these files do not change an active Volta runtime. Use the commands below so Volta downloads and runs the required versions for this repository only, without changing global defaults.
 
 ### Install & run
-```bash
-npm install
-npx ng serve
+```powershell
+volta run --node 24.15.0 --npm 11.6.2 npm ci
+volta run --node 24.15.0 --npm 11.6.2 npm start
 # App available at http://localhost:4200
 ```
 
@@ -32,15 +32,15 @@ The app connects to the backend API. To point it at a different server, set the 
 
 ## Building for Production
 
-```bash
-ng build
+```powershell
+volta run --node 24.15.0 --npm 11.6.2 npm run build
 ```
 
 Build artifacts are output to `dist/`. The production build enables SSR and optimises for performance.
 
 To run the SSR build locally:
-```bash
-node dist/client/server/server.mjs
+```powershell
+volta run --node 24.15.0 node dist/client/server/server.mjs
 ```
 
 The SSR server permits `localhost`, `127.0.0.1`, and Railway's `RAILWAY_PUBLIC_DOMAIN`.

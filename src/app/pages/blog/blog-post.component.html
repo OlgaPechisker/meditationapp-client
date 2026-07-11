@@ -9,7 +9,7 @@
         <time class="blog-post__date" data-testid="post-date">{{ p.publishedAt | date:'dd/MM/yyyy' }}</time>
       </header>
 
-      <div class="blog-post__content" data-testid="post-content">{{ p.content }}</div>
+      <div class="blog-post__content rich-content" data-testid="post-content" [innerHTML]="p.content"></div>
 
       <section class="comments">
         <h2 class="comments__title">{{ 'blog.comments' | transloco }} ({{ p.comments.length }})</h2>

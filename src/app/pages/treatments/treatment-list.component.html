@@ -37,7 +37,7 @@
           </svg>
           <h2 class="treatment-section__title" data-testid="treatment-card-title">{{ treatment.title }}</h2>
           <span class="treatment-section__divider" aria-hidden="true"></span>
-          <p class="treatment-section__description">{{ treatment.description }}</p>
+          <div class="treatment-section__description rich-content" [innerHTML]="treatment.description"></div>
           <a
             [href]="getWhatsappLink(treatment.title)"
             target="_blank"

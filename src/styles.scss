@@ -1,6 +1,7 @@
 @use 'styles/variables';
 @use 'styles/typography';
 @use 'styles/mixins' as *;
+@import 'quill/dist/quill.snow.css';
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -83,4 +84,44 @@ button { cursor: pointer; font-family: inherit; }
   &--primary { background: var(--color-primary); color: white; &:hover { background: var(--color-primary-dark); } }
   &--secondary { background: var(--color-secondary); color: var(--color-text); &:hover { opacity: 0.9; } }
   &--outline { background: transparent; border: 2px solid var(--color-primary); color: var(--color-primary); &:hover { background: var(--color-bg-alt); } }
+}
+
+.rich-content {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+
+  h2 {
+    color: var(--color-primary);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin: var(--spacing-xl) 0 var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  h3 {
+    color: var(--color-primary);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin: var(--spacing-lg) 0 var(--spacing-sm);
+  }
+
+  p { margin: 0 0 var(--spacing-md); }
+
+  ul, ol {
+    margin: 0 0 var(--spacing-md);
+    padding-inline-start: var(--spacing-xl);
+  }
+
+  li { margin-bottom: var(--spacing-xs); }
+  a { text-decoration: underline; }
+  strong { color: var(--color-primary-dark); font-weight: 600; }
+
+  .ql-align-right { text-align: right; }
+  .ql-align-center { text-align: center; }
+  .ql-align-left { text-align: left; }
+  .ql-direction-rtl { direction: rtl; }
+  .ql-direction-ltr { direction: ltr; }
 }

@@ -1,0 +1,81 @@
+.rich-text-editor {
+  direction: rtl;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #fff;
+
+  &:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 20%, transparent);
+  }
+
+  .ql-toolbar.ql-snow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    border: 0;
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--color-bg-alt);
+  }
+
+  .ql-formats {
+    margin-inline: 0 var(--spacing-xs);
+    padding-inline-end: var(--spacing-xs);
+    border-inline-end: 1px solid var(--color-border);
+  }
+
+  .rich-text-editor__text-button {
+    width: auto;
+    min-width: 2.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .ql-container.ql-snow {
+    border: 0;
+    font-family: inherit;
+    font-size: var(--font-size-base);
+  }
+
+  .ql-editor {
+    min-height: 17.5rem;
+    line-height: 1.8;
+    text-align: right;
+
+    ol,
+    ul {
+      padding-right: 1.5em;
+      padding-left: 0;
+    }
+
+    li {
+      padding-right: 1.5em;
+      padding-left: 0;
+    }
+
+    li > .ql-ui::before {
+      margin-right: -1.5em;
+      margin-left: 0.3em;
+      text-align: left;
+    }
+
+    ol.ql-direction-ltr,
+    ul.ql-direction-ltr {
+      padding-right: 0;
+      padding-left: 1.5em;
+    }
+
+    li.ql-direction-ltr {
+      padding-right: 0;
+      padding-left: 1.5em;
+    }
+
+    li.ql-direction-ltr > .ql-ui::before {
+      margin-right: 0.3em;
+      margin-left: -1.5em;
+      text-align: right;
+    }
+  }
+}

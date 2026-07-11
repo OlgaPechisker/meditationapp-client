@@ -13,7 +13,7 @@
               </div>
               <div class="lecture-card__body">
                 <h3 class="lecture-card__title" data-testid="lecture-card-title">{{ lecture.title }}</h3>
-                <p class="lecture-card__desc">{{ lecture.description }}</p>
+                <div class="lecture-card__desc rich-content" [innerHTML]="lecture.description"></div>
                 <div class="lecture-card__meta">
                   <span data-testid="lecture-card-location">{{ 'lectures.location' | transloco }}: {{ lecture.location }}</span>
                   <span data-testid="lecture-card-price">{{ 'lectures.price' | transloco }}: ₪{{ lecture.price }}</span>
@@ -36,7 +36,7 @@
               </div>
               <div class="lecture-card__body">
                 <h3 class="lecture-card__title">{{ lecture.title }}</h3>
-                <p class="lecture-card__desc">{{ lecture.description }}</p>
+                <div class="lecture-card__desc rich-content" [innerHTML]="lecture.description"></div>
                 <div class="lecture-card__meta">
                   <span>{{ 'lectures.location' | transloco }}: {{ lecture.location }}</span>
                 </div>

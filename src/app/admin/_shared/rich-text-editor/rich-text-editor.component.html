@@ -1,0 +1,50 @@
+<div class="rich-text-editor" dir="rtl">
+  <quill-editor
+    [ngModel]="value()"
+    (ngModelChange)="onValueChange($event)"
+    (onEditorCreated)="onEditorCreated($event)"
+    (onBlur)="markTouched()"
+    [readOnly]="disabled()"
+    format="html"
+    theme="snow"
+    placeholder="התחילו לכתוב..."
+    [required]="true"
+  >
+    <div class="rich-text-editor__toolbar" quill-editor-toolbar aria-label="כלי עיצוב">
+      <span class="ql-formats">
+        <button type="button" class="ql-header rich-text-editor__text-button" value="" aria-label="טקסט רגיל" title="טקסט רגיל">Text</button>
+        <button type="button" class="ql-header" value="2" aria-label="כותרת 2" title="כותרת 2">H2</button>
+        <button type="button" class="ql-header" value="3" aria-label="כותרת 3" title="כותרת 3">H3</button>
+      </span>
+      <span class="ql-formats">
+        <button type="button" class="ql-bold" aria-label="מודגש" title="מודגש"></button>
+        <button type="button" class="ql-italic" aria-label="נטוי" title="נטוי"></button>
+      </span>
+      <span class="ql-formats">
+        <button type="button" class="ql-list" value="bullet" aria-label="רשימת תבליטים" title="רשימת תבליטים"></button>
+        <button type="button" class="ql-list" value="ordered" aria-label="רשימה ממוספרת" title="רשימה ממוספרת"></button>
+      </span>
+      <span class="ql-formats">
+        <button type="button" class="ql-link" aria-label="קישור" title="קישור"></button>
+      </span>
+      <span class="ql-formats">
+        <button type="button" class="ql-align" value="right" aria-label="יישור לימין" title="יישור לימין"></button>
+        <button type="button" class="ql-align" value="center" aria-label="יישור למרכז" title="יישור למרכז"></button>
+        <button type="button" class="ql-align" value="left" aria-label="יישור לשמאל" title="יישור לשמאל">
+          <svg viewBox="0 0 18 18" aria-hidden="true">
+            <line class="ql-stroke" x1="3" x2="15" y1="9" y2="9" />
+            <line class="ql-stroke" x1="3" x2="13" y1="14" y2="14" />
+            <line class="ql-stroke" x1="3" x2="9" y1="4" y2="4" />
+          </svg>
+        </button>
+      </span>
+      <span class="ql-formats">
+        <button type="button" aria-label="ניקוי עיצוב" title="ניקוי עיצוב" (click)="clearFormatting()">⊘</button>
+      </span>
+      <span class="ql-formats">
+        <button type="button" aria-label="ביטול" title="ביטול" (click)="undo()">↩</button>
+        <button type="button" aria-label="חזרה" title="חזרה" (click)="redo()">↪</button>
+      </span>
+    </div>
+  </quill-editor>
+</div>

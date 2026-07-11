@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@ang
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { ImageUploadComponent } from '../_shared/image-upload/image-upload.component';
+import { RichTextEditorComponent } from '../_shared/rich-text-editor/rich-text-editor.component';
 
 interface Treatment {
   id: string;
@@ -17,7 +18,7 @@ interface Treatment {
 @Component({
   selector: 'app-admin-treatments',
   standalone: true,
-  imports: [ReactiveFormsModule, ImageUploadComponent],
+  imports: [ReactiveFormsModule, ImageUploadComponent, RichTextEditorComponent],
   templateUrl: './admin-treatments.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-treatments.component.scss',

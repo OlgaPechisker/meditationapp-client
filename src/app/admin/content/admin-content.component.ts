@@ -4,6 +4,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService } from '../../core/services/api.service';
 import { ImageUploadComponent } from '../_shared/image-upload/image-upload.component';
+import { RichTextEditorComponent } from '../_shared/rich-text-editor/rich-text-editor.component';
 
 interface SiteContent {
   id: number;
@@ -17,7 +18,7 @@ type SaveState = 'idle' | 'saving' | 'success' | 'error';
 @Component({
   selector: 'app-admin-content',
   standalone: true,
-  imports: [ReactiveFormsModule, ImageUploadComponent],
+  imports: [ReactiveFormsModule, ImageUploadComponent, RichTextEditorComponent],
   templateUrl: './admin-content.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './admin-content.component.scss',

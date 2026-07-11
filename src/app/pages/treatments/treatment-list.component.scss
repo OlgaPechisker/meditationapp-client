@@ -201,7 +201,6 @@
     color: var(--color-text);
     line-height: 1.9;
     margin: 0;
-    white-space: pre-line;
     position: relative;
     z-index: 1;
   }
@@ -315,4 +314,3 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-

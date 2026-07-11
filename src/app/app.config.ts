@@ -3,6 +3,7 @@ import { provideRouter, withViewTransitions } from '@angular/router';
 import { provideHttpClient, withInterceptors, withFetch, HttpClient } from '@angular/common/http';
 import { provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
 import { provideTransloco, TranslocoLoader, Translation } from '@jsverse/transloco';
+import { provideQuillConfig } from 'ngx-quill';
 
 import { routes } from './app.routes';
 import { localeInterceptor } from './core/interceptors/locale.interceptor';
@@ -22,6 +23,24 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withViewTransitions()),
     provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
     provideHttpClient(withFetch(), withInterceptors([localeInterceptor, authInterceptor])),
+    provideQuillConfig({
+      format: 'html',
+      defaultEmptyValue: '',
+      customOptions: [
+        { import: 'attributors/class/align', whitelist: ['right', 'center', 'left'] },
+        { import: 'attributors/class/direction', whitelist: ['rtl', 'ltr'] },
+        { import: 'formats/header', whitelist: [2, 3, false] },
+      ],
+      modules: {
+        keyboard: {
+          bindings: {
+            tab: { key: 9, handler: () => true },
+          },
+        },
+        history: { delay: 500, maxStack: 100, userOnly: true },
+      },
+      beforeRender: () => import('quill'),
+    }),
     provideTransloco({
       config: {
         availableLangs: ['he', 'en'],
@@ -33,4 +52,3 @@ export const appConfig: ApplicationConfig = {
     }),
   ],
 };
-
