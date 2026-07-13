@@ -2,7 +2,7 @@
   "nav": { "home": "Home", "treatments": "Treatments", "blog": "Blog", "lectures": "Lectures", "songs": "Songs", "about": "About", "contact": "Contact" },
   "home": { "hero_title": "Einat Shomonov", "hero_subtitle": "Healing, Meditation & Inner Peace", "treatments_section": "My Treatments", "blog_section": "From the Blog", "upcoming_lectures": "Upcoming Lectures" },
   "treatments": { "title": "Treatments", "book_via_whatsapp": "Book via WhatsApp", "price": "Price" },
-  "blog": { "title": "Blog", "read_more": "Read More", "comments": "Comments", "leave_comment": "Leave a Comment", "your_name": "Your Name", "comment_text": "Comment", "submit": "Submit", "comment_pending": "Comment submitted and will be approved shortly" },
+  "blog": { "title": "Blog", "read_more": "Read More", "watch": "Watch", "search_placeholder": "Search posts...", "type_video": "Video", "type_article": "Article", "comments": "Comments", "leave_comment": "Leave a Comment", "your_name": "Your Name", "comment_text": "Comment", "submit": "Submit", "comment_pending": "Comment submitted and will be approved shortly" },
   "lectures": { "title": "Lectures", "date": "Date", "location": "Location", "price": "Price" },
   "songs": { "title": "Songs" },
   "about": { "title": "About" },

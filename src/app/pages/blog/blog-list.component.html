@@ -1,23 +1,69 @@
 <div class="blog-page">
   <div class="blog-page__container">
-    <h1 class="blog-page__title">{{ 'blog.title' | transloco }}</h1>
+    <header class="blog-page__head">
+      <h1 class="blog-page__title">{{ 'blog.title' | transloco }}</h1>
+      <div class="searchbar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input
+          type="text"
+          class="searchbar__input"
+          [attr.aria-label]="'blog.search_placeholder' | transloco"
+          [placeholder]="'blog.search_placeholder' | transloco"
+          data-testid="blog-search"
+          [value]="searchTerm()"
+          (input)="onSearchInput($any($event.target).value)"
+        />
+      </div>
+    </header>
 
     @if (posts().length) {
-      <div class="ui-grid">
-        @for (post of posts(); track post.id) {
-          <article class="ui-card" data-testid="blog-card" [attr.data-slug]="post.slug" [routerLink]="['/blog', post.slug]" style="cursor:pointer">
-            <div class="ui-card__image" [style.background-image]="post.imageUrl ? 'url(' + post.imageUrl + ')' : ''"></div>
-            <div class="ui-card__body">
-              <time class="ui-card__meta" data-testid="blog-card-date">{{ post.publishedAt | date:'dd/MM/yyyy' }}</time>
-              <h2 class="ui-card__title">
-                <a [routerLink]="['/blog', post.slug]" data-testid="blog-card-title">{{ post.title }}</a>
+      <section class="blog-bento">
+        @if (featured(); as feat) {
+          <article class="card card--feature" data-testid="blog-card" [attr.data-slug]="feat.slug" [routerLink]="['/blog', feat.slug]">
+            <div class="card__media">
+              @if (cardImage(feat)) {
+                <img [src]="cardImage(feat)" [alt]="feat.title" />
+              }
+              @if (hasVideo(feat)) {
+                <span class="tag-video" data-testid="blog-card-video">▶ {{ 'blog.type_video' | transloco }}</span>
+                <span class="play-badge" aria-hidden="true"></span>
+              }
+            </div>
+            <div class="card__body">
+              <time class="card__date" data-testid="blog-card-date">{{ feat.publishedAt | date:'dd/MM/yyyy' }}</time>
+              <h2 class="card__title">
+                <a [routerLink]="['/blog', feat.slug]" data-testid="blog-card-title">{{ feat.title }}</a>
               </h2>
-              <p class="ui-card__text">{{ post.excerpt }}</p>
-              <a [routerLink]="['/blog', post.slug]" class="blog-card__link">{{ 'blog.read_more' | transloco }}</a>
+              <p class="card__text">{{ feat.excerpt }}</p>
+              <a [routerLink]="['/blog', feat.slug]" class="card__more">{{ (hasVideo(feat) ? 'blog.watch' : 'blog.read_more') | transloco }} ←</a>
             </div>
           </article>
         }
-      </div>
+
+        @for (post of rest(); track post.id; let i = $index) {
+          <article class="card" [class]="cardVariant(i)" data-testid="blog-card" [attr.data-slug]="post.slug" [routerLink]="['/blog', post.slug]">
+            <div class="card__media">
+              @if (cardImage(post)) {
+                <img [src]="cardImage(post)" [alt]="post.title" />
+              }
+              @if (hasVideo(post)) {
+                <span class="tag-video" data-testid="blog-card-video">▶ {{ 'blog.type_video' | transloco }}</span>
+                <span class="play-badge" aria-hidden="true"></span>
+              }
+            </div>
+            <div class="card__body">
+              <time class="card__date" data-testid="blog-card-date">{{ post.publishedAt | date:'dd/MM/yyyy' }}</time>
+              <h2 class="card__title">
+                <a [routerLink]="['/blog', post.slug]" data-testid="blog-card-title">{{ post.title }}</a>
+              </h2>
+              @if (post.excerpt) {
+                <p class="card__text">{{ post.excerpt }}</p>
+              }
+              <a [routerLink]="['/blog', post.slug]" class="card__more">{{ (hasVideo(post) ? 'blog.watch' : 'blog.read_more') | transloco }} ←</a>
+            </div>
+          </article>
+        }
+      </section>
 
       @if (totalPages() > 1) {
         <div class="pagination">
