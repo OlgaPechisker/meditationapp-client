@@ -1,0 +1,51 @@
+:host {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  color: var(--color-text);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px) saturate(1.35);
+  -webkit-backdrop-filter: blur(16px) saturate(1.35);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+:host(:hover) {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+// Living aurora blobs behind the frosted surface
+:host::before {
+  content: '';
+  position: absolute;
+  inset: -45%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 42% at 20% 25%, rgba(155, 126, 199, 0.6), transparent 70%),
+    radial-gradient(34% 40% at 82% 30%, rgba(212, 165, 181, 0.6), transparent 70%),
+    radial-gradient(46% 44% at 60% 90%, rgba(123, 94, 167, 0.42), transparent 70%);
+  filter: blur(26px);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :host::before { animation: gaDrift 16s ease-in-out infinite alternate; }
+}
+
+@keyframes gaDrift {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  50%  { transform: translate3d(4%, -3%, 0) rotate(8deg) scale(1.08); }
+  100% { transform: translate3d(-3%, 3%, 0) rotate(-6deg) scale(1.04); }
+}
