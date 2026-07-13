@@ -1,10 +1,12 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ApiService } from '../../core/services/api.service';
 import { SeoService } from '../../core/services/seo.service';
+import { getYouTubeId, youTubeEmbed } from '../../core/utils/youtube';
 
 interface Comment {
   id: number;
@@ -20,6 +22,7 @@ interface BlogPost {
   excerpt: string;
   content: string;
   imageUrl: string;
+  videoUrl?: string;
   locale: string;
   publishedAt: string;
   comments: Comment[];
@@ -38,10 +41,16 @@ export class BlogPostComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private seo = inject(SeoService);
   private fb = inject(FormBuilder);
+  private sanitizer = inject(DomSanitizer);
 
   post = signal<BlogPost | null>(null);
   commentSubmitted = signal(false);
   submitting = signal(false);
+
+  videoEmbed = computed<SafeResourceUrl | null>(() => {
+    const id = getYouTubeId(this.post()?.videoUrl);
+    return id ? this.sanitizer.bypassSecurityTrustResourceUrl(youTubeEmbed(id)) : null;
+  });
 
   commentForm = this.fb.group({
     authorName: ['', Validators.required],

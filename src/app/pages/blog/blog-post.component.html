@@ -9,6 +9,12 @@
         <time class="blog-post__date" data-testid="post-date">{{ p.publishedAt | date:'dd/MM/yyyy' }}</time>
       </header>
 
+      @if (videoEmbed(); as embed) {
+        <div class="post__embed" data-testid="post-video-embed">
+          <iframe [src]="embed" [title]="p.title" allowfullscreen></iframe>
+        </div>
+      }
+
       <div class="blog-post__content rich-content" data-testid="post-content" [innerHTML]="p.content"></div>
 
       <section class="comments">
