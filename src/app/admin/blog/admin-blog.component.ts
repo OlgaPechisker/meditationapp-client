@@ -11,6 +11,7 @@ interface BlogPost {
   excerpt: string;
   content: string;
   imageUrl?: string;
+  videoUrl?: string;
   publishedAt?: string;
 }
 
@@ -38,6 +39,7 @@ export class AdminBlogComponent implements OnInit {
     excerpt: [''],
     content: ['', Validators.required],
     imageUrl: [''],
+    videoUrl: [''],
     publishedAt: [''],
   });
 
@@ -53,7 +55,7 @@ export class AdminBlogComponent implements OnInit {
 
   openCreate() {
     this.editing.set(null);
-    this.form.reset({ slug: '', title: '', excerpt: '', content: '', imageUrl: '', publishedAt: '' });
+    this.form.reset({ slug: '', title: '', excerpt: '', content: '', imageUrl: '', videoUrl: '', publishedAt: '' });
     this.showForm.set(true);
   }
 
@@ -71,13 +73,21 @@ export class AdminBlogComponent implements OnInit {
 
   save() {
     if (this.form.invalid) { this.error.set('אנא מלא את כל השדות הנדרשים'); return; }
-    const { publishedAt, imageUrl, ...rest } = this.form.value;
+    const { publishedAt, imageUrl, videoUrl, ...rest } = this.form.value;
     const body: Record<string, unknown> = { ...rest, locale: 'he' };
-    if (imageUrl) body['imageUrl'] = imageUrl;
+    const editing = this.editing();
+
+    if (editing) {
+      // On edit, send explicit null to allow clearing a previously-set value.
+      body['imageUrl'] = imageUrl || null;
+      body['videoUrl'] = videoUrl || null;
+    } else {
+      if (imageUrl) body['imageUrl'] = imageUrl;
+      if (videoUrl) body['videoUrl'] = videoUrl;
+    }
     if (publishedAt) {
       body['publishedAt'] = new Date(publishedAt).toISOString();
     }
-    const editing = this.editing();
 
     if (editing) {
       this.api.patch(`/blog/${editing.id}`, body).subscribe({
