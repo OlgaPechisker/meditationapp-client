@@ -54,4 +54,37 @@ describe('lecture model', () => {
     expect(groups.scheduled.map((l) => l.id)).toEqual([1]);
     expect(groups.onDemand.map((l) => l.id)).toEqual([2]);
   });
+
+  it('excludes scheduled lectures before the supplied current time', () => {
+    const now = new Date('2030-01-01T10:00:00.000Z');
+    const past = makeLecture({ id: 1, date: '2030-01-01T09:59:59.999Z' });
+    const current = makeLecture({ id: 2, date: '2030-01-01T10:00:00.000Z' });
+    const future = makeLecture({ id: 3, date: '2030-01-01T10:00:00.001Z' });
+
+    const { scheduled } = groupLectures([future, past, current], now);
+
+    expect(scheduled.map((l) => l.id)).toEqual([2, 3]);
+  });
+
+  it('excludes scheduled lectures with null or invalid dates', () => {
+    const now = new Date('2030-01-01T10:00:00.000Z');
+    const missing = makeLecture({ id: 1, date: null });
+    const invalid = makeLecture({ id: 2, date: 'not-a-date' });
+    const valid = makeLecture({ id: 3, date: '2030-02-01T10:00:00.000Z' });
+
+    const { scheduled } = groupLectures([missing, invalid, valid], now);
+
+    expect(scheduled.map((l) => l.id)).toEqual([3]);
+  });
+
+  it('retains all on-demand lectures regardless of their date values', () => {
+    const now = new Date('2030-01-01T10:00:00.000Z');
+    const past = makeLecture({ id: 1, type: 'ON_DEMAND', date: '2020-01-01T10:00:00.000Z' });
+    const missing = makeLecture({ id: 2, type: 'ON_DEMAND', date: null });
+    const invalid = makeLecture({ id: 3, type: 'ON_DEMAND', date: 'not-a-date' });
+
+    const { onDemand } = groupLectures([past, missing, invalid], now);
+
+    expect(onDemand.map((l) => l.id)).toEqual([1, 2, 3]);
+  });
 });
