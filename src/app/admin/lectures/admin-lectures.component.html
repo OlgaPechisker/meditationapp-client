@@ -17,28 +17,103 @@
         <form [formGroup]="form" (ngSubmit)="save()">
           <div class="form-row">
             <div class="form-group">
+              <label>סוג הרצאה</label>
+              <select formControlName="type" data-testid="field-type">
+                <option value="SCHEDULED">מועד קבוע</option>
+                <option value="ON_DEMAND">להזמנה (תאריך גמיש)</option>
+              </select>
+            </div>
+            <div class="form-group">
               <label>כותרת</label>
               <input formControlName="title" data-testid="field-title" />
             </div>
+          </div>
+
+          <div class="form-row">
             <div class="form-group">
-              <label>מיקום</label>
-              <input formControlName="location" data-testid="field-location" />
+              <label>כותרת משנה</label>
+              <input formControlName="subtitle" data-testid="field-subtitle" />
+            </div>
+            <div class="form-group">
+              <label>משך (טקסט)</label>
+              <input formControlName="durationLabel" placeholder="למשל 90 דקות" data-testid="field-durationLabel" />
             </div>
           </div>
+
+          <div class="form-group">
+            <label>תקציר</label>
+            <textarea formControlName="summary" rows="2" data-testid="field-summary"></textarea>
+          </div>
+
           <div class="form-group">
             <label>תיאור</label>
             <app-rich-text-editor formControlName="description" data-testid="field-description"></app-rich-text-editor>
           </div>
+
+          <div class="form-group">
+            <label>קהל יעד</label>
+            <textarea formControlName="audience" rows="2" data-testid="field-audience"></textarea>
+          </div>
+
+          <div class="form-group" formArrayName="highlights">
+            <label>נקודות עיקריות</label>
+            @for (h of highlights.controls; track $index) {
+              <div class="highlight-row">
+                <input [formControlName]="$index" [attr.data-testid]="'field-highlight-' + $index" />
+                <button
+                  type="button"
+                  class="btn-sm btn-delete"
+                  (click)="removeHighlight($index)"
+                  [disabled]="highlights.length <= 1"
+                  data-testid="highlight-remove"
+                >
+                  הסר
+                </button>
+              </div>
+            }
+            <button type="button" class="btn-secondary btn-sm" (click)="addHighlight()" data-testid="highlight-add">
+              + הוסף נקודה
+            </button>
+          </div>
+
           <div class="form-row">
             <div class="form-group">
-              <label>תאריך</label>
-              <input type="datetime-local" formControlName="date" data-testid="field-date" />
+              <label>מיקום</label>
+              <input formControlName="location" data-testid="field-location" />
+            </div>
+
+            @if (form.controls.type.value === 'SCHEDULED') {
+              <div class="form-group">
+                <label>תאריך</label>
+                <input type="datetime-local" formControlName="date" data-testid="field-date" />
+              </div>
+            } @else {
+              <div class="form-group">
+                <label>מינימום משתתפים</label>
+                <input
+                  type="number"
+                  min="1"
+                  formControlName="minimumParticipants"
+                  data-testid="field-minimumParticipants"
+                />
+              </div>
+            }
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>מחיר (₪)</label>
+              <input type="number" min="0" formControlName="price" data-testid="field-price" />
+              @if (form.controls.type.value === 'ON_DEMAND') {
+                <small class="field-hint">אופציונלי — השאירו ריק למחיר בתיאום</small>
+              }
             </div>
             <div class="form-group">
-              <label>מחיר</label>
-              <input type="number" formControlName="price" data-testid="field-price" />
+              <label>סדר תצוגה</label>
+              <input type="number" formControlName="sortOrder" data-testid="field-sortOrder" />
             </div>
           </div>
+
           <div class="form-row">
             <div class="form-group">
               <app-image-upload
@@ -55,6 +130,7 @@
               </label>
             </div>
           </div>
+
           <div class="form-actions">
             <button type="submit" class="btn-primary" data-testid="form-save">שמור</button>
             <button type="button" class="btn-secondary" (click)="cancel()" data-testid="form-cancel">ביטול</button>
@@ -67,22 +143,48 @@
       <thead>
         <tr>
           <th>כותרת</th>
-          <th>תאריך</th>
+          <th>סוג</th>
+          <th>תאריך / זמינות</th>
+          <th>מינ׳ משתתפים</th>
           <th>מיקום</th>
           <th>מחיר</th>
+          <th>מוצג באתר</th>
           <th>סטטוס</th>
           <th>פעולות</th>
         </tr>
       </thead>
       <tbody>
         @for (item of lectures(); track item.id) {
-          <tr data-testid="lecture-row" [attr.data-id]="item.id">
+          <tr data-testid="lecture-row" [attr.data-id]="item.id" [attr.data-type]="item.type">
             <td data-testid="lecture-title">{{ item.title }}</td>
-            <td>{{ item.date }}</td>
-            <td>{{ item.location }}</td>
-            <td>₪{{ item.price }}</td>
+            <td data-testid="lecture-type">{{ item.type === 'SCHEDULED' ? 'מועד קבוע' : 'להזמנה' }}</td>
             <td>
-              <span class="badge" [class.active]="item.isActive" [class.inactive]="!item.isActive" data-testid="lecture-status">
+              @if (item.type === 'SCHEDULED') {
+                {{ item.date ? (item.date | date: 'dd/MM/yyyy · HH:mm') : 'ללא תאריך' }}
+              } @else {
+                לפי תיאום
+              }
+            </td>
+            <td data-testid="lecture-min">{{ item.minimumParticipants ?? '—' }}</td>
+            <td>{{ item.location || '—' }}</td>
+            <td>{{ item.price != null ? '₪' + item.price : 'בתיאום' }}</td>
+            <td>
+              <span
+                class="badge"
+                [class.active]="isPubliclyVisible(item)"
+                [class.inactive]="!isPubliclyVisible(item)"
+                data-testid="lecture-public"
+              >
+                {{ isPubliclyVisible(item) ? 'מוצג' : 'מוסתר' }}
+              </span>
+            </td>
+            <td>
+              <span
+                class="badge"
+                [class.active]="item.isActive"
+                [class.inactive]="!item.isActive"
+                data-testid="lecture-status"
+              >
                 {{ item.isActive ? 'פעיל' : 'לא פעיל' }}
               </span>
             </td>

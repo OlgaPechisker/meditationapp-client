@@ -8,6 +8,7 @@ export const routes: Routes = [
   { path: 'blog', loadComponent: () => import('./pages/blog/blog-list.component').then(m => m.BlogListComponent) },
   { path: 'blog/:slug', loadComponent: () => import('./pages/blog/blog-post.component').then(m => m.BlogPostComponent) },
   { path: 'lectures', loadComponent: () => import('./pages/lectures/lectures.component').then(m => m.LecturesComponent) },
+  { path: 'lectures/:slug', loadComponent: () => import('./pages/lectures/lecture-detail.component').then(m => m.LectureDetailComponent) },
   { path: 'songs', loadComponent: () => import('./pages/songs/songs.component').then(m => m.SongsComponent) },
   { path: 'about', loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent) },
   { path: 'contact', loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent) },

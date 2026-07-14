@@ -190,6 +190,25 @@
     gap: 0.5rem;
     cursor: pointer;
   }
+}
+
+// List editor (e.g. lecture highlights): repeatable text rows with a remove
+// control, plus an add button beneath the list.
+.highlight-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  input { flex: 1; }
+  .btn-sm { flex: 0 0 auto; }
+}
+
+.field-hint {
+  display: block;
+  margin-top: 0.3rem;
+  color: #777;
+  font-size: 0.8rem;
 
   input[type="checkbox"] {
     width: auto;

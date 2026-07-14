@@ -1,0 +1,126 @@
+<div class="detail-page">
+  <div class="lec-container">
+    <a class="back" routerLink="/lectures" data-testid="lecture-back">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      {{ 'lectures.back' | transloco }}
+    </a>
+
+    @if (!loaded()) {
+      <p class="lec-state" data-testid="lecture-detail-loading">{{ 'lectures.loading' | transloco }}</p>
+    } @else if (notFound()) {
+      <div class="lec-state" data-testid="lecture-not-found">
+        <h1>{{ 'lectures.not_found' | transloco }}</h1>
+        <p>{{ 'lectures.not_found_sub' | transloco }}</p>
+      </div>
+    } @else if (error()) {
+      <p class="lec-state" data-testid="lecture-detail-error">{{ 'lectures.error' | transloco }}</p>
+    } @else if (lecture(); as l) {
+      <article class="detail-hero" [attr.data-type]="l.type">
+        <div
+          class="detail-image"
+          [style.background-image]="l.imageUrl ? 'url(' + l.imageUrl + ')' : ''"
+          aria-hidden="true"
+        >
+          <span class="detail-kind">{{
+            (isScheduled(l) ? 'lectures.kind_scheduled' : 'lectures.kind_ondemand') | transloco
+          }}</span>
+        </div>
+        <div class="detail-copy">
+          @if (l.subtitle) {
+            <span class="eyebrow">{{ l.subtitle }}</span>
+          }
+          <h1 data-testid="lecture-title">{{ l.title }}</h1>
+          @if (l.summary) {
+            <p class="detail-summary" data-testid="lecture-summary">{{ l.summary }}</p>
+          }
+          <div class="main-fact">
+            @if (isScheduled(l)) {
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+              <span>
+                <strong data-testid="lecture-date">
+                  <time [attr.datetime]="l.date">{{ l.date | date: 'EEEE, dd/MM/yyyy':'':'he' }}</time>
+                </strong>
+                {{ l.date | date: 'HH:mm' }}
+              </span>
+            } @else {
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span>
+                <strong>{{ 'lectures.main_fact_ondemand' | transloco }}</strong>
+                @if (l.minimumParticipants != null) {
+                  <span data-testid="lecture-min">{{
+                    'lectures.min_participants' | transloco: { count: l.minimumParticipants }
+                  }}</span>
+                }
+              </span>
+            }
+          </div>
+        </div>
+      </article>
+
+      <div class="detail-layout">
+        <div class="detail-main">
+          <section class="content-panel">
+            <span class="eyebrow">{{ 'lectures.about_eyebrow' | transloco }}</span>
+            <h2>{{ 'lectures.about_title' | transloco }}</h2>
+            <div class="rich-content" data-testid="lecture-description" [innerHTML]="l.description"></div>
+
+            @if (l.highlights.length) {
+              <h3 class="points-title">{{ 'lectures.highlights_title' | transloco }}</h3>
+              <ul class="points" data-testid="lecture-highlights">
+                @for (point of l.highlights; track point) {
+                  <li><i aria-hidden="true">✓</i><span>{{ point }}</span></li>
+                }
+              </ul>
+            }
+          </section>
+
+          @if (l.audience) {
+            <section class="audience">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span>
+                {{ 'lectures.audience_label' | transloco }}
+                <strong data-testid="lecture-audience">{{ l.audience }}</strong>
+              </span>
+            </section>
+          }
+        </div>
+
+        <aside class="booking">
+          <h2>{{ (isScheduled(l) ? 'lectures.booking_scheduled' : 'lectures.booking_ondemand') | transloco }}</h2>
+          <dl>
+            @if (l.location) {
+              <div><dt>{{ 'lectures.location' | transloco }}</dt><dd>{{ l.location }}</dd></div>
+            }
+            @if (l.durationLabel) {
+              <div><dt>{{ 'lectures.duration' | transloco }}</dt><dd>{{ l.durationLabel }}</dd></div>
+            }
+            @if (isScheduled(l)) {
+              <div>
+                <dt>{{ 'lectures.date' | transloco }}</dt>
+                <dd><time [attr.datetime]="l.date">{{ l.date | date: 'dd/MM/yyyy · HH:mm' }}</time></dd>
+              </div>
+            } @else if (l.minimumParticipants != null) {
+              <div>
+                <dt>{{ 'lectures.group_size' | transloco }}</dt>
+                <dd data-testid="booking-min">{{
+                  'lectures.min_participants_short' | transloco: { count: l.minimumParticipants }
+                }}</dd>
+              </div>
+            }
+            <div>
+              <dt>{{ (isScheduled(l) ? 'lectures.price' : 'lectures.cost') | transloco }}</dt>
+              <dd data-testid="booking-price">
+                @if (l.price != null) { ₪{{ l.price }} } @else { {{ 'lectures.price_on_request' | transloco }} }
+              </dd>
+            </div>
+          </dl>
+          <a class="button" [href]="whatsappLink(l)" target="_blank" rel="noopener" data-testid="lecture-cta">
+            {{ (isScheduled(l) ? 'lectures.cta_scheduled' : 'lectures.cta_ondemand') | transloco }}
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <small>{{ 'lectures.whatsapp_note' | transloco }}</small>
+        </aside>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,217 @@
+.detail-page {
+  padding: var(--spacing-xl) 0 var(--spacing-3xl);
+  min-height: 60vh;
+}
+
+.lec-container {
+  width: min(calc(100% - 2 * var(--spacing-lg)), var(--max-width));
+  margin-inline: auto;
+}
+
+.lec-state {
+  padding: var(--spacing-3xl) 0;
+  color: var(--color-text-light);
+  font-size: var(--font-size-lg);
+  text-align: center;
+
+  h1 { color: var(--color-primary-dark); font-size: var(--font-size-2xl); }
+}
+
+.eyebrow { color: var(--color-primary); font-size: var(--font-size-sm); font-weight: 700; }
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--tap-target-min);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+
+  svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+  &:hover { color: var(--color-primary-dark); }
+  &:focus-visible { outline: none; border-radius: var(--radius-sm); box-shadow: var(--focus-ring); }
+}
+
+/* ── Hero ──────────────────────────────────────────────────── */
+.detail-hero {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.15fr);
+  overflow: hidden;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.detail-image {
+  position: relative;
+  min-height: 22rem;
+  background-color: var(--color-bg-alt);
+  background-position: center;
+  background-size: cover;
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background: var(--gradient-brand);
+    opacity: 0.35;
+  }
+}
+
+.detail-kind {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: var(--spacing-lg);
+  inset-inline-start: var(--spacing-lg);
+  padding: 8px 15px;
+  color: var(--color-primary-dark);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+}
+
+.detail-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+
+  h1 { margin: 0; color: var(--color-primary-dark); font-size: var(--font-size-3xl); line-height: 1.05; }
+}
+
+.detail-summary { margin: 0; color: var(--color-text-light); font-size: var(--font-size-lg); line-height: 1.7; }
+
+.main-fact {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-lg);
+
+  svg { flex: 0 0 28px; width: 28px; height: 28px; fill: none; stroke: var(--color-primary); stroke-width: 1.8; }
+  span { display: flex; flex-direction: column; color: var(--color-text-light); font-size: var(--font-size-sm); }
+  strong { color: var(--color-text); font-size: var(--font-size-base); }
+  time { font-style: normal; }
+}
+
+/* ── Body layout ───────────────────────────────────────────── */
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 21rem;
+  gap: var(--spacing-xl);
+  align-items: start;
+  padding-top: var(--spacing-xl);
+}
+
+.content-panel {
+  padding: var(--spacing-xl);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+
+  h2 { margin: var(--spacing-xs) 0 var(--spacing-md); color: var(--color-primary-dark); font-size: var(--font-size-2xl); }
+}
+
+.rich-content { color: var(--color-text-light); line-height: 1.8; }
+
+.points-title { margin: var(--spacing-lg) 0 var(--spacing-sm); color: var(--color-text); font-size: var(--font-size-lg); }
+
+.points {
+  display: grid;
+  gap: var(--spacing-md);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li { display: flex; align-items: flex-start; gap: var(--spacing-sm); }
+  i {
+    display: grid;
+    flex: 0 0 26px;
+    width: 26px;
+    height: 26px;
+    place-items: center;
+    color: var(--color-primary);
+    font-style: normal;
+    background: var(--color-primary-a12);
+    border-radius: 50%;
+  }
+}
+
+.audience {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: var(--gradient-brand);
+  border-radius: var(--radius-lg);
+
+  svg { flex: 0 0 32px; width: 32px; height: 32px; fill: none; stroke: var(--color-primary); stroke-width: 1.8; }
+  span { display: flex; flex-direction: column; color: var(--color-text-light); font-size: var(--font-size-sm); }
+  strong { color: var(--color-text); font-size: var(--font-size-base); }
+}
+
+/* ── Booking panel ─────────────────────────────────────────── */
+.booking {
+  position: sticky;
+  top: calc(var(--header-height) + var(--spacing-sm));
+  padding: var(--spacing-xl);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+
+  h2 { margin: 0 0 var(--spacing-md); color: var(--color-primary-dark); font-size: var(--font-size-xl); }
+  dl { margin: 0 0 var(--spacing-lg); }
+  dl div {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  dt { color: var(--color-text-light); font-size: var(--font-size-sm); }
+  dd { margin: 0; font-weight: 600; }
+  time { font-style: normal; }
+  small { display: block; margin-top: var(--spacing-sm); color: var(--color-text-light); font-size: var(--font-size-xs); text-align: center; }
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  min-height: var(--tap-target-min);
+  padding: 10px var(--spacing-lg);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 12px var(--color-primary-a12);
+
+  svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+  &:hover { background: var(--color-primary-dark); }
+  &:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+}
+
+@media (max-width: 900px) {
+  .detail-hero { grid-template-columns: 1fr; }
+  .detail-layout { grid-template-columns: 1fr; }
+  .booking { position: static; }
+}
+
+@media (max-width: 480px) {
+  .detail-copy,
+  .content-panel,
+  .booking { padding: var(--spacing-lg); }
+}
