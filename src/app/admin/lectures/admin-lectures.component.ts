@@ -1,11 +1,15 @@
-import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, DestroyRef, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { ImageUploadComponent } from '../_shared/image-upload/image-upload.component';
 import { RichTextEditorComponent } from '../_shared/rich-text-editor/rich-text-editor.component';
 import { Lecture, LectureType } from '../../core/models/lecture.model';
+
+const trimmedRequired: ValidatorFn = (control) =>
+  typeof control.value === 'string' && control.value.trim().length > 0 ? null : { required: true };
 
 @Component({
   selector: 'app-admin-lectures',
@@ -18,6 +22,7 @@ import { Lecture, LectureType } from '../../core/models/lecture.model';
 export class AdminLecturesComponent implements OnInit {
   private api = inject(ApiService);
   private fb = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
 
   lectures = signal<Lecture[]>([]);
   loading = signal(true);
@@ -45,7 +50,9 @@ export class AdminLecturesComponent implements OnInit {
 
   ngOnInit() {
     this.loadItems();
-    this.form.controls.type.valueChanges.subscribe((type) => this.applyTypeRules(type));
+    this.form.controls.type.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((type) => this.applyTypeRules(type));
   }
 
   get highlights() {
@@ -53,7 +60,7 @@ export class AdminLecturesComponent implements OnInit {
   }
 
   private newHighlight(value = '') {
-    return this.fb.nonNullable.control(value, Validators.required);
+    return this.fb.nonNullable.control(value, trimmedRequired);
   }
 
   addHighlight() {
@@ -196,7 +203,8 @@ export class AdminLecturesComponent implements OnInit {
       date: isScheduled && v.date ? new Date(v.date).toISOString() : null,
       minimumParticipants: isScheduled ? null : v.minimumParticipants,
     };
-    if (v.imageUrl) body['imageUrl'] = v.imageUrl;
+    if (editing) body['imageUrl'] = v.imageUrl || null;
+    else if (v.imageUrl) body['imageUrl'] = v.imageUrl;
     // locale is only accepted on create; the strict PATCH schema rejects it.
     if (!editing) body['locale'] = 'he';
 

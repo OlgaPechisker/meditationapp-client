@@ -1,8 +1,10 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { DatePipe, formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, EMPTY, switchMap } from 'rxjs';
 import { ApiService } from '../../core/services/api.service';
 import { WhatsappService } from '../../core/services/whatsapp.service';
 import { SeoService } from '../../core/services/seo.service';
@@ -21,7 +23,7 @@ export class LectureDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private whatsapp = inject(WhatsappService);
   private seo = inject(SeoService);
-  private transloco = inject(TranslocoService);
+  private destroyRef = inject(DestroyRef);
 
   lecture = signal<Lecture | null>(null);
   loaded = signal(false);
@@ -29,9 +31,33 @@ export class LectureDetailComponent implements OnInit {
   error = signal(false);
 
   ngOnInit() {
-    const slug = this.route.snapshot.paramMap.get('slug')!;
-    this.api.get<Lecture>(`/lectures/${slug}`, { locale: 'he' }).subscribe({
-      next: (l) => {
+    this.route.paramMap
+      .pipe(
+        switchMap((params) => {
+          this.lecture.set(null);
+          this.loaded.set(false);
+          this.notFound.set(false);
+          this.error.set(false);
+
+          const slug = params.get('slug');
+          if (!slug) {
+            this.notFound.set(true);
+            this.loaded.set(true);
+            return EMPTY;
+          }
+
+          return this.api.get<Lecture>(`/lectures/${slug}`, { locale: 'he' }).pipe(
+            catchError((err: HttpErrorResponse) => {
+              if (err.status === 404) this.notFound.set(true);
+              else this.error.set(true);
+              this.loaded.set(true);
+              return EMPTY;
+            }),
+          );
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((l) => {
         this.lecture.set(l);
         this.loaded.set(true);
         this.seo.updateMeta({
@@ -39,13 +65,7 @@ export class LectureDetailComponent implements OnInit {
           description: l.summary ?? undefined,
           image: l.imageUrl ?? undefined,
         });
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 404) this.notFound.set(true);
-        else this.error.set(true);
-        this.loaded.set(true);
-      },
-    });
+      });
   }
 
   isScheduled(l: Lecture): boolean {
