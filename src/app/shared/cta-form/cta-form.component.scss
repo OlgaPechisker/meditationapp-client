@@ -60,24 +60,9 @@
     color: var(--color-error);
   }
 
-  &__submit {
-    display: block;
+  .cta-button {
+    display: flex;
     margin: 0 auto;
-    padding: var(--spacing-md) var(--spacing-2xl);
-    border-radius: var(--radius-full);
-    background: var(--color-primary);
-    color: #fff;
-    font-family: inherit;
-    font-size: var(--font-size-base);
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-
-    &:hover {
-      background: var(--color-primary-dark);
-      transform: translateY(-2px);
-    }
   }
 
   &__success {

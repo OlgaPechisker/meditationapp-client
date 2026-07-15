@@ -6,7 +6,7 @@
         <h1 class="treatment-detail__title" data-testid="treatment-title">{{ t.title }}</h1>
         <p class="treatment-detail__price" data-testid="treatment-price">{{ 'treatments.price' | transloco }}: ₪{{ t.price }}</p>
         <div class="treatment-detail__description rich-content" data-testid="treatment-description" [innerHTML]="t.description"></div>
-        <a [href]="getWhatsappLink()" target="_blank" rel="noopener" class="treatment-detail__cta">
+        <a [href]="getWhatsappLink()" target="_blank" rel="noopener" class="cta-button">
           {{ 'treatments.book_via_whatsapp' | transloco }}
         </a>
       </div>

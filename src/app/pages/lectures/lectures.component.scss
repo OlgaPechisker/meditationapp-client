@@ -158,22 +158,7 @@
   time { font-style: normal; }
 }
 
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
-  min-height: var(--tap-target-min);
-  padding: 10px var(--spacing-lg);
-  color: #fff;
-  font-weight: 700;
-  background: var(--color-primary);
-  border-radius: var(--radius-full);
-  box-shadow: 0 4px 12px var(--color-primary-a12);
-
-  svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; }
-}
-.lecture-card:hover .button { background: var(--color-primary-dark); }
+.lecture-card:hover .cta-button { background: var(--color-primary-dark); }
 
 /* ── Skeleton ──────────────────────────────────────────────── */
 .lecture-card--skeleton { pointer-events: none; }
@@ -215,11 +200,12 @@
     border-inline-start: 0;
     border-top: 1px solid var(--color-border);
   }
+  .cta-button--block { width: auto; }
 }
 
 @media (max-width: 480px) {
   .card-action { flex-direction: column; align-items: stretch; }
-  .button { width: 100%; }
+  .cta-button--block { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

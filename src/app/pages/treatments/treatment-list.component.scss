@@ -11,37 +11,6 @@
   }
 }
 
-// ─── Page hero CTA (projected into <app-page-hero> actions slot) ──────────────
-
-.treatments-hero__cta {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-sm);
-  background: var(--color-primary);
-  color: #fff;
-  padding: var(--spacing-md) var(--spacing-2xl);
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  font-size: var(--font-size-base);
-  font-weight: 600;
-  box-shadow: 0.2em 0.2em 0 var(--color-primary-a35), var(--shadow-md);
-  border: 0.12em solid var(--color-primary-a40);
-  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
-
-  &:hover {
-    background: var(--color-primary-dark);
-    transform: translateY(-3px);
-    box-shadow: 0.3em 0.4em 0 var(--color-primary-a40), var(--shadow-lg);
-  }
-
-  &::before {
-    content: '✦';
-    font-size: 0.85em;
-    opacity: 0.8;
-  }
-}
-
 // ─── Treatment section (editorial alternating layout) ─────────────────────────
 
 .treatment-section {

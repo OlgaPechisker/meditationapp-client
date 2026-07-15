@@ -51,21 +51,7 @@
     margin-bottom: var(--spacing-2xl);
   }
 
-  &__cta {
-    display: inline-block;
-    background: #25D366;
-    color: #fff;
-    padding: var(--spacing-md) var(--spacing-2xl);
-    border-radius: var(--radius-full);
-    text-decoration: none;
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    text-align: center;
-    transition: background 0.2s;
+  .cta-button {
     align-self: flex-start;
-
-    &:hover {
-      background: #1da851;
-    }
   }
 }
