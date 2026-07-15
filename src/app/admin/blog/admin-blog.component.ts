@@ -74,7 +74,7 @@ export class AdminBlogComponent implements OnInit {
   save() {
     if (this.form.invalid) { this.error.set('אנא מלא את כל השדות הנדרשים'); return; }
     const { publishedAt, imageUrl, videoUrl, ...rest } = this.form.value;
-    const body: Record<string, unknown> = { ...rest, locale: 'he' };
+    const body: Record<string, unknown> = { ...rest };
     const editing = this.editing();
 
     if (editing) {
@@ -95,7 +95,7 @@ export class AdminBlogComponent implements OnInit {
         error: () => this.error.set('שגיאה בעדכון'),
       });
     } else {
-      this.api.post('/blog', body).subscribe({
+      this.api.post('/blog', { ...body, locale: 'he' }).subscribe({
         next: () => { this.showForm.set(false); this.loadItems(); },
         error: () => this.error.set('שגיאה ביצירה'),
       });
