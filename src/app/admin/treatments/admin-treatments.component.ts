@@ -78,7 +78,7 @@ export class AdminTreatmentsComponent implements OnInit {
   save() {
     if (this.form.invalid) { this.error.set('אנא מלא את כל השדות הנדרשים'); return; }
     const formVal = this.form.value;
-    const body: Record<string, unknown> = { ...formVal, locale: 'he' };
+    const body: Record<string, unknown> = { ...formVal };
     if (!body['imageUrl']) delete body['imageUrl'];
     const editing = this.editing();
 
@@ -88,7 +88,7 @@ export class AdminTreatmentsComponent implements OnInit {
         error: () => this.error.set('שגיאה בעדכון'),
       });
     } else {
-      this.api.post('/treatments', body).subscribe({
+      this.api.post('/treatments', { ...body, locale: 'he' }).subscribe({
         next: () => { this.showForm.set(false); this.loadItems(); },
         error: () => this.error.set('שגיאה ביצירה'),
       });
