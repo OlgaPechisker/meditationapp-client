@@ -1,12 +1,18 @@
 <div class="treatments-page">
 
-  <header class="treatments-hero">
-    <div class="treatments-hero__inner">
-      <h1 class="treatments-hero__title">{{ 'treatments.title' | transloco }}</h1>
-      <p class="treatments-hero__subtitle">מרחב ריפוי, מדיטציה ושלווה פנימית</p>
-      <span class="treatments-hero__ornament" aria-hidden="true"></span>
-    </div>
-  </header>
+  <app-page-hero>
+    <h1>{{ 'treatments.title' | transloco }}</h1>
+    <p hero-subtitle>מרחב ריפוי, מדיטציה ושלווה פנימית</p>
+    <a
+      hero-actions
+      [href]="getWhatsappLink()"
+      target="_blank"
+      rel="noopener"
+      class="treatments-hero__cta"
+    >
+      {{ 'treatments.book_via_whatsapp' | transloco }}
+    </a>
+  </app-page-hero>
 
   @for (treatment of treatments(); track treatment.id; let idx = $index) {
     <section
@@ -31,14 +37,6 @@
           <h2 class="treatment-section__title" data-testid="treatment-card-title">{{ treatment.title }}</h2>
           <span class="treatment-section__divider" aria-hidden="true"></span>
           <div class="treatment-section__description rich-content" [innerHTML]="treatment.description"></div>
-          <a
-            [href]="getWhatsappLink(treatment.title)"
-            target="_blank"
-            rel="noopener"
-            class="treatment-section__cta"
-          >
-            {{ 'treatments.book_via_whatsapp' | transloco }}
-          </a>
         </app-glass-panel>
 
       </div>

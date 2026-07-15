@@ -4,6 +4,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService } from '../../core/services/api.service';
 import { SeoService } from '../../core/services/seo.service';
+import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
 
 interface SiteContent {
   id: number;
@@ -15,7 +16,7 @@ interface SiteContent {
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [TranslocoPipe],
+  imports: [TranslocoPipe, PageHeroComponent],
   templateUrl: './about.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './about.component.scss',

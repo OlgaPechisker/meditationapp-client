@@ -1,28 +1,19 @@
 @use '../../../styles/mixins' as *;
 
 .blog-page {
-  padding: var(--spacing-3xl) 0;
+  padding-bottom: var(--spacing-3xl);
   min-height: 40vh;
 
   &__container {
     @include container;
-  }
-
-  &__head {
-    text-align: center;
-    margin: 0 0 var(--spacing-xl);
-  }
-
-  &__title {
-    font-size: var(--font-size-2xl);
-    color: var(--color-text);
-    margin: 0 0 var(--spacing-sm);
+    padding-block-start: var(--spacing-3xl);
   }
 }
 
 .searchbar {
   max-width: 520px;
-  margin: var(--spacing-lg) auto 0;
+  width: 100%;
+  margin: 0;
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);

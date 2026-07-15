@@ -5,6 +5,7 @@ import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { WhatsappService } from '../../core/services/whatsapp.service';
 import { SeoService } from '../../core/services/seo.service';
 import { TicketCardComponent, GlassPanelComponent, PaperNoteComponent, SheenCardComponent } from '../../shared/expressive';
+import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
 
 interface Treatment {
   id: number;
@@ -21,7 +22,7 @@ interface Treatment {
 @Component({
   selector: 'app-treatment-list',
   standalone: true,
-  imports: [TranslocoPipe, TicketCardComponent, GlassPanelComponent, PaperNoteComponent, SheenCardComponent],
+  imports: [TranslocoPipe, TicketCardComponent, GlassPanelComponent, PaperNoteComponent, SheenCardComponent, PageHeroComponent],
   templateUrl: './treatment-list.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './treatment-list.component.scss',
@@ -42,7 +43,13 @@ export class TreatmentListComponent implements OnInit {
       .subscribe(res => { this.treatments.set(res.data); this.loaded.set(true); });
   }
 
-  getWhatsappLink(title: string): string {
-    return this.whatsapp.buildTreatmentLink(title);
+  /**
+   * WhatsApp link for a booking enquiry. Called with a treatment title for a
+   * specific enquiry, or without arguments for the general hero-level CTA.
+   */
+  getWhatsappLink(title = ''): string {
+    return title
+      ? this.whatsapp.buildTreatmentLink(title)
+      : this.whatsapp.buildLink('שלום, אני מעוניין/ת לקבוע תור לטיפול');
   }
 }

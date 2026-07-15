@@ -1,18 +1,15 @@
 <div class="lectures-page">
-  <section class="lec-hero">
-    <div class="lec-container">
-      <span class="eyebrow">{{ 'lectures.eyebrow' | transloco }}</span>
-      <h1 data-testid="lectures-title">{{ 'lectures.hero_title' | transloco }}</h1>
-      <p>{{ 'lectures.intro' | transloco }}</p>
-    </div>
-  </section>
-
-  <div class="lec-container">
-    <div class="legend">
+  <app-page-hero>
+    <span hero-eyebrow>{{ 'lectures.eyebrow' | transloco }}</span>
+    <h1 data-testid="lectures-title">{{ 'lectures.hero_title' | transloco }}</h1>
+    <p hero-subtitle>{{ 'lectures.intro' | transloco }}</p>
+    <div hero-actions class="legend">
       <span><i class="dot" aria-hidden="true"></i>{{ 'lectures.legend_scheduled' | transloco }}</span>
       <span><i class="dot dot--order" aria-hidden="true"></i>{{ 'lectures.legend_ondemand' | transloco }}</span>
     </div>
+  </app-page-hero>
 
+  <div class="lec-container">
     @if (!loaded()) {
       <div class="lecture-list lecture-list--skeleton" aria-hidden="true">
         @for (s of skeletons; track s) {

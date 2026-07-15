@@ -5,11 +5,12 @@ import { RouterLink } from '@angular/router';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { SeoService } from '../../core/services/seo.service';
 import { Lecture, groupLectures } from '../../core/models/lecture.model';
+import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
 
 @Component({
   selector: 'app-lectures',
   standalone: true,
-  imports: [TranslocoPipe, DatePipe, RouterLink, NgTemplateOutlet],
+  imports: [TranslocoPipe, DatePipe, RouterLink, NgTemplateOutlet, PageHeroComponent],
   templateUrl: './lectures.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './lectures.component.scss',

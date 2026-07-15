@@ -1,0 +1,88 @@
+@use '../../../styles/mixins' as *;
+
+// ─── Shared "Editorial Split" page hero (hero-B) ──────────────────────────────
+// ViewEncapsulation.None: every rule is namespaced under `.page-hero` to style
+// projected content without leaking globally.
+
+.page-hero {
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: clamp(1.25rem, 3vw, 2rem) 0 clamp(1rem, 2vw, 1.5rem);
+  position: relative;
+
+  // Champagne→purple hairline anchoring the header.
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: -1px;
+    width: min(220px, 40%);
+    height: 3px;
+    background: var(--gradient-accent-line);
+    border-radius: var(--radius-full);
+  }
+
+  // 1fr auto so the actions column collapses to 0 when a page omits it.
+  &__inner {
+    @include container;
+    display: grid;
+    gap: var(--spacing-lg);
+    align-items: end;
+
+    @include responsive(md) {
+      grid-template-columns: 1fr auto;
+      gap: var(--spacing-2xl);
+    }
+  }
+
+  &__eyebrow {
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    &:empty { display: none; }
+
+    > * { margin: 0; }
+  }
+
+  &__title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-text);
+    line-height: 1.1;
+    font-weight: 800;
+    margin: var(--spacing-xs) 0;
+
+    &:empty { display: none; }
+
+    // Normalise the projected <h1> so the wrapper owns the type scale.
+    > * {
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      line-height: inherit;
+    }
+  }
+
+  &__subtitle {
+    color: var(--color-text-light);
+    font-size: var(--font-size-lg);
+    max-width: 40rem;
+
+    &:empty { display: none; }
+
+    > * { margin: 0; }
+  }
+
+  &__actions {
+    align-self: center;
+    justify-self: start;
+
+    &:empty { display: none; }
+
+    @include responsive(md) {
+      justify-self: end;
+    }
+  }
+}

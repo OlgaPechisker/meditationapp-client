@@ -11,42 +11,34 @@
   }
 }
 
-// ─── Page hero ────────────────────────────────────────────────────────────────
+// ─── Page hero CTA (projected into <app-page-hero> actions slot) ──────────────
 
-.treatments-hero {
-  background: linear-gradient(160deg, var(--color-bg-alt) 0%, var(--color-primary-a12) 100%);
-  padding: var(--spacing-3xl) 0 var(--spacing-2xl);
-  text-align: center;
+.treatments-hero__cta {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--spacing-md) var(--spacing-2xl);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  box-shadow: 0.2em 0.2em 0 var(--color-primary-a35), var(--shadow-md);
+  border: 0.12em solid var(--color-primary-a40);
+  transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
 
-  &__inner {
-    @include container;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-md);
+  &:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0.3em 0.4em 0 var(--color-primary-a40), var(--shadow-lg);
   }
 
-  &__title {
-    font-size: var(--font-size-3xl);
-    color: var(--color-primary);
-    margin: 0;
-    font-weight: 700;
-  }
-
-  &__subtitle {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-light);
-    margin: 0;
-  }
-
-  // Decorative blush/purple ornament bar
-  &__ornament {
-    display: block;
-    width: 80px;
-    height: 3px;
-    background: var(--gradient-accent-line);
-    border-radius: var(--radius-full);
-    margin-block-start: var(--spacing-sm);
+  &::before {
+    content: '✦';
+    font-size: 0.85em;
+    opacity: 0.8;
   }
 }
 
@@ -146,43 +138,5 @@
     margin: 0;
     position: relative;
     z-index: 1;
-  }
-
-  &__cta {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--spacing-sm);
-    width: 100%;
-    background: var(--color-primary);
-    color: #fff;
-    padding: var(--spacing-md) var(--spacing-lg);
-    border-radius: var(--radius-full);
-    text-decoration: none;
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    box-shadow: 0.2em 0.2em 0 var(--color-primary-a35), var(--shadow-md);
-    border: 0.12em solid var(--color-primary-a40);
-    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
-    margin-block-start: var(--spacing-sm);
-    position: relative;
-    z-index: 1;
-
-    @include responsive(md) {
-      width: auto;
-      padding: var(--spacing-md) var(--spacing-2xl);
-    }
-
-    &:hover {
-      background: var(--color-primary-dark);
-      transform: translateY(-3px);
-      box-shadow: 0.3em 0.4em 0 var(--color-primary-a40), var(--shadow-lg);
-    }
-
-    &::before {
-      content: '✦';
-      font-size: 0.85em;
-      opacity: 0.8;
-    }
   }
 }

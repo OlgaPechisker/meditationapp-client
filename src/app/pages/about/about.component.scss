@@ -1,10 +1,11 @@
 @use '../../../styles/mixins' as *;
 
 .about-page {
-  padding: var(--spacing-3xl) 0;
+  padding-bottom: var(--spacing-3xl);
 
   &__container {
     @include container; // responsive padding + max-width: 1200px centered
+    padding-block-start: var(--spacing-3xl);
   }
 
   &__body {
@@ -53,13 +54,6 @@
     object-position: top center;
     aspect-ratio: 3 / 4;
     max-height: 580px;
-  }
-
-  &__title {
-    font-size: var(--font-size-3xl);
-    color: var(--color-primary-dark);
-    margin-bottom: var(--spacing-xl);
-    line-height: 1.2;
   }
 
   &__content {

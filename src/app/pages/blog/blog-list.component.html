@@ -1,20 +1,21 @@
 <div class="blog-page">
+  <app-page-hero>
+    <h1>{{ 'blog.title' | transloco }}</h1>
+    <div hero-actions class="searchbar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input
+        type="text"
+        class="searchbar__input"
+        [attr.aria-label]="'blog.search_placeholder' | transloco"
+        [placeholder]="'blog.search_placeholder' | transloco"
+        data-testid="blog-search"
+        [value]="searchTerm()"
+        (input)="onSearchInput($any($event.target).value)"
+      />
+    </div>
+  </app-page-hero>
+
   <div class="blog-page__container">
-    <header class="blog-page__head">
-      <h1 class="blog-page__title">{{ 'blog.title' | transloco }}</h1>
-      <div class="searchbar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input
-          type="text"
-          class="searchbar__input"
-          [attr.aria-label]="'blog.search_placeholder' | transloco"
-          [placeholder]="'blog.search_placeholder' | transloco"
-          data-testid="blog-search"
-          [value]="searchTerm()"
-          (input)="onSearchInput($any($event.target).value)"
-        />
-      </div>
-    </header>
 
     @if (posts().length) {
       <section class="blog-bento">

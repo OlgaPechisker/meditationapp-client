@@ -7,6 +7,7 @@ import { Subject, merge, of, debounceTime, distinctUntilChanged, skip, switchMap
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { SeoService } from '../../core/services/seo.service';
 import { getYouTubeId, youTubeThumb, isVideoPost } from '../../core/utils/youtube';
+import { PageHeroComponent } from '../../shared/page-hero/page-hero.component';
 
 interface BlogPost {
   id: number;
@@ -23,7 +24,7 @@ interface BlogPost {
 @Component({
   selector: 'app-blog-list',
   standalone: true,
-  imports: [RouterLink, TranslocoPipe, DatePipe],
+  imports: [RouterLink, TranslocoPipe, DatePipe, PageHeroComponent],
   templateUrl: './blog-list.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './blog-list.component.scss',
