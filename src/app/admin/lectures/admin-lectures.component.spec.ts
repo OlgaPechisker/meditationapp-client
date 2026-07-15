@@ -36,14 +36,9 @@ describe('AdminLecturesComponent conditional fields', () => {
   function fillRequiredFields(): void {
     component.form.patchValue({
       title: 'הרצאה',
-      subtitle: 'כותרת משנה',
-      summary: 'תקציר',
       description: '<p>תיאור</p>',
-      audience: 'קהל יעד',
-      durationLabel: '90 דקות',
       location: 'תל אביב',
     });
-    component.highlights.at(0).setValue('  נקודה מרכזית  ');
   }
 
   beforeEach(() => {
@@ -67,10 +62,15 @@ describe('AdminLecturesComponent conditional fields', () => {
 
   it('requires a date for scheduled lectures and not a minimum', () => {
     component.openCreate();
-    const { date, minimumParticipants } = component.form.controls;
+    const { date, minimumParticipants, price, subtitle, summary, audience, durationLabel } = component.form.controls;
     expect(date.valid).toBeFalse();
     minimumParticipants.setValue(null);
     expect(minimumParticipants.valid).toBeTrue();
+    expect(price.valid).toBeTrue();
+    expect(subtitle.valid).toBeTrue();
+    expect(summary.valid).toBeTrue();
+    expect(audience.valid).toBeTrue();
+    expect(durationLabel.valid).toBeTrue();
   });
 
   it('clears the date and requires a minimum when switching to on-demand', () => {
@@ -94,66 +94,41 @@ describe('AdminLecturesComponent conditional fields', () => {
     expect(component.form.controls.minimumParticipants.value).toBeNull();
   });
 
-  it('keeps price optional for on-demand and required for scheduled', () => {
+  it('keeps price optional for every lecture type', () => {
     component.openCreate();
     component.form.controls.price.setValue(null);
-    expect(component.form.controls.price.valid).toBeFalse();
+    expect(component.form.controls.price.valid).toBeTrue();
 
     component.form.controls.type.setValue('ON_DEMAND');
     component.form.controls.price.setValue(null);
     expect(component.form.controls.price.valid).toBeTrue();
   });
 
-  it('manages the highlights list with at least one entry', () => {
+  it('allows an empty highlights list', () => {
     component.openCreate();
-    expect(component.highlights.length).toBe(1);
+    expect(component.highlights.length).toBe(0);
     component.addHighlight();
-    expect(component.highlights.length).toBe(2);
-    component.removeHighlight(0);
     expect(component.highlights.length).toBe(1);
     component.removeHighlight(0);
-    expect(component.highlights.length).toBe(1);
-  });
-
-  it('rejects whitespace-only highlights', () => {
-    component.openCreate();
-    fillRequiredFields();
-    component.form.patchValue({ date: '2099-01-01T10:00', price: 120 });
-    component.highlights.at(0).setValue('   ');
-
-    expect(component.form.invalid).toBeTrue();
-
-    component.save();
-
-    expect(api.post).not.toHaveBeenCalled();
-    expect(api.patch).not.toHaveBeenCalled();
+    expect(component.highlights.length).toBe(0);
   });
 
   it('posts the scheduled payload with an ISO date and create-only locale', () => {
     component.openCreate();
     fillRequiredFields();
-    component.form.patchValue({
-      date: '2099-01-01T10:00',
-      price: 120,
-      sortOrder: 3,
-      imageUrl: '',
-    });
+    component.form.patchValue({ date: '2099-01-01T10:00', sortOrder: 3, imageUrl: '' });
 
     component.save();
 
     expect(api.post).toHaveBeenCalledOnceWith('/lectures', {
       type: 'SCHEDULED',
       title: 'הרצאה',
-      subtitle: 'כותרת משנה',
-      summary: 'תקציר',
       description: '<p>תיאור</p>',
-      audience: 'קהל יעד',
-      durationLabel: '90 דקות',
       location: 'תל אביב',
-      highlights: ['נקודה מרכזית'],
+      highlights: [],
       sortOrder: 3,
       isActive: true,
-      price: 120,
+      price: null,
       date: new Date('2099-01-01T10:00').toISOString(),
       minimumParticipants: null,
       locale: 'he',
@@ -165,24 +140,16 @@ describe('AdminLecturesComponent conditional fields', () => {
     component.openCreate();
     component.form.controls.type.setValue('ON_DEMAND');
     fillRequiredFields();
-    component.form.patchValue({
-      minimumParticipants: 6,
-      price: null,
-      imageUrl: 'https://example.com/new.jpg',
-    });
+    component.form.patchValue({ minimumParticipants: 6, price: null, imageUrl: 'https://example.com/new.jpg' });
 
     component.save();
 
     expect(api.post).toHaveBeenCalledOnceWith('/lectures', {
       type: 'ON_DEMAND',
       title: 'הרצאה',
-      subtitle: 'כותרת משנה',
-      summary: 'תקציר',
       description: '<p>תיאור</p>',
-      audience: 'קהל יעד',
-      durationLabel: '90 דקות',
       location: 'תל אביב',
-      highlights: ['נקודה מרכזית'],
+      highlights: [],
       sortOrder: 0,
       isActive: true,
       price: null,
@@ -198,6 +165,7 @@ describe('AdminLecturesComponent conditional fields', () => {
     component.openEdit(lecture);
     component.form.controls.type.setValue('ON_DEMAND');
     component.form.controls.minimumParticipants.setValue(8);
+    component.form.patchValue({ subtitle: '', summary: '', audience: '', durationLabel: '' });
     component.onImageUrlChange(null);
 
     component.save();
@@ -205,11 +173,11 @@ describe('AdminLecturesComponent conditional fields', () => {
     expect(api.patch).toHaveBeenCalledOnceWith('/lectures/1', {
       type: 'ON_DEMAND',
       title: 'הרצאה',
-      subtitle: 'כותרת משנה',
-      summary: 'תקציר',
+      subtitle: null,
+      summary: null,
       description: '<p>תיאור</p>',
-      audience: 'קהל יעד',
-      durationLabel: '90 דקות',
+      audience: null,
+      durationLabel: null,
       location: 'תל אביב',
       highlights: ['נקודה'],
       sortOrder: 3,
