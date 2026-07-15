@@ -17,15 +17,18 @@
         <form [formGroup]="form" (ngSubmit)="save()">
           <div class="form-row">
             <div class="form-group">
-              <label>סוג הרצאה</label>
-              <select formControlName="type" data-testid="field-type">
+              <label for="lecture-type">סוג הרצאה <span class="required-marker" aria-hidden="true" data-testid="required-marker-type">*</span></label>
+              <select id="lecture-type" formControlName="type" data-testid="field-type" [class.invalid-control]="isInvalid(form.controls.type)" [attr.aria-invalid]="isInvalid(form.controls.type)">
                 <option value="SCHEDULED">מועד קבוע</option>
                 <option value="ON_DEMAND">להזמנה (תאריך גמיש)</option>
               </select>
             </div>
             <div class="form-group">
-              <label>כותרת</label>
-              <input formControlName="title" data-testid="field-title" />
+              <label for="lecture-title">כותרת <span class="required-marker" aria-hidden="true" data-testid="required-marker-title">*</span></label>
+              <input id="lecture-title" formControlName="title" data-testid="field-title" [class.invalid-control]="isInvalid(form.controls.title)" [attr.aria-invalid]="isInvalid(form.controls.title)" aria-describedby="title-error" />
+              @if (isInvalid(form.controls.title)) {
+                <p id="title-error" class="field-error" role="alert" data-testid="field-error-title">יש להזין כותרת.</p>
+              }
             </div>
           </div>
 
@@ -46,8 +49,11 @@
           </div>
 
           <div class="form-group">
-            <label>תיאור</label>
-            <app-rich-text-editor formControlName="description" data-testid="field-description"></app-rich-text-editor>
+            <label>תיאור <span class="required-marker" aria-hidden="true" data-testid="required-marker-description">*</span></label>
+            <app-rich-text-editor formControlName="description" data-testid="field-description" [class.invalid-control]="isInvalid(form.controls.description)" [attr.aria-invalid]="isInvalid(form.controls.description)" aria-describedby="description-error"></app-rich-text-editor>
+            @if (isInvalid(form.controls.description)) {
+              <p id="description-error" class="field-error" role="alert" data-testid="field-error-description">יש להזין תיאור.</p>
+            }
           </div>
 
           <div class="form-group">
@@ -78,24 +84,37 @@
 
           <div class="form-row">
             <div class="form-group">
-              <label>מיקום</label>
-              <input formControlName="location" data-testid="field-location" />
+              <label for="lecture-location">מיקום <span class="required-marker" aria-hidden="true" data-testid="required-marker-location">*</span></label>
+              <input id="lecture-location" formControlName="location" data-testid="field-location" [class.invalid-control]="isInvalid(form.controls.location)" [attr.aria-invalid]="isInvalid(form.controls.location)" aria-describedby="location-error" />
+              @if (isInvalid(form.controls.location)) {
+                <p id="location-error" class="field-error" role="alert" data-testid="field-error-location">יש להזין מיקום.</p>
+              }
             </div>
 
             @if (form.controls.type.value === 'SCHEDULED') {
               <div class="form-group">
-                <label>תאריך</label>
-                <input type="datetime-local" formControlName="date" data-testid="field-date" />
+                <label for="lecture-date">תאריך <span class="required-marker" aria-hidden="true" data-testid="required-marker-date">*</span></label>
+                <input id="lecture-date" type="datetime-local" formControlName="date" data-testid="field-date" [class.invalid-control]="isInvalid(form.controls.date)" [attr.aria-invalid]="isInvalid(form.controls.date)" aria-describedby="date-error" />
+                @if (isInvalid(form.controls.date)) {
+                  <p id="date-error" class="field-error" role="alert" data-testid="field-error-date">יש להזין תאריך.</p>
+                }
               </div>
             } @else {
               <div class="form-group">
-                <label>מינימום משתתפים</label>
+                <label for="lecture-minimum-participants">מינימום משתתפים <span class="required-marker" aria-hidden="true" data-testid="required-marker-minimumParticipants">*</span></label>
                 <input
+                  id="lecture-minimum-participants"
                   type="number"
                   min="1"
                   formControlName="minimumParticipants"
                   data-testid="field-minimumParticipants"
+                  [class.invalid-control]="isInvalid(form.controls.minimumParticipants)"
+                  [attr.aria-invalid]="isInvalid(form.controls.minimumParticipants)"
+                  aria-describedby="minimum-participants-error"
                 />
+                @if (isInvalid(form.controls.minimumParticipants)) {
+                  <p id="minimum-participants-error" class="field-error" role="alert" data-testid="field-error-minimumParticipants">יש להזין לפחות משתתף אחד.</p>
+                }
               </div>
             }
           </div>

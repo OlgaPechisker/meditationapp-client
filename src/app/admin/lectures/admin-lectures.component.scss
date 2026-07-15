@@ -1,1 +1,19 @@
 @import '../_shared-admin';
+
+.required-marker,
+.field-error {
+  color: #c0392b;
+}
+
+.required-marker {
+  font-weight: 700;
+}
+
+.field-error {
+  margin: 0.3rem 0 0;
+  font-size: 0.8rem;
+}
+
+.invalid-control {
+  border-color: #c0392b !important;
+}

@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule, FormBuilder, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -32,20 +32,20 @@ export class AdminLecturesComponent implements OnInit {
 
   form = this.fb.group({
     type: this.fb.nonNullable.control<LectureType>('SCHEDULED', Validators.required),
-    title: ['', Validators.required],
-    subtitle: ['', Validators.required],
-    summary: ['', Validators.required],
-    description: ['', Validators.required],
-    audience: ['', Validators.required],
-    durationLabel: ['', Validators.required],
-    location: ['', Validators.required],
+    title: ['', trimmedRequired],
+    subtitle: [''],
+    summary: [''],
+    description: ['', trimmedRequired],
+    audience: [''],
+    durationLabel: [''],
+    location: ['', trimmedRequired],
     date: [''],
     minimumParticipants: this.fb.control<number | null>(null),
     price: this.fb.control<number | null>(null),
     sortOrder: this.fb.nonNullable.control(0),
     imageUrl: [''],
     isActive: this.fb.nonNullable.control(true),
-    highlights: this.fb.array<FormControl<string>>([this.newHighlight()]),
+    highlights: this.fb.array<FormControl<string>>([]),
   });
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class AdminLecturesComponent implements OnInit {
   }
 
   private newHighlight(value = '') {
-    return this.fb.nonNullable.control(value, trimmedRequired);
+    return this.fb.nonNullable.control(value);
   }
 
   addHighlight() {
@@ -68,7 +68,7 @@ export class AdminLecturesComponent implements OnInit {
   }
 
   removeHighlight(index: number) {
-    if (this.highlights.length > 1) this.highlights.removeAt(index);
+    this.highlights.removeAt(index);
   }
 
   /** Toggles required validators and clears stale conditional values on type change. */
@@ -78,7 +78,7 @@ export class AdminLecturesComponent implements OnInit {
       date.setValidators([Validators.required]);
       minimumParticipants.clearValidators();
       minimumParticipants.setValue(null);
-      price.setValidators([Validators.required, Validators.min(0)]);
+      price.setValidators([Validators.min(0)]);
     } else {
       date.clearValidators();
       date.setValue('');
@@ -91,9 +91,8 @@ export class AdminLecturesComponent implements OnInit {
   }
 
   private setHighlights(values: string[]) {
-    const items = values.length ? values : [''];
     this.highlights.clear();
-    items.forEach((v) => this.highlights.push(this.newHighlight(v)));
+    values.forEach((v) => this.highlights.push(this.newHighlight(v)));
   }
 
   openCreate() {
@@ -115,7 +114,7 @@ export class AdminLecturesComponent implements OnInit {
       imageUrl: '',
       isActive: true,
     });
-    this.setHighlights(['']);
+    this.setHighlights([]);
     this.applyTypeRules('SCHEDULED');
     this.showForm.set(true);
   }
@@ -139,7 +138,7 @@ export class AdminLecturesComponent implements OnInit {
       imageUrl: item.imageUrl ?? '',
       isActive: item.isActive,
     });
-    this.setHighlights(item.highlights?.length ? item.highlights : ['']);
+    this.setHighlights(item.highlights ?? []);
     this.applyTypeRules(item.type);
     this.showForm.set(true);
   }
@@ -150,6 +149,10 @@ export class AdminLecturesComponent implements OnInit {
 
   onImageUrlChange(url: string | null): void {
     this.form.patchValue({ imageUrl: url ?? '' });
+  }
+
+  isInvalid(control: AbstractControl | null): boolean {
+    return !!control && control.invalid && (control.touched || this.form.touched);
   }
 
   isPubliclyVisible(item: Lecture): boolean {
@@ -190,11 +193,7 @@ export class AdminLecturesComponent implements OnInit {
     const body: Record<string, unknown> = {
       type: v.type,
       title: v.title,
-      subtitle: v.subtitle,
-      summary: v.summary,
       description: v.description,
-      audience: v.audience,
-      durationLabel: v.durationLabel,
       location: v.location,
       highlights: cleanHighlights,
       sortOrder: v.sortOrder ?? 0,
@@ -203,6 +202,21 @@ export class AdminLecturesComponent implements OnInit {
       date: isScheduled && v.date ? new Date(v.date).toISOString() : null,
       minimumParticipants: isScheduled ? null : v.minimumParticipants,
     };
+    const optionalText = {
+      subtitle: v.subtitle?.trim() ?? '',
+      summary: v.summary?.trim() ?? '',
+      audience: v.audience?.trim() ?? '',
+      durationLabel: v.durationLabel?.trim() ?? '',
+    };
+    if (editing) {
+      Object.entries(optionalText).forEach(([key, value]) => {
+        body[key] = value || null;
+      });
+    } else {
+      Object.entries(optionalText).forEach(([key, value]) => {
+        if (value) body[key] = value;
+      });
+    }
     if (editing) body['imageUrl'] = v.imageUrl || null;
     else if (v.imageUrl) body['imageUrl'] = v.imageUrl;
     // locale is only accepted on create; the strict PATCH schema rejects it.
