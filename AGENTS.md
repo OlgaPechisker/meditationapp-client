@@ -2,7 +2,7 @@
 
 Angular frontend for the Einat Shomonov meditation, healing & wellness practitioner website.
 
-> **Backend (API):** [Einat server](https://github.com/OlgaPechisker/meditationapp)
+> **Backend (API):** [Einat server] C:\Users\opechisker\source\repos\Einat
 
 ## Tech Stack
 
