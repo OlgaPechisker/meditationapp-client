@@ -111,63 +111,10 @@
     }
   }
 
-  // ── Content column — "doodle paper note" card, dominant element ──────────────
+  // ── Content column — ticket-card, dominant element ───────────────────────────
   &__content {
     flex: 1;
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-lg);
-    position: relative;
-
-    // Ruled paper background — warm-white with blush horizontal lines
-    background:
-      linear-gradient(var(--paper-bg) 1.5em, transparent 1.5em) 0 0 / 100% 1.6em,
-      linear-gradient(var(--color-accent-a18) 0.08em, transparent 0.08em) 0 1.5em / 100% 1.6em var(--paper-bg);
-
-    // Sketchy hand-drawn border
-    border: 0.2em solid var(--color-primary-a40);
-    border-radius: var(--sketch-radius);
-
-    // Offset hard shadow (purple) + ambient soft shadow
-    box-shadow: var(--shadow-sketch);
-
-    padding: 2.5em 1.2em 1.8em;
-    transition:
-      transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-      box-shadow 0.4s ease,
-      border-radius 0.4s ease;
-
-    @include responsive(md) {
-      padding: 3em 1.5em 2em;
-    }
-
-    @include responsive(lg) {
-      padding: 3.5em var(--spacing-2xl) 2.5em;
-    }
-
-    // Paper tape pseudo-element at top center
-    &::before {
-      content: '';
-      position: absolute;
-      inset-block-start: -0.7em;
-      // translateX(-50%) centers on the element's own axis — valid in both LTR and RTL
-      inset-inline-start: 50%;
-      transform: translateX(-50%) rotate(-4deg);
-      width: 5em;
-      height: 1.4em;
-      background: var(--color-champagne-tape);
-      border: 0.1em solid rgba(0, 0, 0, 0.1);
-      box-shadow: 0.1em 0.1em 0.2em rgba(0, 0, 0, 0.1);
-      border-radius: 2px 4px 2px 5px;
-      z-index: 2;
-    }
-
-    &:hover {
-      transform: translateY(-0.5em) rotate(0.5deg);
-      box-shadow: var(--shadow-sketch-hover);
-      border-radius: var(--sketch-radius-hover);
-    }
   }
 
   &__title {
@@ -238,75 +185,4 @@
       opacity: 0.8;
     }
   }
-}
-
-// ─── Doodle decorations inside the paper note card ────────────────────────────
-
-.note-doodle {
-  position: absolute;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  pointer-events: none;
-  z-index: 0;
-
-  &--sparkle {
-    width: 1.8em;
-    height: 1.8em;
-    inset-block-start: 1.5em;
-    inset-inline-end: 1.5em;
-    stroke: var(--color-primary);
-    stroke-width: 1.4;
-    fill: var(--color-accent-a40);
-  }
-
-  &--swirl {
-    width: 2.5em;
-    height: 2.5em;
-    inset-block-end: 1.5em;
-    inset-inline-start: 1em;
-    stroke: var(--color-accent);
-    stroke-width: 5;
-    opacity: 0.6;
-  }
-}
-
-// ─── Keyframe animations ──────────────────────────────────────────────────────
-
-@media (prefers-reduced-motion: no-preference) {
-  .treatment-section__content {
-    animation: floatCard 6s ease-in-out infinite;
-
-    &::before {
-      animation: tapeFlutter 4s infinite alternate ease-in-out;
-    }
-  }
-
-  .note-doodle--sparkle {
-    animation: pulseSparkle 3s infinite alternate ease-in-out;
-  }
-
-  .note-doodle--swirl {
-    animation: rotateDoodle 15s linear infinite;
-  }
-}
-
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-0.4em); }
-}
-
-@keyframes tapeFlutter {
-  0% { transform: translateX(-50%) rotate(-4deg) scale(1); }
-  100% { transform: translateX(-50%) rotate(-2deg) scale(1.02); }
-}
-
-@keyframes pulseSparkle {
-  0% { transform: scale(0.8); opacity: 0.6; }
-  100% { transform: scale(1.1); opacity: 1; }
-}
-
-@keyframes rotateDoodle {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }

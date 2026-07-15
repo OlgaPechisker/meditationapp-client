@@ -4,6 +4,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { ApiService, PaginatedResponse } from '../../core/services/api.service';
 import { WhatsappService } from '../../core/services/whatsapp.service';
 import { SeoService } from '../../core/services/seo.service';
+import { TicketCardComponent, GlassPanelComponent, PaperNoteComponent, SheenCardComponent } from '../../shared/expressive';
 
 interface Treatment {
   id: number;
@@ -20,7 +21,7 @@ interface Treatment {
 @Component({
   selector: 'app-treatment-list',
   standalone: true,
-  imports: [TranslocoPipe],
+  imports: [TranslocoPipe, TicketCardComponent, GlassPanelComponent, PaperNoteComponent, SheenCardComponent],
   templateUrl: './treatment-list.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './treatment-list.component.scss',
