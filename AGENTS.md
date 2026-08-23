@@ -57,3 +57,17 @@ Default locale is **Hebrew** (`he`). English (`en`) translations are wired in bu
 ## Admin
 
 The admin panel is served by the frontend at `/admin/login`. It authenticates against the backend API (JWT). See the [server repo](https://github.com/OlgaPechisker/meditationapp) for admin setup.
+
+## Cross-repository E2E CI
+
+On pull requests and pushes to `main`, the `e2e` CI job builds and serves this branch of the
+client through SSR, checks out the backend repository's (`meditationapp`) `main` branch,
+starts PostgreSQL and the backend, waits for both applications to become healthy, and runs
+the backend repository's root Playwright suite against them. The Playwright HTML report is
+uploaded as a build artifact if the suite fails.
+
+To reproduce this locally, check out the backend as a sibling directory. In that repository,
+start its PostgreSQL service with `docker-compose up -d`, then run its migrate/seed/build/
+start commands. Build and serve this client with `npm run build` and
+`npm run serve:ssr:client`, then run the backend's e2e suite from its checkout with
+`APP_URL=http://localhost:4000 API_URL=http://localhost:3000 npm run e2e`.
