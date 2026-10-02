@@ -40,7 +40,9 @@ are missing. Ports `3000` and `4200` must be free.
 
 ## Environment / API URL
 
-The app connects to the backend API. To point it at a different server, set the `API_URL` environment variable (or update `src/environments/`) before building.
+The Angular API URL is selected at build time from `src/environments/`. The production build
+uses the Railway API; `npm run build:e2e` uses `http://localhost:3000/api`. Setting `API_URL`
+for Playwright does not change the URL embedded in the client build.
 
 ## Building for Production
 
@@ -80,6 +82,6 @@ uploaded as a build artifact if the suite fails.
 
 To reproduce this locally, check out the backend as a sibling directory. In that repository,
 start its PostgreSQL service with `docker-compose up -d`, then run its migrate/seed/build/
-start commands. Build and serve this client with `npm run build` and
+start commands. Build and serve this client with `npm run build:e2e` and
 `npm run serve:ssr:client`, then run the backend's e2e suite from its checkout with
 `APP_URL=http://localhost:4000 API_URL=http://localhost:3000 npm run e2e`.
