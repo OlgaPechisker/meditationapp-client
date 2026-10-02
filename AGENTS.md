@@ -26,6 +26,18 @@ volta run --node 24.15.0 --npm 11.6.2 npm start
 # App available at http://localhost:4200
 ```
 
+To start both apps from this directory for local testing, keep the backend in
+the sibling `Einat` folder with `server/.env` configured for its Docker database
+(host port `5433`), and run:
+```powershell
+.\start-local.ps1
+```
+The script starts PostgreSQL, applies pending migrations, and serves the backend
+at `http://localhost:3000` and the frontend at `http://localhost:4200`.
+Press Ctrl+C to stop both app processes; PostgreSQL remains running. It does not
+seed or reset the database. Run `npm ci` once in each repository if dependencies
+are missing. Ports `3000` and `4200` must be free.
+
 ## Environment / API URL
 
 The app connects to the backend API. To point it at a different server, set the `API_URL` environment variable (or update `src/environments/`) before building.

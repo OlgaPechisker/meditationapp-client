@@ -11,7 +11,7 @@ import { WhatsappService } from '../../core/services/whatsapp.service';
   styleUrl: './cta-form.component.scss',
 })
 export class CtaFormComponent {
-  private whatsapp = inject(WhatsappService);
+  readonly whatsapp = inject(WhatsappService);
   private fb = inject(FormBuilder);
 
   /** Prefix for input ids/labels so they stay unique when the form appears on multiple pages. */
@@ -33,7 +33,9 @@ export class CtaFormComponent {
     }
     const { name, phone, email, message } = this.contactForm.value;
     const text = `שלום, שמי ${name}.\nטלפון: ${phone}\nאימייל: ${email}${message ? '\n' + message : ''}`;
-    window.open(this.whatsapp.buildLink(text), '_blank');
+    const link = this.whatsapp.buildLink(text);
+    if (!link) return;
+    window.open(link, '_blank');
     this.submitted.set(true);
     this.contactForm.reset();
   }

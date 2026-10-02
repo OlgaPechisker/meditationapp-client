@@ -21,7 +21,7 @@ import { Lecture } from '../../core/models/lecture.model';
 export class LectureDetailComponent implements OnInit {
   private api = inject(ApiService);
   private route = inject(ActivatedRoute);
-  private whatsapp = inject(WhatsappService);
+  readonly whatsapp = inject(WhatsappService);
   private seo = inject(SeoService);
   private destroyRef = inject(DestroyRef);
 
@@ -72,7 +72,7 @@ export class LectureDetailComponent implements OnInit {
     return l.type === 'SCHEDULED';
   }
 
-  whatsappLink(l: Lecture): string {
+  whatsappLink(l: Lecture): string | null {
     if (l.type === 'SCHEDULED') {
       const formatted = l.date ? formatDate(l.date, 'dd/MM/yyyy', 'en-US') : '';
       return this.whatsapp.buildScheduledLectureLink(l.title, formatted);

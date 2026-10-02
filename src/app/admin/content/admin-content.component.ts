@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService } from '../../core/services/api.service';
+import { WhatsappService } from '../../core/services/whatsapp.service';
 import { ImageUploadComponent } from '../_shared/image-upload/image-upload.component';
 import { RichTextEditorComponent } from '../_shared/rich-text-editor/rich-text-editor.component';
 
@@ -25,6 +26,7 @@ type SaveState = 'idle' | 'saving' | 'success' | 'error';
 })
 export class AdminContentComponent implements OnInit {
   private api = inject(ApiService);
+  private whatsapp = inject(WhatsappService);
   private fb = inject(FormBuilder);
 
   loading = signal(true);
@@ -92,7 +94,10 @@ export class AdminContentComponent implements OnInit {
       this.api.put('/content', { key: 'contact_phone', value: phone!, locale: 'he' }),
       this.api.put('/content', { key: 'contact_email', value: email!, locale: 'he' }),
     ]).subscribe({
-      next: () => this.contactSaveState.set('success'),
+      next: () => {
+        this.whatsapp.refresh();
+        this.contactSaveState.set('success');
+      },
       error: () => this.contactSaveState.set('error'),
     });
   }

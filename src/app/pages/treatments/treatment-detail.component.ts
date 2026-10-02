@@ -28,7 +28,7 @@ interface Treatment {
 export class TreatmentDetailComponent implements OnInit {
   private api = inject(ApiService);
   private route = inject(ActivatedRoute);
-  private whatsapp = inject(WhatsappService);
+  readonly whatsapp = inject(WhatsappService);
   private seo = inject(SeoService);
 
   treatment = signal<Treatment | null>(null);
@@ -42,7 +42,7 @@ export class TreatmentDetailComponent implements OnInit {
       });
   }
 
-  getWhatsappLink(): string {
+  getWhatsappLink(): string | null {
     return this.whatsapp.buildTreatmentLink(this.treatment()?.title ?? '');
   }
 }
