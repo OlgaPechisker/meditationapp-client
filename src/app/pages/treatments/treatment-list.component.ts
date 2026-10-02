@@ -30,7 +30,7 @@ interface Treatment {
 export class TreatmentListComponent implements OnInit {
   private api = inject(ApiService);
   private route = inject(ActivatedRoute);
-  private whatsapp = inject(WhatsappService);
+  readonly whatsapp = inject(WhatsappService);
   private seo = inject(SeoService);
 
   treatments = signal<Treatment[]>([]);
@@ -47,7 +47,7 @@ export class TreatmentListComponent implements OnInit {
    * WhatsApp link for a booking enquiry. Called with a treatment title for a
    * specific enquiry, or without arguments for the general hero-level CTA.
    */
-  getWhatsappLink(title = ''): string {
+  getWhatsappLink(title = ''): string | null {
     return title
       ? this.whatsapp.buildTreatmentLink(title)
       : this.whatsapp.buildLink('שלום, אני מעוניין/ת לקבוע תור לטיפול');
