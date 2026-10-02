@@ -58,7 +58,7 @@ jobs:
           node-version: 24.15.0
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - run: npm run build:e2e
       - uses: actions/checkout@v5
         with:
           repository: OlgaPechisker/meditationapp
